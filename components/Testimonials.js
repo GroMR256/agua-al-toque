@@ -4,25 +4,28 @@ import FadeIn from './FadeIn';
 export default function Testimonials() {
   const reviews = [
     {
-      name: 'Carlos Mendoza',
-      district: 'Miraflores',
+      name: 'Ing. Marcelo Ugarte',
+      role: 'Gerente de Operaciones',
+      company: 'Consorcio Minero del Sur',
       rating: 5,
-      text: 'Impresionante la rapidez. Hice el pedido por WhatsApp y el bidón llegó en 22 minutos exactos. El sabor del agua es increíblemente puro.',
-      avatar: '👨‍💼'
+      text: 'Agua Al Toque B2B abastece nuestros 3 campamentos en zonas de alta montaña. El cumplimiento en el horario de cisternas y la trazabilidad de los informes de laboratorio son impecables.',
+      avatar: '⛏️'
     },
     {
-      name: 'Dra. Elena Ramos',
-      district: 'San Isidro',
+      name: 'Dra. Patricia Alarcón',
+      role: 'Directora de Compras',
+      company: 'Cadena Hotelera Riviera',
       rating: 5,
-      text: 'Como médica me importa mucho la pureza del agua para mi familia. Saber que filtran por ósmosis inversa de 7 etapas me da total tranquilidad.',
-      avatar: '👩‍⚕️'
+      text: 'Contamos con suministro de respaldo continuo para nuestros hoteles y calderas. Su tiempo de respuesta en situaciones de emergencia ha salvado nuestra operación en múltiples ocasiones.',
+      avatar: '🏨'
     },
     {
-      name: 'Renzo Farfán',
-      district: 'Surco',
+      name: 'Ing. Fernando Castillo',
+      role: 'Jefe de Logística & Obras',
+      company: 'Constructora Vial Andina',
       rating: 5,
-      text: 'El dispensador smart que alquilé funciona perfecto para el café en las mañanas y agua helada para entrenar. Servicio 10/10.',
-      avatar: '🏋️‍♂️'
+      text: 'Trabajamos con un volumen de más de 100 m³ diarios para compactación de suelos y curado en obra. Las facturaciones a 30 días y la flexibilidad en la flota hacen la diferencia.',
+      avatar: '🏗️'
     }
   ];
 
@@ -30,10 +33,10 @@ export default function Testimonials() {
     <section className="section">
       <div className="container">
         <FadeIn className="section-header">
-          <span className="badge-glass">Opiniones de Clientes</span>
-          <h2 className="section-title">Lo que dicen <span className="text-gradient">Nuestros Usuarios</span></h2>
+          <span className="badge-glass">Casos de Éxito Corporativos</span>
+          <h2 className="section-title">Confianza de <span className="text-gradient">Grandes Empresas</span></h2>
           <p className="section-subtitle">
-            Miles de familias y empresas confían en Agua Al Toque para su hidratación diaria.
+            Líderes de operaciones en minería, agro, hotelería y construcción respaldan la puntualidad y calidad de nuestro servicio.
           </p>
         </FadeIn>
 
@@ -55,8 +58,9 @@ export default function Testimonials() {
                   {rev.avatar}
                 </div>
                 <div>
-                  <h4 style={{ fontWeight: 700, fontSize: '1.1rem' }}>{rev.name}</h4>
-                  <span style={{ fontSize: '0.85rem', color: 'var(--text-muted)' }}>📍 {rev.district}</span>
+                  <h4 style={{ fontWeight: 700, fontSize: '1.05rem' }}>{rev.name}</h4>
+                  <span style={{ fontSize: '0.82rem', color: 'var(--color-cyan)', fontWeight: 600 }}>{rev.role}</span>
+                  <div style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>{rev.company}</div>
                 </div>
               </div>
 
@@ -64,7 +68,7 @@ export default function Testimonials() {
                 {'★'.repeat(rev.rating)}
               </div>
 
-              <p style={{ color: 'var(--text-muted)', fontSize: '0.95rem', lineHeight: 1.6, italic: 'true' }}>
+              <p style={{ color: 'var(--text-muted)', fontSize: '0.92rem', lineHeight: 1.6, fontStyle: 'italic' }}>
                 "{rev.text}"
               </p>
             </FadeIn>

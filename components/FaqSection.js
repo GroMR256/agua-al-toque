@@ -7,24 +7,24 @@ export default function FaqSection() {
 
   const faqs = [
     {
-      q: '¿Cómo funciona el proceso de purificación por Ósmosis Inversa?',
-      a: 'Nuestra agua pasa por 7 etapas de refinamiento: microfiltración de sedimentos, carbón activado en bloque, ósmosis inversa molecular de 0.0001 micras, remineralización balanceada, filtro pulidor y doble esterilización con radiación UV y ozono.'
+      q: '¿Cuál es la capacidad mínima y máxima de despacho en cisterna?',
+      a: 'Nuestra flota pesada cuenta con cisternas de 10 m³ (10,000L), 15 m³ (15,000L) y 30 m³ (30,000L). Podemos movilizar convoyes simultáneos de hasta 500 m³ diarios para megaproyectos o eventos extraordinarios.'
     },
     {
-      q: '¿Cómo funciona el intercambio de bidones retornables?',
-      a: 'En tu primera compra entregas un envase retornable en buen estado o adquieres uno nuevo con nosotros. En las siguientes entregas, nuestro repartidor retira el envase vacío y te entrega el bidón purificado y sellado al instante.'
+      q: '¿Emiten certificados de calidad microbiológica y fisicoquímica?',
+      a: 'Sí. Cada despacho cuenta con hoja de trazabilidad e informe de laboratorio acreditado conforme a la Norma Sanitaria DS 031-MINSA para agua apta para consumo humano o uso industrial especializado.'
     },
     {
-      q: '¿Cuál es el tiempo de entrega y costo de envío?',
-      a: 'El envío es 100% GRATIS en zonas con cobertura exprés (Miraflores, San Isidro, Surco, San Borja, etc.) y el tiempo de entrega promedio es de 30 a 45 minutos. Para otros distritos programamos la entrega en el mismo día.'
+      q: '¿Ofrecen crédito corporativo y facturación electrónica a 30/60 días?',
+      a: 'Sí. Previa evaluación crediticia y firma de contrato de suministro, otorgamos líneas de crédito a 30, 45 o 60 días para compras corporativas mediante Orden de Compra (O/C).'
     },
     {
-      q: '¿Qué medios de pago aceptan?',
-      a: 'Aceptamos Yape, Plin, transferencias bancarias directas, tarjetas de crédito/débito y pago contra entrega en efectivo o POS móvil.'
+      q: '¿Cómo funciona la instalación de plantas móviles de tratamiento in situ?',
+      a: 'Desplegamos módulos contenedorizados de filtración y ósmosis inversa directamente en tu campamento, mina o granja. Nos encargamos del montaje, puesta en marcha y mantenimiento técnico continuo.'
     },
     {
-      q: '¿Cuentan con promociones para empresas u oficinas?',
-      a: '¡Sí! Ofrecemos planes corporativos mensuales con hasta 20% de descuento y entrega semanal programada con factura electrónica.'
+      q: '¿Cuál es el procedimiento para participar en licitaciones del Estado o contrataciones públicas?',
+      a: 'Contamos con RNP (Registro Nacional de Proveedores) activo en el capítulo de Bienes y Servicios. Atendemos requerimientos del SEACE y compras corporativas gubernamentales.'
     }
   ];
 
@@ -32,10 +32,10 @@ export default function FaqSection() {
     <section id="faq" className="section" style={{ background: 'rgba(11, 19, 43, 0.4)' }}>
       <div className="container">
         <FadeIn className="section-header">
-          <span className="badge-glass">Resolvemos tus Dudas</span>
-          <h2 className="section-title">Preguntas <span className="text-gradient">Frecuentes</span></h2>
+          <span className="badge-glass">Consultas Corporativas</span>
+          <h2 className="section-title">Preguntas Frecuentes <span className="text-gradient">B2B</span></h2>
           <p className="section-subtitle">
-            Todo lo que necesitas saber sobre nuestros procesos de pureza, entregas y suscripciones.
+            Información clave sobre logística de transporte, créditos institucionales y normativas sanitarias.
           </p>
         </FadeIn>
 

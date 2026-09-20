@@ -1,7 +1,7 @@
 'use client';
-import WaterMetricsWidget from './WaterMetricsWidget';
+import B2bTelemetryWidget from './B2bTelemetryWidget';
 
-export default function Hero({ onOpenOrderModal }) {
+export default function Hero({ onOpenQuoteModal }) {
   return (
     <section id="inicio" className="hero">
       <div className="container">
@@ -9,51 +9,51 @@ export default function Hero({ onOpenOrderModal }) {
           <div className="hero-content">
             <div>
               <span className="badge-glass">
-                💎 Filtrado Molecular de 7 Etapas
+                🏢 Suministro Industrial & Logística B2B 24/7
               </span>
             </div>
             
             <h1 className="hero-title">
-              Agua Ultra Pura & Delivery <span className="text-gradient">al Instante</span>
+              Suministro Masivo de Agua Tratada para el <span className="text-gradient">Sector B2B e Industrial</span>
             </h1>
 
             <p className="hero-subtitle">
-              Siente la frescura absoluta con nuestra agua purificada por ósmosis inversa. Telemetría de pureza en tiempo real y entrega garantizada a tu puerta en menos de 45 minutos.
+              Garantizamos continuidad operativa a gran escala. Abastecimiento en flota de cisternas de 10,000L a 30,000L y plantas de ósmosis inversa para minas, agro, construcción, hoteles y entidades públicas.
             </p>
 
             <div className="hero-actions">
               <button 
-                onClick={onOpenOrderModal} 
+                onClick={() => onOpenQuoteModal()} 
                 className="btn btn-primary btn-large"
               >
-                ⚡ Pedir Agua al Toque
+                💼 Cotización Corporativa B2B
               </button>
               <a 
-                href="#calculadora" 
+                href="#sectores" 
                 className="btn btn-secondary btn-large"
               >
-                🧮 Calcular Pedido
+                🚜 Ver Sectores Atendidos
               </a>
             </div>
 
             <div className="hero-stats">
               <div className="stat-item">
-                <span className="stat-value text-gradient">99.98%</span>
-                <span className="stat-label">Pureza Molécular</span>
+                <span className="stat-value text-gradient">+5M Litros</span>
+                <span className="stat-label">Suministro Mensual</span>
               </div>
               <div className="stat-item">
-                <span className="stat-value text-gradient">&lt; 45 min</span>
-                <span className="stat-label">Tiempo Promedio</span>
+                <span className="stat-value text-gradient">30,000 L</span>
+                <span className="stat-label">Capacidad por Cisterna</span>
               </div>
               <div className="stat-item">
-                <span className="stat-value text-gradient">+18.5k</span>
-                <span className="stat-label">Bidones Entregados</span>
+                <span className="stat-value text-gradient">DS 031-MINSA</span>
+                <span className="stat-label">Certificación Oficial</span>
               </div>
             </div>
           </div>
 
           <div>
-            <WaterMetricsWidget />
+            <B2bTelemetryWidget />
           </div>
         </div>
       </div>

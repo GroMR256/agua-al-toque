@@ -6,9 +6,7 @@ export default function FinalCta({ onOpenQuoteModal }) {
     <section className="section" style={{ padding: '90px 0', backgroundColor: 'var(--primary-navy)', color: '#FFFFFF', textAlign: 'center' }}>
       <div className="container">
         <div style={{ maxWidth: '750px', margin: '0 auto' }}>
-          <span className="badge-pro" style={{ backgroundColor: 'rgba(255, 255, 255, 0.1)', borderColor: 'rgba(255, 255, 255, 0.2)', color: 'var(--accent-cyan)' }}>
-            Atención Comercial Directa
-          </span>
+
 
           <h2 style={{ fontSize: 'clamp(2rem, 3.5vw, 2.8rem)', fontWeight: 800, marginTop: '16px', marginBottom: '16px' }}>
             ¿Necesitas abastecimiento de agua?

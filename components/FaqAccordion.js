@@ -40,15 +40,14 @@ export default function FaqAccordion() {
   ];
 
   return (
-    <section className="section" style={{ padding: '90px 0', backgroundColor: '#FFFFFF' }}>
+    <section id="faq" className="section" style={{ padding: '90px 0', backgroundColor: '#FFFFFF' }}>
       <div className="container">
         <div style={{ textAlign: 'center', maxWidth: '700px', margin: '0 auto 60px auto' }}>
-          <span className="badge-pro">Preguntas Frecuentes</span>
           <h2 className="section-title" style={{ marginTop: '12px' }}>
-            Resolvemos tus Dudas sobre el Servicio
+            Preguntas Frecuentes
           </h2>
           <p className="section-subtitle" style={{ margin: '12px auto 0 auto' }}>
-            Respuestas claras a las consultas habituales sobre volúmenes, zonas, contratación y alquiler de cisternas.
+            Resolvemos consultas comunes sobre nuestro servicio.
           </p>
         </div>
 

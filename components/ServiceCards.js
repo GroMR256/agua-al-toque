@@ -21,12 +21,13 @@ export default function ServiceCards({ onOpenQuoteModal }) {
       title: 'Agua para agricultura',
       desc: 'Abastecimiento continuo de fundos, reservorios y operaciones agrícolas de alta escala.',
     },
+    /*
     {
       id: 'agua-para-construccion',
       image: 'https://images.unsplash.com/photo-1541888946425-d0fbb186a5b3?auto=format&fit=crop&w=600&q=80',
       title: 'Agua para construcción',
       desc: 'Suministro para obras, campamentos de construcción, curado de concreto y compactación de suelos.',
-    },
+    },*/
     {
       id: 'agua-para-mineria',
       image: 'https://images.unsplash.com/photo-1578575437130-527eed3abbec?auto=format&fit=crop&w=600&q=80',
@@ -39,12 +40,7 @@ export default function ServiceCards({ onOpenQuoteModal }) {
       title: 'Alquiler de cisternas',
       desc: 'Alquiler de unidades de cisterna para operaciones que requieren transporte y almacenamiento temporal.',
     },
-    {
-      id: 'transporte-de-agua',
-      image: 'https://images.unsplash.com/photo-1519003722824-194d4455a60c?auto=format&fit=crop&w=600&q=80',
-      title: 'Transporte de agua',
-      desc: 'Servicio de transporte y flete logístico cuando la empresa cliente ya dispone de la fuente hídrica.',
-    },
+
     {
       id: 'abastecimiento-de-emergencia',
       image: 'https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=600&q=80',
@@ -57,7 +53,6 @@ export default function ServiceCards({ onOpenQuoteModal }) {
     <section id="servicios" className="section" style={{ padding: '90px 0', backgroundColor: '#FFFFFF' }}>
       <div className="container">
         <div style={{ textAlign: 'center', maxWidth: '700px', margin: '0 auto 60px auto' }}>
-          <span className="badge-pro">Servicios Principales</span>
           <h2 className="section-title" style={{ marginTop: '12px' }}>
             Soluciones de Abastecimiento & Logística de Agua
           </h2>
@@ -66,7 +61,7 @@ export default function ServiceCards({ onOpenQuoteModal }) {
           </p>
         </div>
 
-        <div className="grid-4">
+        <div className="grid-3">
           {services.map((srv) => (
             <div key={srv.id} className="card-pro" style={{ padding: 0, overflow: 'hidden' }}>
               <div style={{ height: '180px', overflow: 'hidden', position: 'relative' }}>

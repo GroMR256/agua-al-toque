@@ -11,7 +11,7 @@ export default function Header({ onOpenQuoteModal }) {
     { label: 'Servicios', href: '#servicios' },
     { label: 'Sectores', href: '#sectores' },
     { label: 'Flota', href: '#flota' },
-    { label: 'Nosotros', href: '#nosotros' },
+    //{ label: 'Nosotros', href: '#nosotros' },
     { label: 'Cobertura', href: '#cobertura' },
     { label: 'FAQ', href: '#faq' },
     { label: 'Contacto', href: '#contacto' },

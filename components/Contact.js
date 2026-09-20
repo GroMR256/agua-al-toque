@@ -1,17 +1,29 @@
+'use client';
 import FadeIn from './FadeIn';
 
-export default function Contact() {
-    return (
-        <section id="contact" className="section contact">
-            <div className="container contact-container">
-                <FadeIn className="contact-text">
-                    <h2 className="section-title">Contáctanos</h2>
-                    <p>Estamos listos para atenderte. Llámanos o escríbenos por WhatsApp.</p>
-                    <a href="https://wa.me/51999999999" className="btn btn-primary btn-large">
-                        WhatsApp: 999 999 999
-                    </a>
-                </FadeIn>
-            </div>
-        </section>
-    );
+export default function Contact({ onOpenOrderModal }) {
+  return (
+    <section id="contacto" className="section">
+      <div className="container">
+        <FadeIn className="contact-cta">
+          <span className="badge-glass" style={{ marginBottom: '16px' }}>⚡ Hidratación Inmediata</span>
+          <h2 style={{ fontSize: '2.5rem', fontWeight: 800, marginBottom: '16px' }} className="text-gradient">
+            ¿Listo para probar la máxima pureza?
+          </h2>
+          <p style={{ color: 'var(--text-muted)', fontSize: '1.15rem', maxWidth: '650px', margin: '0 auto 30px auto' }}>
+            Haz tu pedido ahora y recibe tu agua purificada por ósmosis inversa en minutos con envío gratis a tu zona.
+          </p>
+
+          <div style={{ display: 'flex', gap: '16px', justifyContent: 'center', flexWrap: 'wrap' }}>
+            <button onClick={onOpenOrderModal} className="btn btn-primary btn-large">
+              📲 Pedir por WhatsApp (Atención 24/7)
+            </button>
+            <a href="tel:+51999999999" className="btn btn-secondary btn-large">
+              📞 Llamar a Central: 999 999 999
+            </a>
+          </div>
+        </FadeIn>
+      </div>
+    </section>
+  );
 }

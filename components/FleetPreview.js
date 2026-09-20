@@ -28,7 +28,7 @@ export default function FleetPreview({ onOpenQuoteModal }) {
   ];
 
   return (
-    <section className="section" style={{ padding: '90px 0', backgroundColor: '#FFFFFF' }}>
+    <section id="flota" className="section" style={{ padding: '90px 0', backgroundColor: '#FFFFFF' }}>
       <div className="container">
         <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', marginBottom: '48px' }}>
           <span className="badge-pro">Nuestra Flotas de Cisternas</span>

@@ -3,15 +3,14 @@ import { MapPinIcon, PhoneIcon, WhatsAppIcon } from './Icons';
 
 export default function CoverageMap({ onOpenQuoteModal }) {
   return (
-    <section className="section" style={{ padding: '90px 0', backgroundColor: 'var(--bg-light)' }}>
+    <section id="cobertura" className="section" style={{ padding: '90px 0', backgroundColor: 'var(--bg-light)' }}>
       <div className="container">
         <div style={{ textAlign: 'center', maxWidth: '700px', margin: '0 auto 60px auto' }}>
-          <span className="badge-pro">Alcance & Logística</span>
           <h2 className="section-title" style={{ marginTop: '12px' }}>
             Zonas de Cobertura & Atención
           </h2>
           <p className="section-subtitle" style={{ margin: '12px auto 0 auto' }}>
-            Operamos en las principales áreas urbanas, zonas industriales, proyectos de infraestructura y fundos agrícolas de [ZONA DE COBERTURA].
+            Operamos en las principales áreas urbanas, zonas industriales, proyectos de infraestructura y fundos agrícolas de Huarmey.
           </p>
         </div>
 
@@ -27,14 +26,14 @@ export default function CoverageMap({ onOpenQuoteModal }) {
               <h3 style={{ fontSize: '1.35rem', fontWeight: 800, color: 'var(--primary-navy)', marginBottom: '16px' }}>
                 Áreas Atendidas Habitualmente
               </h3>
-              
+
               <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '14px', marginBottom: '24px' }}>
                 <li style={{ display: 'flex', gap: '12px', alignItems: 'flex-start' }}>
                   <MapPinIcon size={20} color="var(--accent-sky)" />
                   <div>
                     <strong style={{ color: 'var(--primary-navy)' }}>Zona Urbana & Comercial:</strong>
                     <div style={{ fontSize: '0.9rem', color: 'var(--text-secondary)' }}>
-                      Atención a hoteles, comercios, hospitales, empresas y residencias en [CIUDAD Y DISTRITOS].
+                      Atención a hoteles, comercios, hospitales, empresas y residencias en Huarmey y alrededores.
                     </div>
                   </div>
                 </li>
@@ -43,7 +42,7 @@ export default function CoverageMap({ onOpenQuoteModal }) {
                   <div>
                     <strong style={{ color: 'var(--primary-navy)' }}>Zona Agrícola & Fundos:</strong>
                     <div style={{ fontSize: '0.9rem', color: 'var(--text-secondary)' }}>
-                      Despacho en cisternas a reservorios y valles de [ZONAS AGRÍCOLAS].
+                      Despacho en cisternas a reservorios y valles de Ancash.
                     </div>
                   </div>
                 </li>
@@ -96,7 +95,7 @@ export default function CoverageMap({ onOpenQuoteModal }) {
                   Mapa Operativo Logístico
                 </h4>
                 <p style={{ fontSize: '0.88rem', color: '#94A3B8', marginBottom: '20px' }}>
-                  Base central y rutas estratégicas de despacho de cisternas en [ZONA DE COBERTURA / CIUDAD].
+                  Base central y rutas estratégicas de despacho de cisternas en Huarmey.
                 </p>
                 <div style={{ display: 'inline-flex', gap: '8px', padding: '6px 14px', backgroundColor: 'rgba(255, 255, 255, 0.1)', borderRadius: '99px', fontSize: '0.8rem', fontWeight: 600 }}>
                   📍 Cobertura Local & Regional Activa

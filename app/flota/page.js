@@ -33,7 +33,7 @@ export default function FlotaPage() {
       image: 'https://images.unsplash.com/photo-1601584115197-04ecc0da31d7?auto=format&fit=crop&w=800&q=80',
       serviceType: 'Construcción, Obras Viales, Fundos Agrícolas',
       availability: 'Disponible para contratos diarios y semanales',
-      maintenance: 'Certificación técnica semestral e inspección de estanqueidad',
+      maintenance: 'Certificación  técnica semestral e inspección de estanqueidad',
       equipment: 'Bomba impulsora de 3 pulgadas, carrete de manguera de 70m, rociadores traseros para tierra',
       description: 'Unidad de gran versatilidad para obras en construcción, humedecimiento de suelos y riego agrícola.'
     },
@@ -70,7 +70,7 @@ export default function FlotaPage() {
       <section className="section" style={{ padding: '80px 0' }}>
         <div className="container" style={{ display: 'flex', flexDirection: 'column', gap: '60px' }}>
           {fleetUnits.map((unit, idx) => (
-            <div 
+            <div
               key={idx}
               style={{
                 backgroundColor: '#FFFFFF',

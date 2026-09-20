@@ -39,7 +39,6 @@ export default function WhyUs() {
     <section className="section" style={{ padding: '90px 0', backgroundColor: '#FFFFFF' }}>
       <div className="container">
         <div style={{ textAlign: 'center', maxWidth: '700px', margin: '0 auto 60px auto' }}>
-          <span className="badge-pro">Capacidades Concretas</span>
           <h2 className="section-title" style={{ marginTop: '12px' }}>
             ¿Por Qué Elegirnos como Aliado Logístico?
           </h2>

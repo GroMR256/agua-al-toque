@@ -3,13 +3,10 @@ import { FileTextIcon, WhatsAppIcon, ShieldCheckIcon } from './Icons';
 
 export default function Hero({ onOpenQuoteModal }) {
   return (
-    <section className="hero-section">
+    <section id="inicio" className="hero-section">
       <div className="container">
         <div className="hero-grid">
           <div>
-            <span className="badge-pro">
-              <ShieldCheckIcon size={16} /> Soluciones de Logística & Abastecimiento de Agua
-            </span>
 
             <h1 className="hero-title" style={{ marginTop: '16px' }}>
               Agua cuando la necesitas, <span style={{ color: 'var(--accent-sky)' }}>donde la necesitas.</span>

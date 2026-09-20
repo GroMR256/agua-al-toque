@@ -2,10 +2,10 @@
 
 export default function TrustMetrics() {
   const metrics = [
-    { value: '+[X]', label: 'Años de Experiencia' },
-    { value: '[X]', label: 'Camiones Cisterna' },
-    { value: '[X] m³', label: 'Capacidad Operativa' },
-    { value: '+[X]', label: 'Clientes Atendidos' },
+    { value: '+10', label: 'Años de Experiencia' },
+    { value: '4', label: 'Camiones Cisterna' },
+    { value: '50 m³', label: 'Capacidad Operativa' },
+    { value: '+50', label: 'Clientes Atendidos' },
   ];
 
   return (

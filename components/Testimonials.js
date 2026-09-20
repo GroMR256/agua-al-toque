@@ -27,7 +27,6 @@ export default function Testimonials() {
     <section className="section" style={{ padding: '90px 0', backgroundColor: '#FFFFFF' }}>
       <div className="container">
         <div style={{ textAlign: 'center', maxWidth: '700px', margin: '0 auto 60px auto' }}>
-          <span className="badge-pro">Experiencia & Casos de Servicio</span>
           <h2 className="section-title" style={{ marginTop: '12px' }}>
             Respaldados por Experiencia Operativa
           </h2>

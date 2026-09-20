@@ -17,7 +17,6 @@ export default function GalleryPreview() {
       <div className="container">
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', flexWrap: 'wrap', gap: '20px', marginBottom: '48px' }}>
           <div>
-            <span className="badge-pro">Galería Operativa</span>
             <h2 className="section-title" style={{ marginTop: '12px' }}>
               Nuestra Flota & Operaciones en Campo
             </h2>
@@ -25,9 +24,9 @@ export default function GalleryPreview() {
               Imágenes de nuestras unidades cisterna, entregas y presencia en proyectos reales.
             </p>
           </div>
-          <Link href="/galeria" className="btn btn-secondary">
+          {/*<Link href="/galeria" className="btn btn-secondary">
             Ver galería completa <ArrowRightIcon size={16} />
-          </Link>
+          </Link>*/}
         </div>
 
         <div className="grid-3">

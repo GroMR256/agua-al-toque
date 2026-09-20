@@ -31,7 +31,6 @@ export default function FleetPreview({ onOpenQuoteModal }) {
     <section id="flota" className="section" style={{ padding: '90px 0', backgroundColor: '#FFFFFF' }}>
       <div className="container">
         <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', marginBottom: '48px' }}>
-          <span className="badge-pro">Nuestra Flotas de Cisternas</span>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', flexWrap: 'wrap', gap: '20px' }}>
             <div>
               <h2 className="section-title">
@@ -41,9 +40,7 @@ export default function FleetPreview({ onOpenQuoteModal }) {
                 Flota propia de unidades acondicionadas y mantenidas bajo estrictos estándares de limpieza y seguridad.
               </p>
             </div>
-            <Link href="/flota" className="btn btn-secondary">
-              <TruckIcon size={18} /> Conoce nuestra flota completa <ArrowRightIcon size={16} />
-            </Link>
+
           </div>
         </div>
 

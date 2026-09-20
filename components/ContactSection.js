@@ -274,7 +274,7 @@ export default function ContactSection() {
                   </div>
                   <div>
                     <strong style={{ color: 'var(--primary-navy)', fontSize: '0.95rem' }}>WhatsApp Directo:</strong>
-                    <div style={{ color: 'var(--text-secondary)', fontSize: '0.9rem' }}>[NÚMERO DE TELÉFONO]</div>
+                    <div style={{ color: 'var(--text-secondary)', fontSize: '0.9rem' }}>+51 956812339</div>
                   </div>
                 </li>
 
@@ -284,7 +284,7 @@ export default function ContactSection() {
                   </div>
                   <div>
                     <strong style={{ color: 'var(--primary-navy)', fontSize: '0.95rem' }}>Base / Dirección:</strong>
-                    <div style={{ color: 'var(--text-secondary)', fontSize: '0.9rem' }}>[ZONA DE COBERTURA / CIUDAD]</div>
+                    <div style={{ color: 'var(--text-secondary)', fontSize: '0.9rem' }}>Av. Alberto Reyes 268 - Huarmey</div>
                   </div>
                 </li>
 

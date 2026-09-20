@@ -33,7 +33,6 @@ export default function HowItWorks() {
     <section className="section" style={{ padding: '90px 0', backgroundColor: 'var(--bg-light)' }}>
       <div className="container">
         <div style={{ textAlign: 'center', maxWidth: '700px', margin: '0 auto 60px auto' }}>
-          <span className="badge-pro">Proceso de Atención</span>
           <h2 className="section-title" style={{ marginTop: '12px' }}>
             ¿Cómo Funciona Nuestro Servicio?
           </h2>

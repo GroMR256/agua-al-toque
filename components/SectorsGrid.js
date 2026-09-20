@@ -56,7 +56,6 @@ export default function SectorsGrid({ onOpenQuoteModal }) {
     <section id="sectores" className="section" style={{ padding: '90px 0', backgroundColor: 'var(--bg-light)' }}>
       <div className="container">
         <div style={{ textAlign: 'center', maxWidth: '700px', margin: '0 auto 60px auto' }}>
-          <span className="badge-pro">Sectores que Atendemos</span>
           <h2 className="section-title" style={{ marginTop: '12px' }}>
             Soluciones Adaptadas a Cada Industria
           </h2>
@@ -84,15 +83,6 @@ export default function SectorsGrid({ onOpenQuoteModal }) {
                   {sec.desc}
                 </p>
 
-                <div style={{ paddingTop: '16px', borderTop: '1px solid var(--border-light)' }}>
-                  <button
-                    onClick={() => onOpenQuoteModal(`Sector: ${sec.title}`)}
-                    className="btn btn-secondary"
-                    style={{ width: '100%', justifyContent: 'center' }}
-                  >
-                    Cotizar para {sec.title}
-                  </button>
-                </div>
               </div>
             </div>
           ))}

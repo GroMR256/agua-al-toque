@@ -38,7 +38,7 @@ export default function Home() {
       <FleetPreview onOpenQuoteModal={(unit) => handleOpenQuoteModal(unit)} />
       <HowItWorks />
       <WhyUs />
-      <AboutSection />
+
       <CoverageMap onOpenQuoteModal={() => handleOpenQuoteModal()} />
       <Testimonials />
       <GalleryPreview />

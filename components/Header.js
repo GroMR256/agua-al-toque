@@ -1,27 +1,27 @@
 'use client';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
 import { TruckIcon, WhatsAppIcon, FileTextIcon } from './Icons';
 
 export default function Header({ onOpenQuoteModal }) {
   const [isOpen, setIsOpen] = useState(false);
-  const pathname = usePathname();
 
   const navItems = [
-    { label: 'Inicio', href: '/' },
-    { label: 'Servicios', href: '/servicios' },
-    { label: 'Sectores', href: '/sectores' },
-    { label: 'Flota', href: '/flota' },
-    { label: 'Cobertura', href: '/cobertura' },
-    { label: 'Nosotros', href: '/nosotros' },
-    { label: 'Contacto', href: '/contacto' },
+    { label: 'Inicio', href: '#inicio' },
+    { label: 'Servicios', href: '#servicios' },
+    { label: 'Sectores', href: '#sectores' },
+    { label: 'Flota', href: '#flota' },
+    { label: 'Cómo Funciona', href: '#como-funciona' },
+    { label: 'Nosotros', href: '#nosotros' },
+    { label: 'Cobertura', href: '#cobertura' },
+    { label: 'FAQ', href: '#faq' },
+    { label: 'Contacto', href: '#contacto' },
   ];
 
   return (
     <header className="site-header">
       <div className="container header-inner">
-        <Link href="/" className="brand-logo">
+        <Link href="#inicio" className="brand-logo">
           <div className="brand-icon">
             <TruckIcon size={22} />
           </div>
@@ -42,20 +42,17 @@ export default function Header({ onOpenQuoteModal }) {
         </button>
 
         <nav className={`nav-links ${isOpen ? 'open' : ''}`}>
-          {navItems.map((item) => {
-            const isActive = pathname === item.href;
-            return (
-              <li key={item.href}>
-                <Link 
-                  href={item.href} 
-                  className={`nav-item-link ${isActive ? 'active' : ''}`}
-                  onClick={() => setIsOpen(false)}
-                >
-                  {item.label}
-                </Link>
-              </li>
-            );
-          })}
+          {navItems.map((item) => (
+            <li key={item.href}>
+              <a 
+                href={item.href} 
+                className="nav-item-link"
+                onClick={() => setIsOpen(false)}
+              >
+                {item.label}
+              </a>
+            </li>
+          ))}
         </nav>
 
         <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }} className="desktop-only">

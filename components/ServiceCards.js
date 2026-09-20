@@ -1,74 +1,63 @@
 'use client';
-import Link from 'next/link';
-import { 
-  WaterIcon, 
-  BuildingIcon, 
-  SproutIcon, 
-  HardHatIcon, 
-  PickaxeIcon, 
-  TruckIcon, 
-  MapPinIcon, 
-  EmergencyIcon,
-  ArrowRightIcon 
-} from './Icons';
+import { ArrowRightIcon } from './Icons';
 
 export default function ServiceCards({ onOpenQuoteModal }) {
   const services = [
     {
       id: 'suministro-de-agua',
-      icon: <WaterIcon size={24} />,
+      image: 'https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&w=600&q=80',
       title: 'Suministro de agua',
       desc: 'Abastecimiento mediante cisternas para necesidades programadas o puntuales en cualquier punto acordado.',
     },
     {
       id: 'abastecimiento-empresarial',
-      icon: <BuildingIcon size={24} />,
+      image: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=600&q=80',
       title: 'Abastecimiento empresarial',
       desc: 'Contratos y entregas recurrentes para empresas que necesitan garantizar continuidad en su operación.',
     },
     {
       id: 'agua-para-agricultura',
-      icon: <SproutIcon size={24} />,
+      image: 'https://images.unsplash.com/photo-1500937386664-56d1dfef3854?auto=format&fit=crop&w=600&q=80',
       title: 'Agua para agricultura',
       desc: 'Abastecimiento continuo de fundos, reservorios y operaciones agrícolas de alta escala.',
     },
     {
       id: 'agua-para-construccion',
-      icon: <HardHatIcon size={24} />,
+      image: 'https://images.unsplash.com/photo-1541888946425-d0fbb186a5b3?auto=format&fit=crop&w=600&q=80',
       title: 'Agua para construcción',
       desc: 'Suministro para obras, campamentos de construcción, curado de concreto y compactación de suelos.',
     },
     {
       id: 'agua-para-mineria',
-      icon: <PickaxeIcon size={24} />,
+      image: 'https://images.unsplash.com/photo-1578575437130-527eed3abbec?auto=format&fit=crop&w=600&q=80',
       title: 'Agua para minería y proyectos',
       desc: 'Abastecimiento especializado para proyectos mineros, operaciones en zonas remotas y campamentos.',
     },
     {
       id: 'alquiler-de-cisternas',
-      icon: <TruckIcon size={24} />,
+      image: 'https://images.unsplash.com/photo-1601584115197-04ecc0da31d7?auto=format&fit=crop&w=600&q=80',
       title: 'Alquiler de cisternas',
       desc: 'Alquiler de unidades de cisterna para operaciones que requieren transporte y almacenamiento temporal.',
     },
     {
       id: 'transporte-de-agua',
-      icon: <MapPinIcon size={24} />,
+      image: 'https://images.unsplash.com/photo-1519003722824-194d4455a60c?auto=format&fit=crop&w=600&q=80',
       title: 'Transporte de agua',
       desc: 'Servicio de transporte y flete logístico cuando la empresa cliente ya dispone de la fuente hídrica.',
     },
     {
       id: 'abastecimiento-de-emergencia',
-      icon: <EmergencyIcon size={24} />,
+      image: 'https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=600&q=80',
       title: 'Abastecimiento de emergencia',
       desc: 'Entregas prioritarias e inmediatas ante cortes imprevistos, fallas mecánicas o falta repentina de agua.',
     },
   ];
 
   return (
-    <section className="section" style={{ padding: '90px 0', backgroundColor: '#FFFFFF' }}>
+    <section id="servicios" className="section" style={{ padding: '90px 0', backgroundColor: '#FFFFFF' }}>
       <div className="container">
         <div style={{ textAlign: 'center', maxWidth: '700px', margin: '0 auto 60px auto' }}>
-          <span className="badge-pro">Nuestros Servicios Principales</span>
+          <span className="badge-pro">Servicios Principales</span>
           <h2 className="section-title" style={{ marginTop: '12px' }}>
             Soluciones de Abastecimiento & Logística de Agua
           </h2>
@@ -79,30 +68,32 @@ export default function ServiceCards({ onOpenQuoteModal }) {
 
         <div className="grid-4">
           {services.map((srv) => (
-            <div key={srv.id} className="card-pro">
-              <div className="icon-wrapper">
-                {srv.icon}
+            <div key={srv.id} className="card-pro" style={{ padding: 0, overflow: 'hidden' }}>
+              <div style={{ height: '180px', overflow: 'hidden', position: 'relative' }}>
+                <img
+                  src={srv.image}
+                  alt={srv.title}
+                  style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                />
               </div>
-              <h3 style={{ fontSize: '1.25rem', fontWeight: 700, color: 'var(--primary-navy)', marginBottom: '10px' }}>
-                {srv.title}
-              </h3>
-              <p style={{ color: 'var(--text-secondary)', fontSize: '0.92rem', lineHeight: 1.5, marginBottom: '24px', flex: 1 }}>
-                {srv.desc}
-              </p>
 
-              <div style={{ display: 'flex', gap: '8px', alignItems: 'center', paddingTop: '16px', borderTop: '1px solid var(--border-light)' }}>
-                <Link 
-                  href={`/servicios#${srv.id}`}
-                  style={{ fontSize: '0.9rem', fontWeight: 700, color: 'var(--accent-sky)', display: 'inline-flex', alignItems: 'center', gap: '6px' }}
-                >
-                  Conocer más <ArrowRightIcon size={14} />
-                </Link>
-                <button
-                  onClick={() => onOpenQuoteModal(srv.title)}
-                  style={{ marginLeft: 'auto', background: 'none', border: 'none', color: 'var(--text-muted)', fontSize: '0.85rem', cursor: 'pointer', fontWeight: 600 }}
-                >
-                  Cotizar
-                </button>
+              <div style={{ padding: '24px', display: 'flex', flexDirection: 'column', flex: 1 }}>
+                <h3 style={{ fontSize: '1.2rem', fontWeight: 700, color: 'var(--primary-navy)', marginBottom: '10px' }}>
+                  {srv.title}
+                </h3>
+                <p style={{ color: 'var(--text-secondary)', fontSize: '0.9rem', lineHeight: 1.5, marginBottom: '20px', flex: 1 }}>
+                  {srv.desc}
+                </p>
+
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', paddingTop: '16px', borderTop: '1px solid var(--border-light)' }}>
+                  <button
+                    onClick={() => onOpenQuoteModal(srv.title)}
+                    className="btn btn-primary"
+                    style={{ width: '100%', justifyContent: 'center' }}
+                  >
+                    Solicitar cotización
+                  </button>
+                </div>
               </div>
             </div>
           ))}

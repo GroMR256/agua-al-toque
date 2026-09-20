@@ -8,10 +8,12 @@ import SectorsGrid from '../components/SectorsGrid';
 import FleetPreview from '../components/FleetPreview';
 import HowItWorks from '../components/HowItWorks';
 import WhyUs from '../components/WhyUs';
+import AboutSection from '../components/AboutSection';
 import CoverageMap from '../components/CoverageMap';
 import Testimonials from '../components/Testimonials';
 import GalleryPreview from '../components/GalleryPreview';
 import FaqAccordion from '../components/FaqAccordion';
+import ContactSection from '../components/ContactSection';
 import FinalCta from '../components/FinalCta';
 import Footer from '../components/Footer';
 import QuoteModal from '../components/QuoteModal';
@@ -36,10 +38,12 @@ export default function Home() {
       <FleetPreview onOpenQuoteModal={(unit) => handleOpenQuoteModal(unit)} />
       <HowItWorks />
       <WhyUs />
+      <AboutSection />
       <CoverageMap onOpenQuoteModal={() => handleOpenQuoteModal()} />
       <Testimonials />
       <GalleryPreview />
       <FaqAccordion />
+      <ContactSection />
       <FinalCta onOpenQuoteModal={() => handleOpenQuoteModal()} />
       <Footer />
 

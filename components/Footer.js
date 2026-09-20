@@ -1,5 +1,4 @@
 'use client';
-import Link from 'next/link';
 import { TruckIcon, PhoneIcon, WhatsAppIcon, MapPinIcon, ClockIcon } from './Icons';
 
 export default function Footer() {
@@ -27,24 +26,24 @@ export default function Footer() {
           <div>
             <div className="footer-col-title">Servicios Principales</div>
             <ul className="footer-links-list">
-              <li><Link href="/servicios" className="footer-link">Suministro de Agua</Link></li>
-              <li><Link href="/servicios" className="footer-link">Abastecimiento Empresarial</Link></li>
-              <li><Link href="/servicios" className="footer-link">Agua para Agricultura</Link></li>
-              <li><Link href="/servicios" className="footer-link">Agua para Construcción</Link></li>
-              <li><Link href="/servicios" className="footer-link">Agua para Minería</Link></li>
-              <li><Link href="/servicios" className="footer-link">Alquiler de Cisternas</Link></li>
+              <li><a href="#servicios" className="footer-link">Suministro de Agua</a></li>
+              <li><a href="#servicios" className="footer-link">Abastecimiento Empresarial</a></li>
+              <li><a href="#servicios" className="footer-link">Agua para Agricultura</a></li>
+              <li><a href="#servicios" className="footer-link">Agua para Construcción</a></li>
+              <li><a href="#servicios" className="footer-link">Agua para Minería</a></li>
+              <li><a href="#servicios" className="footer-link">Alquiler de Cisternas</a></li>
             </ul>
           </div>
 
           <div>
             <div className="footer-col-title">Sectores Atendidos</div>
             <ul className="footer-links-list">
-              <li><Link href="/sectores" className="footer-link">Hoteles y Restaurantes</Link></li>
-              <li><Link href="/sectores" className="footer-link">Agricultura y Fundos</Link></li>
-              <li><Link href="/sectores" className="footer-link">Minería y Proyectos</Link></li>
-              <li><Link href="/sectores" className="footer-link">Construcción y Obras</Link></li>
-              <li><Link href="/sectores" className="footer-link">Industria y Comercio</Link></li>
-              <li><Link href="/sectores" className="footer-link">Hogares y Condominios</Link></li>
+              <li><a href="#sectores" className="footer-link">Hoteles y Restaurantes</a></li>
+              <li><a href="#sectores" className="footer-link">Agricultura y Fundos</a></li>
+              <li><a href="#sectores" className="footer-link">Minería y Proyectos</a></li>
+              <li><a href="#sectores" className="footer-link">Construcción y Obras</a></li>
+              <li><a href="#sectores" className="footer-link">Industria y Comercio</a></li>
+              <li><a href="#sectores" className="footer-link">Hogares y Condominios</a></li>
             </ul>
           </div>
 
@@ -76,10 +75,10 @@ export default function Footer() {
             &copy; 2026 Agua Al Toque. Todos los derechos reservados. Soluciones de abastecimiento y logística de agua.
           </div>
           <div style={{ display: 'flex', gap: '20px' }}>
-            <Link href="/cobertura" className="footer-link">Cobertura</Link>
-            <Link href="/nosotros" className="footer-link">Nosotros</Link>
-            <Link href="/faq" className="footer-link">FAQ</Link>
-            <Link href="/contacto" className="footer-link">Contacto</Link>
+            <a href="#cobertura" className="footer-link">Cobertura</a>
+            <a href="#nosotros" className="footer-link">Nosotros</a>
+            <a href="#faq" className="footer-link">FAQ</a>
+            <a href="#contacto" className="footer-link">Contacto</a>
           </div>
         </div>
       </div>

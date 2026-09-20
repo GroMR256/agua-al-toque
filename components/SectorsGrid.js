@@ -1,71 +1,59 @@
 'use client';
-import Link from 'next/link';
-import { 
-  HotelIcon, 
-  SproutIcon, 
-  PickaxeIcon, 
-  HardHatIcon, 
-  FactoryIcon, 
-  BuildingIcon, 
-  ShieldCheckIcon, 
-  HomeIcon,
-  ArrowRightIcon
-} from './Icons';
 
 export default function SectorsGrid({ onOpenQuoteModal }) {
   const sectors = [
     {
       id: 'hoteles-y-restaurantes',
       title: 'Hoteles y restaurantes',
-      icon: <HotelIcon size={24} />,
+      image: 'https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=600&q=80',
       desc: 'Abastecimiento continuo para evitar interrupciones en la atención al cliente, cocina y servicios.',
     },
     {
       id: 'agricultura',
       title: 'Agricultura',
-      icon: <SproutIcon size={24} />,
+      image: 'https://images.unsplash.com/photo-1500937386664-56d1dfef3854?auto=format&fit=crop&w=600&q=80',
       desc: 'Suministro constante para riego de auxilio, reservorios y operaciones agrícolas de exportación.',
     },
     {
       id: 'mineria',
       title: 'Minería',
-      icon: <PickaxeIcon size={24} />,
+      image: 'https://images.unsplash.com/photo-1578575437130-527eed3abbec?auto=format&fit=crop&w=600&q=80',
       desc: 'Abastecimiento para proyectos mineros, operaciones en zonas de difícil acceso y campamentos.',
     },
     {
       id: 'construccion',
       title: 'Construcción',
-      icon: <HardHatIcon size={24} />,
+      image: 'https://images.unsplash.com/photo-1541888946425-d0fbb186a5b3?auto=format&fit=crop&w=600&q=80',
       desc: 'Suministro para obras civiles, campamentos temporales y control de polvo en frentes de trabajo.',
     },
     {
       id: 'industria',
       title: 'Industria',
-      icon: <FactoryIcon size={24} />,
+      image: 'https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&w=600&q=80',
       desc: 'Abastecimiento programado para procesos industriales, torres de enfriamiento y plantas fabriles.',
     },
     {
       id: 'comercio-y-empresas',
       title: 'Comercio y empresas',
-      icon: <BuildingIcon size={24} />,
+      image: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=600&q=80',
       desc: 'Soluciones de suministro recurrente o de emergencia para garantizar continuidad del negocio.',
     },
     {
       id: 'instituciones',
       title: 'Instituciones',
-      icon: <ShieldCheckIcon size={24} />,
+      image: 'https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?auto=format&fit=crop&w=600&q=80',
       desc: 'Atención a entidades públicas, centros de salud, colegios e infraestructura del Estado.',
     },
     {
       id: 'hogares',
       title: 'Hogares y condominios',
-      icon: <HomeIcon size={24} />,
+      image: 'https://images.unsplash.com/photo-1560518883-ce09059eeffa?auto=format&fit=crop&w=600&q=80',
       desc: 'Entrega de agua en cisterna ante cortes de servicio público o llenado de cisternas residenciales.',
     },
   ];
 
   return (
-    <section className="section" style={{ padding: '90px 0', backgroundColor: 'var(--bg-light)' }}>
+    <section id="sectores" className="section" style={{ padding: '90px 0', backgroundColor: 'var(--bg-light)' }}>
       <div className="container">
         <div style={{ textAlign: 'center', maxWidth: '700px', margin: '0 auto 60px auto' }}>
           <span className="badge-pro">Sectores que Atendemos</span>
@@ -79,28 +67,32 @@ export default function SectorsGrid({ onOpenQuoteModal }) {
 
         <div className="grid-4">
           {sectors.map((sec) => (
-            <div key={sec.id} className="card-pro" style={{ backgroundColor: '#FFFFFF' }}>
-              <div className="icon-wrapper" style={{ backgroundColor: 'rgba(15, 23, 42, 0.05)', color: 'var(--primary-navy)' }}>
-                {sec.icon}
+            <div key={sec.id} className="card-pro" style={{ padding: 0, overflow: 'hidden', backgroundColor: '#FFFFFF' }}>
+              <div style={{ height: '180px', overflow: 'hidden', position: 'relative' }}>
+                <img
+                  src={sec.image}
+                  alt={sec.title}
+                  style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                />
               </div>
-              <h3 style={{ fontSize: '1.2rem', fontWeight: 700, color: 'var(--primary-navy)', marginBottom: '8px' }}>
-                {sec.title}
-              </h3>
-              <p style={{ color: 'var(--text-secondary)', fontSize: '0.9rem', lineHeight: 1.5, marginBottom: '20px', flex: 1 }}>
-                {sec.desc}
-              </p>
 
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', paddingTop: '16px', borderTop: '1px solid var(--border-light)' }}>
-                <Link href="/sectores" style={{ fontSize: '0.85rem', fontWeight: 700, color: 'var(--accent-sky)', display: 'inline-flex', alignItems: 'center', gap: '4px' }}>
-                  Ver sector <ArrowRightIcon size={14} />
-                </Link>
-                <button
-                  onClick={() => onOpenQuoteModal(`Sector: ${sec.title}`)}
-                  className="btn btn-secondary"
-                  style={{ padding: '6px 12px', fontSize: '0.8rem' }}
-                >
-                  Cotizar
-                </button>
+              <div style={{ padding: '24px', display: 'flex', flexDirection: 'column', flex: 1 }}>
+                <h3 style={{ fontSize: '1.2rem', fontWeight: 700, color: 'var(--primary-navy)', marginBottom: '8px' }}>
+                  {sec.title}
+                </h3>
+                <p style={{ color: 'var(--text-secondary)', fontSize: '0.9rem', lineHeight: 1.5, marginBottom: '20px', flex: 1 }}>
+                  {sec.desc}
+                </p>
+
+                <div style={{ paddingTop: '16px', borderTop: '1px solid var(--border-light)' }}>
+                  <button
+                    onClick={() => onOpenQuoteModal(`Sector: ${sec.title}`)}
+                    className="btn btn-secondary"
+                    style={{ width: '100%', justifyContent: 'center' }}
+                  >
+                    Cotizar para {sec.title}
+                  </button>
+                </div>
               </div>
             </div>
           ))}

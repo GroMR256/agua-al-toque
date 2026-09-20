@@ -1,77 +1,64 @@
 'use client';
-import FadeIn from './FadeIn';
+import { ShieldCheckIcon, HotelIcon, HardHatIcon, SproutIcon } from './Icons';
 
 export default function Testimonials() {
-  const reviews = [
+  const experiences = [
     {
-      name: 'Ing. Marcelo Ugarte',
-      role: 'Gerente de Operaciones',
-      company: 'Consorcio Minero del Sur',
-      rating: 5,
-      text: 'Agua Al Toque B2B abastece nuestros 3 campamentos en zonas de alta montaña. El cumplimiento en el horario de cisternas y la trazabilidad de los informes de laboratorio son impecables.',
-      avatar: '⛏️'
+      sector: 'Sector Agroindustrial',
+      icon: <SproutIcon size={24} />,
+      title: 'Abastecimiento continuo para riego de auxilio',
+      desc: 'Suministro constante en cisternas de 30 m³ durante periodo de escasez hídrica, garantizando la preservación del cultivo sin pérdidas.',
     },
     {
-      name: 'Dra. Patricia Alarcón',
-      role: 'Directora de Compras',
-      company: 'Cadena Hotelera Riviera',
-      rating: 5,
-      text: 'Contamos con suministro de respaldo continuo para nuestros hoteles y calderas. Su tiempo de respuesta en situaciones de emergencia ha salvado nuestra operación en múltiples ocasiones.',
-      avatar: '🏨'
+      sector: 'Sector Construcción',
+      icon: <HardHatIcon size={24} />,
+      title: 'Logística diaria para frente de obra vial',
+      desc: 'Atención puntual con franjas horarias fijas para compactación de suelos y campamento de trabajadores en proyecto vial.',
     },
     {
-      name: 'Ing. Fernando Castillo',
-      role: 'Jefe de Logística & Obras',
-      company: 'Constructora Vial Andina',
-      rating: 5,
-      text: 'Trabajamos con un volumen de más de 100 m³ diarios para compactación de suelos y curado en obra. Las facturaciones a 30 días y la flexibilidad en la flota hacen la diferencia.',
-      avatar: '🏗️'
+      sector: 'Sector Hotelería',
+      icon: <HotelIcon size={24} />,
+      title: 'Respuesta rápida ante corte de servicio público',
+      desc: 'Despacho de emergencia en menos de 2 horas para llenado de cisterna principal de complejo hotelero en temporada alta.',
     }
   ];
 
   return (
-    <section className="section">
+    <section className="section" style={{ padding: '90px 0', backgroundColor: '#FFFFFF' }}>
       <div className="container">
-        <FadeIn className="section-header">
-          <span className="badge-glass">Casos de Éxito Corporativos</span>
-          <h2 className="section-title">Confianza de <span className="text-gradient">Grandes Empresas</span></h2>
-          <p className="section-subtitle">
-            Líderes de operaciones en minería, agro, hotelería y construcción respaldan la puntualidad y calidad de nuestro servicio.
+        <div style={{ textAlign: 'center', maxWidth: '700px', margin: '0 auto 60px auto' }}>
+          <span className="badge-pro">Experiencia & Casos de Servicio</span>
+          <h2 className="section-title" style={{ marginTop: '12px' }}>
+            Respaldados por Experiencia Operativa
+          </h2>
+          <p className="section-subtitle" style={{ margin: '12px auto 0 auto' }}>
+            Conoce cómo resolvemos las necesidades de abastecimiento de agua en diferentes sectores de la industria.
           </p>
-        </FadeIn>
+        </div>
 
         <div className="grid-3">
-          {reviews.map((rev, index) => (
-            <FadeIn key={index} delay={index * 100} className="glass-card">
-              <div style={{ display: 'flex', alignItems: 'center', gap: '14px', marginBottom: '16px' }}>
-                <div style={{
-                  fontSize: '2rem',
-                  width: '50px',
-                  height: '50px',
-                  borderRadius: '50%',
-                  background: 'rgba(255, 255, 255, 0.08)',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  border: '1px solid rgba(255, 255, 255, 0.15)'
-                }}>
-                  {rev.avatar}
+          {experiences.map((exp, idx) => (
+            <div key={idx} className="card-pro">
+              <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '16px' }}>
+                <div className="icon-wrapper" style={{ marginBottom: 0 }}>
+                  {exp.icon}
                 </div>
                 <div>
-                  <h4 style={{ fontWeight: 700, fontSize: '1.05rem' }}>{rev.name}</h4>
-                  <span style={{ fontSize: '0.82rem', color: 'var(--color-cyan)', fontWeight: 600 }}>{rev.role}</span>
-                  <div style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>{rev.company}</div>
+                  <span style={{ fontSize: '0.8rem', fontWeight: 700, color: 'var(--accent-sky)', textTransform: 'uppercase' }}>
+                    {exp.sector}
+                  </span>
+                  <h4 style={{ fontSize: '1.1rem', fontWeight: 700, color: 'var(--primary-navy)' }}>
+                    {exp.title}
+                  </h4>
                 </div>
               </div>
-
-              <div style={{ color: '#FFB300', marginBottom: '12px', fontSize: '1.1rem' }}>
-                {'★'.repeat(rev.rating)}
-              </div>
-
-              <p style={{ color: 'var(--text-muted)', fontSize: '0.92rem', lineHeight: 1.6, fontStyle: 'italic' }}>
-                "{rev.text}"
+              <p style={{ color: 'var(--text-secondary)', fontSize: '0.92rem', lineHeight: 1.5, flex: 1 }}>
+                "{exp.desc}"
               </p>
-            </FadeIn>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '6px', marginTop: '16px', fontSize: '0.82rem', color: 'var(--accent-emerald)', fontWeight: 600 }}>
+                <ShieldCheckIcon size={16} /> Servicio Verificado en Campo
+              </div>
+            </div>
           ))}
         </div>
       </div>

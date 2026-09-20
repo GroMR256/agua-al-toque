@@ -1,53 +1,81 @@
 'use client';
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
+import { TruckIcon, WhatsAppIcon, FileTextIcon } from './Icons';
 
 export default function Header({ onOpenQuoteModal }) {
   const [isOpen, setIsOpen] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
+  const pathname = usePathname();
 
-  useEffect(() => {
-    const handleScroll = () => {
-      if (window.scrollY > 20) {
-        setScrolled(true);
-      } else {
-        setScrolled(false);
-      }
-    };
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+  const navItems = [
+    { label: 'Inicio', href: '/' },
+    { label: 'Servicios', href: '/servicios' },
+    { label: 'Sectores', href: '/sectores' },
+    { label: 'Flota', href: '/flota' },
+    { label: 'Cobertura', href: '/cobertura' },
+    { label: 'Nosotros', href: '/nosotros' },
+    { label: 'Contacto', href: '/contacto' },
+  ];
 
   return (
-    <header className={`header ${scrolled ? 'scrolled' : ''}`}>
-      <div className="container header-container">
-        <Link href="/" className="logo">
-          <div className="logo-icon">🚛</div>
-          <span>Agua <span className="text-gradient">Al Toque B2B</span></span>
+    <header className="site-header">
+      <div className="container header-inner">
+        <Link href="/" className="brand-logo">
+          <div className="brand-icon">
+            <TruckIcon size={22} />
+          </div>
+          <div>
+            <div>Agua Al Toque</div>
+            <div style={{ fontSize: '0.68rem', fontWeight: 600, color: 'var(--accent-sky)', textTransform: 'uppercase', letterSpacing: '1px', marginTop: '-4px' }}>
+              Abastecimiento & Logística
+            </div>
+          </div>
         </Link>
 
-        <button className="mobile-toggle" onClick={() => setIsOpen(!isOpen)} aria-label="Menu Toggle">
+        <button 
+          className="mobile-toggle-btn"
+          onClick={() => setIsOpen(!isOpen)}
+          aria-label="Abrir menú"
+        >
           {isOpen ? '✕' : '☰'}
         </button>
 
-        <nav className={`nav ${isOpen ? 'open' : ''}`}>
-          <ul className="nav-list">
-            <li><Link href="#inicio" className="nav-link" onClick={() => setIsOpen(false)}>Inicio</Link></li>
-            <li><Link href="#sectores" className="nav-link" onClick={() => setIsOpen(false)}>Sectores</Link></li>
-            <li><Link href="#servicios" className="nav-link" onClick={() => setIsOpen(false)}>Servicios</Link></li>
-            <li><Link href="#cotizador" className="nav-link" onClick={() => setIsOpen(false)}>Estimador m³</Link></li>
-            <li><Link href="#nosotros" className="nav-link" onClick={() => setIsOpen(false)}>Logística</Link></li>
-            <li><Link href="#faq" className="nav-link" onClick={() => setIsOpen(false)}>Preguntas B2B</Link></li>
-          </ul>
+        <nav className={`nav-links ${isOpen ? 'open' : ''}`}>
+          {navItems.map((item) => {
+            const isActive = pathname === item.href;
+            return (
+              <li key={item.href}>
+                <Link 
+                  href={item.href} 
+                  className={`nav-item-link ${isActive ? 'active' : ''}`}
+                  onClick={() => setIsOpen(false)}
+                >
+                  {item.label}
+                </Link>
+              </li>
+            );
+          })}
         </nav>
 
-        <button 
-          onClick={onOpenQuoteModal}
-          className="btn btn-primary desktop-only" 
-          style={{ padding: '10px 22px', fontSize: '0.9rem' }}
-        >
-          💼 Cotizar B2B
-        </button>
+        <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }} className="desktop-only">
+          <a 
+            href="https://wa.me/51999999999?text=Hola,%20deseo%20consultar%20por%20servicio%20de%20agua%20en%20cisterna"
+            target="_blank" 
+            rel="noreferrer"
+            className="btn btn-whatsapp"
+            style={{ padding: '10px 16px', fontSize: '0.88rem' }}
+          >
+            <WhatsAppIcon size={16} /> WhatsApp
+          </a>
+          <button 
+            onClick={onOpenQuoteModal} 
+            className="btn btn-primary"
+            style={{ padding: '10px 20px', fontSize: '0.88rem' }}
+          >
+            <FileTextIcon size={16} /> Solicitar Cotización
+          </button>
+        </div>
       </div>
     </header>
   );

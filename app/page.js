@@ -2,46 +2,54 @@
 import { useState } from 'react';
 import Header from '../components/Header';
 import Hero from '../components/Hero';
-import SectorsSection from '../components/SectorsSection';
-import Services from '../components/Services';
-import About from '../components/About';
+import TrustMetrics from '../components/TrustMetrics';
+import ServiceCards from '../components/ServiceCards';
+import SectorsGrid from '../components/SectorsGrid';
+import FleetPreview from '../components/FleetPreview';
+import HowItWorks from '../components/HowItWorks';
+import WhyUs from '../components/WhyUs';
+import CoverageMap from '../components/CoverageMap';
 import Testimonials from '../components/Testimonials';
-import FaqSection from '../components/FaqSection';
-import Contact from '../components/Contact';
+import GalleryPreview from '../components/GalleryPreview';
+import FaqAccordion from '../components/FaqAccordion';
+import FinalCta from '../components/FinalCta';
 import Footer from '../components/Footer';
-import B2bQuoteModal from '../components/B2bQuoteModal';
+import QuoteModal from '../components/QuoteModal';
+import FloatingContactButtons from '../components/FloatingContactButtons';
 
 export default function Home() {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [selectedSector, setSelectedSector] = useState(null);
+  const [selectedService, setSelectedService] = useState('Suministro de Agua');
 
-  const handleOpenQuoteModal = (sector = null) => {
-    setSelectedSector(sector);
+  const handleOpenQuoteModal = (serviceName = 'Suministro de Agua') => {
+    setSelectedService(serviceName);
     setIsModalOpen(true);
   };
 
   return (
-    <main style={{ position: 'relative', overflow: 'hidden' }}>
-      {/* Ambient Glass Glow Orbs */}
-      <div className="bg-orb bg-orb-1" />
-      <div className="bg-orb bg-orb-2" />
-      <div className="bg-orb bg-orb-3" />
-
+    <main>
       <Header onOpenQuoteModal={() => handleOpenQuoteModal()} />
       <Hero onOpenQuoteModal={() => handleOpenQuoteModal()} />
-      <SectorsSection onOpenQuoteModal={(sec) => handleOpenQuoteModal(sec)} />
-      <Services onOpenQuoteModal={(sec) => handleOpenQuoteModal(sec)} />
-      <About />
+      <TrustMetrics />
+      <ServiceCards onOpenQuoteModal={(srv) => handleOpenQuoteModal(srv)} />
+      <SectorsGrid onOpenQuoteModal={(sec) => handleOpenQuoteModal(sec)} />
+      <FleetPreview onOpenQuoteModal={(unit) => handleOpenQuoteModal(unit)} />
+      <HowItWorks />
+      <WhyUs />
+      <CoverageMap onOpenQuoteModal={() => handleOpenQuoteModal()} />
       <Testimonials />
-      <FaqSection />
-      <Contact onOpenQuoteModal={() => handleOpenQuoteModal()} />
+      <GalleryPreview />
+      <FaqAccordion />
+      <FinalCta onOpenQuoteModal={() => handleOpenQuoteModal()} />
       <Footer />
 
-      <B2bQuoteModal 
-        isOpen={isModalOpen} 
-        onClose={() => setIsModalOpen(false)} 
-        selectedSector={selectedSector} 
+      <QuoteModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        defaultService={selectedService}
       />
+
+      <FloatingContactButtons onOpenQuoteModal={() => handleOpenQuoteModal()} />
     </main>
   );
 }

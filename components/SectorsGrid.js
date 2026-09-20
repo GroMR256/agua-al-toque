@@ -57,7 +57,7 @@ export default function SectorsGrid({ onOpenQuoteModal }) {
       <div className="container">
         <div style={{ textAlign: 'center', maxWidth: '700px', margin: '0 auto 60px auto' }}>
           <h2 className="section-title" style={{ marginTop: '12px' }}>
-            Soluciones Adaptadas a Cada Industria
+            Experiencia Adaptada a Cada Industria
           </h2>
           <p className="section-subtitle" style={{ margin: '12px auto 0 auto' }}>
             Contamos con experiencia logística en diversos sectores de la economía nacional.

@@ -6,7 +6,6 @@ export default function CoverageMap({ onOpenQuoteModal }) {
     <section id="cobertura" className="section" style={{ padding: '90px 0', backgroundColor: 'var(--bg-light)' }}>
       <div className="container">
         <div style={{ textAlign: 'center', maxWidth: '700px', margin: '0 auto 60px auto' }}>
-          <span className="badge-pro">Alcance & Logística</span>
           <h2 className="section-title" style={{ marginTop: '12px' }}>
             Zonas de Cobertura & Mapa Operativo
           </h2>
@@ -27,7 +26,7 @@ export default function CoverageMap({ onOpenQuoteModal }) {
               <h3 style={{ fontSize: '1.35rem', fontWeight: 800, color: 'var(--primary-navy)', marginBottom: '16px' }}>
                 Zonas Atendidas Habitualmente
               </h3>
-              
+
               <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '14px', marginBottom: '24px' }}>
                 <li style={{ display: 'flex', gap: '12px', alignItems: 'flex-start' }}>
                   <MapPinIcon size={20} color="var(--accent-sky)" />
@@ -86,7 +85,7 @@ export default function CoverageMap({ onOpenQuoteModal }) {
             }}>
               <iframe
                 title="Mapa de Zonas de Cobertura de Agua Al Toque"
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d249687.2882877083!2d-77.12786358359374!3d-12.026267600000002!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9105c5f619ee3ec7%3A0x14206cb9cc452e4a!2sLima!5e0!3m2!1ses!2spe!4v1700000000000!5m2!1ses!2spe"
+                src="https://www.google.com/maps?q=+Ancash,+Peru&z=9&output=embed"
                 width="100%"
                 height="100%"
                 style={{ border: 0 }}

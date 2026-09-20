@@ -25,7 +25,6 @@ export default function ContactSection() {
     <section id="contacto" className="section" style={{ padding: '80px 0', backgroundColor: '#FFFFFF' }}>
       <div className="container">
         <div style={{ textAlign: 'center', maxWidth: '650px', margin: '0 auto 48px auto' }}>
-          <span className="badge-pro">Contacto Rápido</span>
           <h2 className="section-title" style={{ marginTop: '12px' }}>
             Solicitar Cotización o Información
           </h2>

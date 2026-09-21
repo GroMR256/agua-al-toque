@@ -1,13 +1,9 @@
 'use client';
 import FadeIn from './FadeIn';
 import { getWhatsAppLink } from '@/lib/contactConfig';
-import { trackEvent, ANALYTICS_EVENTS } from '@/lib/analytics';
+import { handleDirectWhatsAppClick } from '@/lib/whatsappTracker';
 
 export default function Contact({ onOpenQuoteModal }) {
-  const handleWhatsAppClick = () => {
-    trackEvent(ANALYTICS_EVENTS.WHATSAPP_CLICK, { location: 'contact_b2b_banner' });
-  };
-
   return (
     <section id="contacto" className="section">
       <div className="container">
@@ -28,7 +24,7 @@ export default function Contact({ onOpenQuoteModal }) {
               href={getWhatsAppLink('Hola, deseo cotizar suministro de agua B2B para mi empresa')}
               target="_blank"
               rel="noreferrer"
-              onClick={handleWhatsAppClick}
+              onClick={(e) => handleDirectWhatsAppClick(e, 'contact_b2b_banner', 'Hola, deseo cotizar suministro de agua B2B para mi empresa')}
               className="btn btn-secondary btn-large"
             >
               📱 WhatsApp Corporativo B2B

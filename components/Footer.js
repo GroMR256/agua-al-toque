@@ -1,13 +1,9 @@
 'use client';
 import { TruckIcon, PhoneIcon, WhatsAppIcon, MapPinIcon, ClockIcon } from './Icons';
 import { getWhatsAppLink, PUBLIC_CONFIG } from '@/lib/contactConfig';
-import { trackEvent, ANALYTICS_EVENTS } from '@/lib/analytics';
+import { handleDirectWhatsAppClick } from '@/lib/whatsappTracker';
 
 export default function Footer() {
-  const handleWhatsAppClick = () => {
-    trackEvent(ANALYTICS_EVENTS.WHATSAPP_CLICK, { location: 'footer' });
-  };
-
   return (
     <footer className="site-footer">
       <div className="container">
@@ -27,7 +23,7 @@ export default function Footer() {
                 href={getWhatsAppLink('Hola, deseo contactar con atención directa de Agua Al Toque')}
                 target="_blank"
                 rel="noreferrer"
-                onClick={handleWhatsAppClick}
+                onClick={(e) => handleDirectWhatsAppClick(e, 'footer', 'Hola, deseo contactar con atención directa de Agua Al Toque')}
                 className="btn btn-whatsapp"
                 style={{ padding: '8px 16px', fontSize: '0.85rem' }}
               >

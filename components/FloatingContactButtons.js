@@ -1,13 +1,9 @@
 'use client';
 import { WhatsAppIcon, FileTextIcon } from './Icons';
 import { getWhatsAppLink } from '@/lib/contactConfig';
-import { trackEvent, ANALYTICS_EVENTS } from '@/lib/analytics';
+import { handleDirectWhatsAppClick } from '@/lib/whatsappTracker';
 
 export default function FloatingContactButtons({ onOpenQuoteModal }) {
-  const handleWhatsAppClick = (location) => {
-    trackEvent(ANALYTICS_EVENTS.WHATSAPP_CLICK, { location });
-  };
-
   return (
     <>
       {/* Floating WhatsApp Button */}
@@ -15,7 +11,7 @@ export default function FloatingContactButtons({ onOpenQuoteModal }) {
         href={getWhatsAppLink('Hola, deseo solicitar información sobre suministro de agua y cisternas')}
         target="_blank"
         rel="noreferrer"
-        onClick={() => handleWhatsAppClick('floating_button')}
+        onClick={(e) => handleDirectWhatsAppClick(e, 'floating_button', 'Hola, deseo solicitar información sobre suministro de agua y cisternas')}
         className="floating-whatsapp"
         aria-label="Contacto por WhatsApp"
       >
@@ -37,7 +33,7 @@ export default function FloatingContactButtons({ onOpenQuoteModal }) {
             href={getWhatsAppLink('Hola, deseo cotizar agua en cisterna')}
             target="_blank"
             rel="noreferrer"
-            onClick={() => handleWhatsAppClick('sticky_mobile_bar')}
+            onClick={(e) => handleDirectWhatsAppClick(e, 'sticky_mobile_bar', 'Hola, deseo cotizar agua en cisterna')}
             className="btn btn-whatsapp"
             style={{ padding: '8px 14px', fontSize: '0.85rem' }}
           >

@@ -3,6 +3,9 @@ import { useState } from 'react';
 import Link from 'next/link';
 import { TruckIcon, WhatsAppIcon, FileTextIcon } from './Icons';
 
+import { getWhatsAppLink } from '@/lib/contactConfig';
+import { trackEvent, ANALYTICS_EVENTS } from '@/lib/analytics';
+
 export default function Header({ onOpenQuoteModal }) {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -16,6 +19,10 @@ export default function Header({ onOpenQuoteModal }) {
     { label: 'FAQ', href: '#faq' },
     { label: 'Contacto', href: '#contacto' },
   ];
+
+  const handleWhatsAppClick = () => {
+    trackEvent(ANALYTICS_EVENTS.WHATSAPP_CLICK, { location: 'header' });
+  };
 
   return (
     <header className="site-header">
@@ -56,9 +63,10 @@ export default function Header({ onOpenQuoteModal }) {
 
         <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }} className="desktop-only">
           <a
-            href="https://wa.me/51999999999?text=Hola,%20deseo%20consultar%20por%20servicio%20de%20agua%20en%20cisterna"
+            href={getWhatsAppLink('Hola, deseo consultar por servicio de agua en cisterna')}
             target="_blank"
             rel="noreferrer"
+            onClick={handleWhatsAppClick}
             className="btn btn-whatsapp"
             style={{ padding: '10px 16px', fontSize: '0.88rem' }}
           >

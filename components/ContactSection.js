@@ -1,25 +1,67 @@
 'use client';
 import { useState } from 'react';
 import { PhoneIcon, WhatsAppIcon, MapPinIcon, ClockIcon, FileTextIcon } from './Icons';
+import { getWhatsAppLink, PUBLIC_CONFIG } from '@/lib/contactConfig';
+import { getStoredUtmData } from '@/lib/utmTracker';
+import { trackEvent, ANALYTICS_EVENTS } from '@/lib/analytics';
 
 export default function ContactSection() {
   const [name, setName] = useState('');
   const [phone, setPhone] = useState('');
   const [company, setCompany] = useState('');
   const [message, setMessage] = useState('');
+  const [hpField, setHpField] = useState('');
+
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
+  const [errorMsg, setErrorMsg] = useState('');
+  const [whatsappUrl, setWhatsappUrl] = useState('');
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    const text = `¡Hola! Deseo solicitar información/cotización:\n\n` +
-      `• Nombre: ${name}\n` +
-      `• Teléfono: ${phone}\n` +
-      `${company ? `• Empresa: ${company}\n` : ''}` +
-      `${message ? `• Requerimiento: ${message}` : ''}`;
+    if (isSubmitting) return;
 
-    window.open(`https://wa.me/51999999999?text=${encodeURIComponent(text)}`, '_blank');
-    setSubmitted(true);
+    setIsSubmitting(true);
+    setErrorMsg('');
+
+    const utmData = getStoredUtmData();
+
+    const payload = {
+      name,
+      phone,
+      company,
+      service: 'Contacto General / Cotización',
+      message,
+      source: 'contact_section',
+      hp_field: hpField,
+      ...utmData
+    };
+
+    try {
+      const response = await fetch('/api/quote', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+
+      const resData = await response.json();
+
+      if (response.ok && resData.success) {
+        setSubmitted(true);
+        setWhatsappUrl(resData.whatsappUrl || getWhatsAppLink(`Hola, envié una consulta desde la web`));
+        trackEvent(ANALYTICS_EVENTS.CONTACT_SUBMITTED);
+      } else {
+        setErrorMsg(resData.message || 'No pudimos procesar tu solicitud. Inténtalo por WhatsApp.');
+      }
+    } catch (err) {
+      console.error('Contact submit error:', err);
+      setErrorMsg('Error de conexión al enviar. Por favor contáctanos por WhatsApp.');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
+
+  const fallbackWaUrl = getWhatsAppLink('Hola, deseo cotizar servicio de agua en cisterna');
 
   return (
     <section id="contacto" className="section" style={{ padding: '80px 0', backgroundColor: '#FFFFFF' }}>
@@ -35,82 +77,127 @@ export default function ContactSection() {
 
         <div className="grid-2" style={{ gap: '48px', alignItems: 'flex-start' }}>
           <div style={{ backgroundColor: 'var(--bg-light)', padding: '36px', borderRadius: '16px', border: '1px solid var(--border-light)' }}>
-            {submitted && (
-              <div style={{ padding: '14px 18px', borderRadius: '8px', backgroundColor: 'rgba(5, 150, 105, 0.1)', border: '1px solid var(--accent-emerald)', color: 'var(--accent-emerald)', marginBottom: '20px', fontWeight: 600, fontSize: '0.9rem' }}>
-                ✓ Redirigiendo a atención directa por WhatsApp...
-              </div>
-            )}
-
-            <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
-              <div>
-                <label style={{ display: 'block', fontSize: '0.88rem', fontWeight: 600, color: 'var(--text-secondary)', marginBottom: '6px' }}>
-                  Nombre completo *
-                </label>
-                <input
-                  type="text"
-                  placeholder="Tu nombre"
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
-                  required
-                  style={{ width: '100%', padding: '12px 16px', borderRadius: '8px', border: '1px solid var(--border-light)', outline: 'none', backgroundColor: '#FFFFFF' }}
-                />
-              </div>
-
-              <div>
-                <label style={{ display: 'block', fontSize: '0.88rem', fontWeight: 600, color: 'var(--text-secondary)', marginBottom: '6px' }}>
-                  Teléfono / WhatsApp *
-                </label>
-                <input
-                  type="tel"
-                  placeholder="[NÚMERO DE TELÉFONO]"
-                  value={phone}
-                  onChange={(e) => setPhone(e.target.value)}
-                  required
-                  style={{ width: '100%', padding: '12px 16px', borderRadius: '8px', border: '1px solid var(--border-light)', outline: 'none', backgroundColor: '#FFFFFF' }}
-                />
-              </div>
-
-              <div>
-                <label style={{ display: 'block', fontSize: '0.88rem', fontWeight: 600, color: 'var(--text-secondary)', marginBottom: '6px' }}>
-                  Empresa (opcional)
-                </label>
-                <input
-                  type="text"
-                  placeholder="Nombre de tu empresa o particular"
-                  value={company}
-                  onChange={(e) => setCompany(e.target.value)}
-                  style={{ width: '100%', padding: '12px 16px', borderRadius: '8px', border: '1px solid var(--border-light)', outline: 'none', backgroundColor: '#FFFFFF' }}
-                />
-              </div>
-
-              <div>
-                <label style={{ display: 'block', fontSize: '0.88rem', fontWeight: 600, color: 'var(--text-secondary)', marginBottom: '6px' }}>
-                  ¿Cómo podemos ayudarte? (opcional)
-                </label>
-                <textarea
-                  rows={3}
-                  placeholder="Ej. Requiero una cisterna de 10 m³ en [UBICACIÓN] para mañana..."
-                  value={message}
-                  onChange={(e) => setMessage(e.target.value)}
-                  style={{ width: '100%', padding: '12px 16px', borderRadius: '8px', border: '1px solid var(--border-light)', outline: 'none', resize: 'vertical', backgroundColor: '#FFFFFF' }}
-                />
-              </div>
-
-              <div style={{ display: 'flex', gap: '12px', marginTop: '8px' }}>
-                <button type="submit" className="btn btn-primary btn-large" style={{ flex: 1 }}>
-                  <FileTextIcon size={18} /> Enviar Cotización
-                </button>
+            {submitted ? (
+              <div style={{ textAlign: 'center', padding: '16px 0' }}>
+                <div style={{ fontSize: '2.5rem', color: 'var(--accent-emerald)', marginBottom: '8px' }}>✓</div>
+                <h3 style={{ fontSize: '1.25rem', fontWeight: 700, color: 'var(--primary-navy)', marginBottom: '8px' }}>
+                  ¡Mensaje Enviado con Éxito!
+                </h3>
+                <p style={{ color: 'var(--text-secondary)', fontSize: '0.92rem', marginBottom: '20px' }}>
+                  Un asesor comercial procesará tus datos y se comunicará a la brevedad.
+                </p>
                 <a
-                  href="https://wa.me/51999999999?text=Hola,%20deseo%20cotizar%20servicio%20de%20agua%20en%20cisterna"
+                  href={whatsappUrl || fallbackWaUrl}
                   target="_blank"
                   rel="noreferrer"
+                  onClick={() => trackEvent(ANALYTICS_EVENTS.WHATSAPP_CLICK, { location: 'contact_section_success' })}
                   className="btn btn-whatsapp btn-large"
-                  style={{ flex: 1 }}
+                  style={{ width: '100%', justifyContent: 'center' }}
                 >
-                  <WhatsAppIcon size={18} /> WhatsApp
+                  <WhatsAppIcon size={18} /> Continuar por WhatsApp
                 </a>
               </div>
-            </form>
+            ) : (
+              <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+                <input
+                  type="text"
+                  name="hp_field"
+                  value={hpField}
+                  onChange={(e) => setHpField(e.target.value)}
+                  style={{ display: 'none' }}
+                  tabIndex={-1}
+                  autoComplete="off"
+                />
+
+                {errorMsg && (
+                  <div style={{
+                    padding: '12px 14px',
+                    borderRadius: '8px',
+                    backgroundColor: 'rgba(239, 68, 68, 0.1)',
+                    border: '1px solid #EF4444',
+                    color: '#B91C1C',
+                    fontSize: '0.88rem'
+                  }}>
+                    ⚠️ {errorMsg}
+                  </div>
+                )}
+
+                <div>
+                  <label style={{ display: 'block', fontSize: '0.88rem', fontWeight: 600, color: 'var(--text-secondary)', marginBottom: '6px' }}>
+                    Nombre completo *
+                  </label>
+                  <input
+                    type="text"
+                    placeholder="Tu nombre"
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                    required
+                    style={{ width: '100%', padding: '12px 16px', borderRadius: '8px', border: '1px solid var(--border-light)', outline: 'none', backgroundColor: '#FFFFFF' }}
+                  />
+                </div>
+
+                <div>
+                  <label style={{ display: 'block', fontSize: '0.88rem', fontWeight: 600, color: 'var(--text-secondary)', marginBottom: '6px' }}>
+                    Teléfono / WhatsApp *
+                  </label>
+                  <input
+                    type="tel"
+                    placeholder="Ej. 987 654 321"
+                    value={phone}
+                    onChange={(e) => setPhone(e.target.value)}
+                    required
+                    style={{ width: '100%', padding: '12px 16px', borderRadius: '8px', border: '1px solid var(--border-light)', outline: 'none', backgroundColor: '#FFFFFF' }}
+                  />
+                </div>
+
+                <div>
+                  <label style={{ display: 'block', fontSize: '0.88rem', fontWeight: 600, color: 'var(--text-secondary)', marginBottom: '6px' }}>
+                    Empresa (opcional)
+                  </label>
+                  <input
+                    type="text"
+                    placeholder="Nombre de tu empresa o particular"
+                    value={company}
+                    onChange={(e) => setCompany(e.target.value)}
+                    style={{ width: '100%', padding: '12px 16px', borderRadius: '8px', border: '1px solid var(--border-light)', outline: 'none', backgroundColor: '#FFFFFF' }}
+                  />
+                </div>
+
+                <div>
+                  <label style={{ display: 'block', fontSize: '0.88rem', fontWeight: 600, color: 'var(--text-secondary)', marginBottom: '6px' }}>
+                    ¿Cómo podemos ayudarte? (opcional)
+                  </label>
+                  <textarea
+                    rows={3}
+                    placeholder="Ej. Requiero una cisterna de 10 m³ para mañana..."
+                    value={message}
+                    onChange={(e) => setMessage(e.target.value)}
+                    style={{ width: '100%', padding: '12px 16px', borderRadius: '8px', border: '1px solid var(--border-light)', outline: 'none', resize: 'vertical', backgroundColor: '#FFFFFF' }}
+                  />
+                </div>
+
+                <div style={{ display: 'flex', gap: '12px', marginTop: '8px' }}>
+                  <button
+                    type="submit"
+                    disabled={isSubmitting}
+                    className="btn btn-primary btn-large"
+                    style={{ flex: 1, opacity: isSubmitting ? 0.7 : 1, cursor: isSubmitting ? 'not-allowed' : 'pointer' }}
+                  >
+                    <FileTextIcon size={18} /> {isSubmitting ? 'Enviando...' : 'Enviar Cotización'}
+                  </button>
+                  <a
+                    href={fallbackWaUrl}
+                    target="_blank"
+                    rel="noreferrer"
+                    onClick={() => trackEvent(ANALYTICS_EVENTS.WHATSAPP_CLICK, { location: 'contact_section_direct' })}
+                    className="btn btn-whatsapp btn-large"
+                    style={{ flex: 1 }}
+                  >
+                    <WhatsAppIcon size={18} /> WhatsApp
+                  </a>
+                </div>
+              </form>
+            )}
           </div>
 
           <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
@@ -125,7 +212,7 @@ export default function ContactSection() {
                   </div>
                   <div>
                     <strong style={{ color: 'var(--primary-navy)', fontSize: '0.95rem' }}>Central Telefónica:</strong>
-                    <div style={{ color: 'var(--text-secondary)', fontSize: '0.9rem' }}>[NÚMERO DE TELÉFONO]</div>
+                    <div style={{ color: 'var(--text-secondary)', fontSize: '0.9rem' }}>+{PUBLIC_CONFIG.whatsappNumber}</div>
                   </div>
                 </li>
 
@@ -135,7 +222,7 @@ export default function ContactSection() {
                   </div>
                   <div>
                     <strong style={{ color: 'var(--primary-navy)', fontSize: '0.95rem' }}>WhatsApp Directo:</strong>
-                    <div style={{ color: 'var(--text-secondary)', fontSize: '0.9rem' }}>[NÚMERO DE TELÉFONO]</div>
+                    <div style={{ color: 'var(--text-secondary)', fontSize: '0.9rem' }}>+{PUBLIC_CONFIG.whatsappNumber}</div>
                   </div>
                 </li>
 
@@ -145,7 +232,7 @@ export default function ContactSection() {
                   </div>
                   <div>
                     <strong style={{ color: 'var(--primary-navy)', fontSize: '0.95rem' }}>Base Operativa:</strong>
-                    <div style={{ color: 'var(--text-secondary)', fontSize: '0.9rem' }}>[ZONA DE COBERTURA / CIUDAD]</div>
+                    <div style={{ color: 'var(--text-secondary)', fontSize: '0.9rem' }}>Despachos Urbanos e Industriales</div>
                   </div>
                 </li>
 

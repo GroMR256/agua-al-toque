@@ -1,7 +1,13 @@
 'use client';
 import { TruckIcon, PhoneIcon, WhatsAppIcon, MapPinIcon, ClockIcon } from './Icons';
+import { getWhatsAppLink, PUBLIC_CONFIG } from '@/lib/contactConfig';
+import { trackEvent, ANALYTICS_EVENTS } from '@/lib/analytics';
 
 export default function Footer() {
+  const handleWhatsAppClick = () => {
+    trackEvent(ANALYTICS_EVENTS.WHATSAPP_CLICK, { location: 'footer' });
+  };
+
   return (
     <footer className="site-footer">
       <div className="container">
@@ -17,7 +23,14 @@ export default function Footer() {
               Soluciones integrales de abastecimiento, transporte y logística de agua mediante camiones cisterna para empresas, minería, construcción, agricultura y necesidades particulares.
             </p>
             <div style={{ display: 'flex', gap: '12px' }}>
-              <a href="https://wa.me/51999999999" target="_blank" rel="noreferrer" className="btn btn-whatsapp" style={{ padding: '8px 16px', fontSize: '0.85rem' }}>
+              <a
+                href={getWhatsAppLink('Hola, deseo contactar con atención directa de Agua Al Toque')}
+                target="_blank"
+                rel="noreferrer"
+                onClick={handleWhatsAppClick}
+                className="btn btn-whatsapp"
+                style={{ padding: '8px 16px', fontSize: '0.85rem' }}
+              >
                 <WhatsAppIcon size={16} /> WhatsApp Directo
               </a>
             </div>
@@ -52,11 +65,11 @@ export default function Footer() {
             <ul className="footer-links-list">
               <li style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
                 <PhoneIcon size={16} color="#0EA5E9" />
-                <span>Central: [NÚMERO DE TELÉFONO]</span>
+                <span>Central: +{PUBLIC_CONFIG.whatsappNumber}</span>
               </li>
               <li style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
                 <WhatsAppIcon size={16} color="#10B981" />
-                <span>WhatsApp: [NÚMERO DE TELÉFONO]</span>
+                <span>WhatsApp: +{PUBLIC_CONFIG.whatsappNumber}</span>
               </li>
               <li style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
                 <MapPinIcon size={16} color="#0EA5E9" />

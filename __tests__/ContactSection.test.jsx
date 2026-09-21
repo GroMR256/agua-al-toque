@@ -1,23 +1,35 @@
-import { render, screen, fireEvent } from '@testing-library/react';
+import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import ContactSection from '../components/ContactSection';
 
-describe('ContactSection Component (Simplified Form)', () => {
-  it('renders simplified non-intrusive contact form inputs', () => {
+describe('ContactSection Component', () => {
+  beforeEach(() => {
+    global.fetch = jest.fn().mockResolvedValue({
+      ok: true,
+      json: async () => ({
+        success: true,
+        message: '¡Solicitud registrada con éxito!',
+        whatsappUrl: 'https://wa.me/51999999999?text=Test'
+      })
+    });
+  });
+
+  afterEach(() => {
+    jest.restoreAllMocks();
+  });
+
+  it('renders contact form inputs correctly', () => {
     render(<ContactSection />);
 
     expect(screen.getByPlaceholderText(/Tu nombre/i)).toBeInTheDocument();
-    expect(screen.getByPlaceholderText(/\[NÚMERO DE TELÉFONO\]/i)).toBeInTheDocument();
+    expect(screen.getByPlaceholderText(/Ej. 987 654 321/i)).toBeInTheDocument();
     expect(screen.getByPlaceholderText(/Nombre de tu empresa o particular/i)).toBeInTheDocument();
-    expect(screen.getByPlaceholderText(/Ej. Requiero una cisterna de 10 m³/i)).toBeInTheDocument();
   });
 
-  it('updates form inputs and triggers submission window.open for WhatsApp', () => {
-    window.open = jest.fn();
-
+  it('submits lead data to /api/quote on submit', async () => {
     render(<ContactSection />);
 
     const nameInput = screen.getByPlaceholderText(/Tu nombre/i);
-    const phoneInput = screen.getByPlaceholderText(/\[NÚMERO DE TELÉFONO\]/i);
+    const phoneInput = screen.getByPlaceholderText(/Ej. 987 654 321/i);
     const submitBtn = screen.getByRole('button', { name: /Enviar Cotización/i });
 
     fireEvent.change(nameInput, { target: { value: 'Carlos Ramos' } });
@@ -25,7 +37,14 @@ describe('ContactSection Component (Simplified Form)', () => {
 
     fireEvent.click(submitBtn);
 
-    expect(window.open).toHaveBeenCalledTimes(1);
-    expect(window.open).toHaveBeenCalledWith(expect.stringContaining('https://wa.me/51999999999'), '_blank');
+    await waitFor(() => {
+      expect(global.fetch).toHaveBeenCalledWith(
+        '/api/quote',
+        expect.objectContaining({
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' }
+        })
+      );
+    });
   });
 });

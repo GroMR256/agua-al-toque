@@ -12,10 +12,15 @@ export const metadata = {
   description: 'Agua purificada al instante mediante ósmosis inversa de 7 etapas. Delivery ultra-rápido, monitoreo de pureza en vivo y envases ecológicos.',
 };
 
+import UtmInitializer from '@/components/UtmInitializer';
+
 export default function RootLayout({ children }) {
   return (
     <html lang="es" className="scroll-smooth">
-      <body className={jakarta.className}>{children}</body>
+      <body className={jakarta.className}>
+        <UtmInitializer />
+        {children}
+      </body>
     </html>
   );
 }

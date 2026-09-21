@@ -16,6 +16,7 @@ import {
   FileTextIcon,
   WhatsAppIcon
 } from '../../components/Icons';
+import { getWhatsAppLink } from '@/lib/contactConfig';
 
 export default function SectoresPage() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -148,7 +149,7 @@ export default function SectoresPage() {
                       <FileTextIcon size={18} /> {sec.ctaText}
                     </button>
                     <a
-                      href={`https://wa.me/51999999999?text=Hola,%20deseo%20cotizar%20servicio%20de%20agua%20para%20${encodeURIComponent(sec.title)}`}
+                      href={getWhatsAppLink(`Hola, deseo cotizar servicio de agua para ${sec.title}`)}
                       target="_blank"
                       rel="noreferrer"
                       className="btn btn-whatsapp"

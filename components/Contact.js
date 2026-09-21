@@ -1,7 +1,13 @@
 'use client';
 import FadeIn from './FadeIn';
+import { getWhatsAppLink } from '@/lib/contactConfig';
+import { trackEvent, ANALYTICS_EVENTS } from '@/lib/analytics';
 
 export default function Contact({ onOpenQuoteModal }) {
+  const handleWhatsAppClick = () => {
+    trackEvent(ANALYTICS_EVENTS.WHATSAPP_CLICK, { location: 'contact_b2b_banner' });
+  };
+
   return (
     <section id="contacto" className="section">
       <div className="container">
@@ -18,7 +24,13 @@ export default function Contact({ onOpenQuoteModal }) {
             <button onClick={() => onOpenQuoteModal()} className="btn btn-primary btn-large">
               💼 Solicitar Cotización B2B (Atención Inmediata)
             </button>
-            <a href="https://wa.me/51999999999?text=Hola,%20deseo%20cotizar%20suministro%20de%20agua%20B2B%20para%20mi%20empresa" target="_blank" rel="noreferrer" className="btn btn-secondary btn-large">
+            <a
+              href={getWhatsAppLink('Hola, deseo cotizar suministro de agua B2B para mi empresa')}
+              target="_blank"
+              rel="noreferrer"
+              onClick={handleWhatsAppClick}
+              className="btn btn-secondary btn-large"
+            >
               📱 WhatsApp Corporativo B2B
             </a>
           </div>

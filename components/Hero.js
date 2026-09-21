@@ -1,7 +1,18 @@
 'use client';
 import { FileTextIcon, WhatsAppIcon, ShieldCheckIcon } from './Icons';
+import { getWhatsAppLink } from '@/lib/contactConfig';
+import { trackEvent, ANALYTICS_EVENTS } from '@/lib/analytics';
 
 export default function Hero({ onOpenQuoteModal }) {
+  const handleWhatsAppClick = () => {
+    trackEvent(ANALYTICS_EVENTS.WHATSAPP_CLICK, { location: 'hero' });
+  };
+
+  const handleQuoteClick = () => {
+    trackEvent(ANALYTICS_EVENTS.QUOTE_MODAL_OPENED, { location: 'hero' });
+    if (onOpenQuoteModal) onOpenQuoteModal();
+  };
+
   return (
     <section id="inicio" className="hero-section">
       <div className="container">
@@ -17,13 +28,14 @@ export default function Hero({ onOpenQuoteModal }) {
             </p>
 
             <div style={{ display: 'flex', gap: '16px', flexWrap: 'wrap' }}>
-              <button onClick={onOpenQuoteModal} className="btn btn-primary btn-large">
+              <button onClick={handleQuoteClick} className="btn btn-primary btn-large">
                 <FileTextIcon size={20} /> Solicitar Cotización
               </button>
               <a
-                href="https://wa.me/51999999999?text=Hola,%20deseo%20contactarme%20para%20un%20servicio%20de%20agua%20en%20cisterna"
+                href={getWhatsAppLink('Hola, deseo contactarme para un servicio de agua en cisterna')}
                 target="_blank"
                 rel="noreferrer"
+                onClick={handleWhatsAppClick}
                 className="btn btn-whatsapp btn-large"
               >
                 <WhatsAppIcon size={20} /> Contactar por WhatsApp

@@ -1,7 +1,13 @@
 'use client';
 import { FileTextIcon, WhatsAppIcon } from './Icons';
+import { getWhatsAppLink } from '@/lib/contactConfig';
+import { trackEvent, ANALYTICS_EVENTS } from '@/lib/analytics';
 
 export default function FinalCta({ onOpenQuoteModal }) {
+  const handleWhatsAppClick = () => {
+    trackEvent(ANALYTICS_EVENTS.WHATSAPP_CLICK, { location: 'final_cta' });
+  };
+
   return (
     <section className="section" style={{ padding: '90px 0', backgroundColor: 'var(--primary-navy)', color: '#FFFFFF', textAlign: 'center' }}>
       <div className="container">
@@ -21,9 +27,10 @@ export default function FinalCta({ onOpenQuoteModal }) {
               <FileTextIcon size={20} /> Solicitar Cotización
             </button>
             <a
-              href="https://wa.me/51999999999?text=Hola,%20deseo%20solicitar%20abastecimiento%20de%20agua%20en%20cisterna"
+              href={getWhatsAppLink('Hola, deseo solicitar abastecimiento de agua en cisterna')}
               target="_blank"
               rel="noreferrer"
+              onClick={handleWhatsAppClick}
               className="btn btn-whatsapp btn-large"
             >
               <WhatsAppIcon size={20} /> Contactar por WhatsApp

@@ -7,6 +7,8 @@ import FloatingContactButtons from '../../components/FloatingContactButtons';
 import FinalCta from '../../components/FinalCta';
 import { MapPinIcon, PhoneIcon, WhatsAppIcon, FileTextIcon } from '../../components/Icons';
 
+import { getWhatsAppLink } from '@/lib/contactConfig';
+
 export default function CoberturaPage() {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -94,7 +96,7 @@ export default function CoberturaPage() {
                   <FileTextIcon size={18} /> Consultar disponibilidad de ruta
                 </button>
                 <a
-                  href="https://wa.me/51999999999?text=Hola,%20deseo%20consultar%20cobertura%20para%20mi%20ubicación"
+                  href={getWhatsAppLink('Hola, deseo consultar cobertura para mi ubicación')}
                   target="_blank"
                   rel="noreferrer"
                   className="btn btn-whatsapp"

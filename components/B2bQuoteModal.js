@@ -1,5 +1,5 @@
 'use client';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { getWhatsAppLink } from '@/lib/contactConfig';
 import { getStoredUtmData } from '@/lib/utmTracker';
 import { trackEvent, ANALYTICS_EVENTS } from '@/lib/analytics';
@@ -21,6 +21,24 @@ export default function B2bQuoteModal({ isOpen, onClose, selectedSector = null }
   const [submitted, setSubmitted] = useState(false);
   const [errorMsg, setErrorMsg] = useState('');
   const [whatsappUrl, setWhatsappUrl] = useState('');
+
+  useEffect(() => {
+    if (!isOpen) return;
+
+    document.body.classList.add('no-scroll');
+
+    const handleKeyDown = (e) => {
+      if (e.key === 'Escape') {
+        if (onClose) onClose();
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => {
+      document.body.classList.remove('no-scroll');
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [isOpen, onClose]);
 
   if (!isOpen) return null;
 
@@ -90,37 +108,28 @@ export default function B2bQuoteModal({ isOpen, onClose, selectedSector = null }
   );
 
   return (
-    <div style={{
-      position: 'fixed',
-      top: 0,
-      left: 0,
-      width: '100vw',
-      height: '100vh',
-      background: 'rgba(3, 7, 18, 0.85)',
-      backdropFilter: 'blur(20px)',
-      WebkitBackdropFilter: 'blur(20px)',
-      zIndex: 2000,
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
-      padding: '20px'
-    }}>
-      <div className="glass-panel" style={{
+    <div
+      className="modal-overlay"
+      style={{ background: 'rgba(3, 7, 18, 0.85)' }}
+      onClick={(e) => {
+        if (e.target === e.currentTarget) handleReset();
+      }}
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="b2b-modal-title"
+    >
+      <div className="modal-content glass-panel" style={{
         maxWidth: '620px',
-        width: '100%',
-        maxHeight: '90vh',
-        overflowY: 'auto',
-        padding: '36px',
-        position: 'relative',
         boxShadow: '0 25px 60px rgba(0, 242, 254, 0.25)',
         border: '1px solid rgba(0, 242, 254, 0.3)'
       }}>
         <button 
           onClick={handleReset}
+          aria-label="Cerrar modal"
           style={{
             position: 'absolute',
-            top: '20px',
-            right: '20px',
+            top: '16px',
+            right: '16px',
             background: 'rgba(255, 255, 255, 0.1)',
             border: 'none',
             color: 'white',
@@ -128,27 +137,33 @@ export default function B2bQuoteModal({ isOpen, onClose, selectedSector = null }
             height: '36px',
             borderRadius: '50%',
             cursor: 'pointer',
-            fontSize: '1.1rem'
+            fontSize: '1.1rem',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            zIndex: 10
           }}
         >
           ✕
         </button>
 
-        <span className="badge-glass" style={{ marginBottom: '12px' }}>🏢 Cotización Empresarial B2B</span>
-        <h3 style={{ fontSize: '1.8rem', fontWeight: 800, marginBottom: '8px' }} className="text-gradient">
-          Solicitud de Suministro Industrial
-        </h3>
-        <p style={{ color: 'var(--text-muted)', marginBottom: '24px', fontSize: '0.95rem' }}>
-          Recibe una propuesta técnica y económica personalizada con crédito corporativo a 30/60 días.
-        </p>
+        <div style={{ paddingRight: '30px', marginBottom: '20px' }}>
+          <span className="badge-glass" style={{ marginBottom: '8px' }}>🏢 Cotización Empresarial B2B</span>
+          <h3 id="b2b-modal-title" style={{ fontSize: 'clamp(1.4rem, 4vw, 1.8rem)', fontWeight: 800, marginBottom: '6px' }} className="text-gradient">
+            Solicitud de Suministro Industrial
+          </h3>
+          <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem' }}>
+            Recibe una propuesta técnica y económica personalizada con crédito corporativo a 30/60 días.
+          </p>
+        </div>
 
         {submitted ? (
-          <div style={{ textAlign: 'center', padding: '24px 0' }}>
+          <div style={{ textAlign: 'center', padding: '20px 0' }}>
             <div style={{ fontSize: '3rem', color: 'var(--accent-emerald)', marginBottom: '12px' }}>✓</div>
-            <h4 style={{ fontSize: '1.4rem', fontWeight: 800, color: 'white', marginBottom: '8px' }}>
+            <h4 style={{ fontSize: '1.3rem', fontWeight: 800, color: 'white', marginBottom: '8px' }}>
               ¡Solicitud Corporativa Recibida!
             </h4>
-            <p style={{ color: 'var(--text-muted)', fontSize: '0.95rem', marginBottom: '24px', lineHeight: 1.5 }}>
+            <p style={{ color: 'var(--text-muted)', fontSize: '0.92rem', marginBottom: '24px', lineHeight: 1.5 }}>
               Un ingeniero comercial asignado revisará la especificación y se comunicará con {contactName}.
             </p>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
@@ -165,14 +180,14 @@ export default function B2bQuoteModal({ isOpen, onClose, selectedSector = null }
               <button
                 onClick={handleReset}
                 className="btn"
-                style={{ background: 'rgba(255,255,255,0.1)', color: 'white', width: '100%', padding: '10px' }}
+                style={{ background: 'rgba(255,255,255,0.1)', color: 'white', width: '100%', padding: '12px' }}
               >
                 Cerrar ventana
               </button>
             </div>
           </div>
         ) : (
-          <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+          <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
             <input
               type="text"
               name="hp_field"
@@ -196,7 +211,7 @@ export default function B2bQuoteModal({ isOpen, onClose, selectedSector = null }
               </div>
             )}
 
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px' }}>
+            <div className="modal-form-grid">
               <div>
                 <label style={{ display: 'block', fontSize: '0.82rem', color: 'var(--text-muted)', marginBottom: '4px' }}>RUC de la Empresa *</label>
                 <input 
@@ -223,7 +238,7 @@ export default function B2bQuoteModal({ isOpen, onClose, selectedSector = null }
               </div>
             </div>
 
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px' }}>
+            <div className="modal-form-grid">
               <div>
                 <label style={{ display: 'block', fontSize: '0.82rem', color: 'var(--text-muted)', marginBottom: '4px' }}>Persona de Contacto *</label>
                 <input 
@@ -250,7 +265,7 @@ export default function B2bQuoteModal({ isOpen, onClose, selectedSector = null }
               </div>
             </div>
 
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px' }}>
+            <div className="modal-form-grid">
               <div>
                 <label style={{ display: 'block', fontSize: '0.82rem', color: 'var(--text-muted)', marginBottom: '4px' }}>Sector / Industria</label>
                 <select 
@@ -301,7 +316,7 @@ export default function B2bQuoteModal({ isOpen, onClose, selectedSector = null }
               type="submit"
               disabled={isSubmitting}
               className="btn btn-primary btn-large"
-              style={{ width: '100%', marginTop: '8px', opacity: isSubmitting ? 0.7 : 1, cursor: isSubmitting ? 'not-allowed' : 'pointer' }}
+              style={{ width: '100%', marginTop: '8px', opacity: isSubmitting ? 0.7 : 1, cursor: isSubmitting ? 'not-allowed' : 'pointer', justifyContent: 'center' }}
             >
               💼 {isSubmitting ? 'Procesando Solicitud B2B...' : 'Enviar Solicitud B2B'}
             </button>
@@ -311,3 +326,4 @@ export default function B2bQuoteModal({ isOpen, onClose, selectedSector = null }
     </div>
   );
 }
+

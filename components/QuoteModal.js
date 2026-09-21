@@ -1,5 +1,5 @@
 'use client';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { FileTextIcon, WhatsAppIcon } from './Icons';
 import { getWhatsAppLink } from '@/lib/contactConfig';
 import { getStoredUtmData } from '@/lib/utmTracker';
@@ -17,6 +17,24 @@ export default function QuoteModal({ isOpen, onClose, defaultService = 'Suminist
   const [submitted, setSubmitted] = useState(false);
   const [errorMsg, setErrorMsg] = useState('');
   const [whatsappUrl, setWhatsappUrl] = useState('');
+
+  useEffect(() => {
+    if (!isOpen) return;
+
+    document.body.classList.add('no-scroll');
+
+    const handleKeyDown = (e) => {
+      if (e.key === 'Escape') {
+        if (onClose) onClose();
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => {
+      document.body.classList.remove('no-scroll');
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [isOpen, onClose]);
 
   if (!isOpen) return null;
 
@@ -80,39 +98,23 @@ export default function QuoteModal({ isOpen, onClose, defaultService = 'Suminist
   );
 
   return (
-    <div style={{
-      position: 'fixed',
-      top: 0,
-      left: 0,
-      width: '100vw',
-      height: '100vh',
-      backgroundColor: 'rgba(15, 23, 42, 0.8)',
-      backdropFilter: 'blur(8px)',
-      WebkitBackdropFilter: 'blur(8px)',
-      zIndex: 1000,
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
-      padding: '20px'
-    }}>
-      <div style={{
-        backgroundColor: '#FFFFFF',
-        borderRadius: '16px',
-        maxWidth: '520px',
-        width: '100%',
-        maxHeight: '90vh',
-        overflowY: 'auto',
-        padding: '32px',
-        position: 'relative',
-        boxShadow: 'var(--shadow-xl)',
-        border: '1px solid var(--border-light)'
-      }}>
+    <div
+      className="modal-overlay"
+      onClick={(e) => {
+        if (e.target === e.currentTarget) handleReset();
+      }}
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="quote-modal-title"
+    >
+      <div className="modal-content">
         <button
           onClick={handleReset}
+          aria-label="Cerrar modal"
           style={{
             position: 'absolute',
-            top: '20px',
-            right: '20px',
+            top: '16px',
+            right: '16px',
             background: '#F1F5F9',
             border: 'none',
             color: '#475569',
@@ -121,26 +123,30 @@ export default function QuoteModal({ isOpen, onClose, defaultService = 'Suminist
             borderRadius: '50%',
             cursor: 'pointer',
             fontSize: '1.2rem',
-            fontWeight: 700
+            fontWeight: 700,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            zIndex: 10
           }}
         >
           ✕
         </button>
 
-        <div style={{ marginBottom: '20px' }}>
+        <div style={{ marginBottom: '20px', paddingRight: '30px' }}>
           <span className="badge-pro" style={{ marginBottom: '8px' }}>
             <FileTextIcon size={14} /> Cotización Rápida
           </span>
-          <h3 style={{ fontSize: '1.5rem', fontWeight: 800, color: 'var(--primary-navy)' }}>
+          <h3 id="quote-modal-title" style={{ fontSize: '1.4rem', fontWeight: 800, color: 'var(--primary-navy)' }}>
             Solicitar Cotización de Servicio
           </h3>
-          <p style={{ color: 'var(--text-secondary)', fontSize: '0.92rem', marginTop: '4px' }}>
+          <p style={{ color: 'var(--text-secondary)', fontSize: '0.9rem', marginTop: '4px' }}>
             Ingresa tus datos de contacto y te enviaremos una propuesta formal a la brevedad.
           </p>
         </div>
 
         {submitted ? (
-          <div style={{ textAlign: 'center', padding: '20px 0' }}>
+          <div style={{ textAlign: 'center', padding: '16px 0' }}>
             <div style={{
               fontSize: '3rem',
               color: 'var(--accent-emerald)',
@@ -148,10 +154,10 @@ export default function QuoteModal({ isOpen, onClose, defaultService = 'Suminist
             }}>
               ✓
             </div>
-            <h4 style={{ fontSize: '1.3rem', fontWeight: 700, color: 'var(--primary-navy)', marginBottom: '8px' }}>
+            <h4 style={{ fontSize: '1.25rem', fontWeight: 700, color: 'var(--primary-navy)', marginBottom: '8px' }}>
               ¡Solicitud Registrada con Éxito!
             </h4>
-            <p style={{ color: 'var(--text-secondary)', fontSize: '0.95rem', marginBottom: '24px', lineHeight: 1.5 }}>
+            <p style={{ color: 'var(--text-secondary)', fontSize: '0.92rem', marginBottom: '24px', lineHeight: 1.5 }}>
               Hemos recibido tus datos y nuestro equipo comercial te contactará inmediatamente.
             </p>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
@@ -168,7 +174,7 @@ export default function QuoteModal({ isOpen, onClose, defaultService = 'Suminist
               <button
                 onClick={handleReset}
                 className="btn"
-                style={{ background: '#F1F5F9', color: '#334155', width: '100%', padding: '10px' }}
+                style={{ background: '#F1F5F9', color: '#334155', width: '100%', padding: '12px' }}
               >
                 Cerrar ventana
               </button>
@@ -176,7 +182,6 @@ export default function QuoteModal({ isOpen, onClose, defaultService = 'Suminist
           </div>
         ) : (
           <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
-            {/* Campo Honeypot Oculto */}
             <input
               type="text"
               name="hp_field"
@@ -266,12 +271,12 @@ export default function QuoteModal({ isOpen, onClose, defaultService = 'Suminist
               />
             </div>
 
-            <div style={{ display: 'flex', gap: '12px', marginTop: '8px' }}>
+            <div className="modal-actions">
               <button
                 type="submit"
                 disabled={isSubmitting}
                 className="btn btn-primary btn-large"
-                style={{ flex: 1, opacity: isSubmitting ? 0.7 : 1, cursor: isSubmitting ? 'not-allowed' : 'pointer' }}
+                style={{ flex: 1, opacity: isSubmitting ? 0.7 : 1, cursor: isSubmitting ? 'not-allowed' : 'pointer', justifyContent: 'center' }}
               >
                 <FileTextIcon size={18} /> {isSubmitting ? 'Enviando...' : 'Enviar Cotización'}
               </button>
@@ -281,7 +286,7 @@ export default function QuoteModal({ isOpen, onClose, defaultService = 'Suminist
                 rel="noreferrer"
                 onClick={() => trackEvent(ANALYTICS_EVENTS.WHATSAPP_CLICK, { location: 'quote_modal_direct' })}
                 className="btn btn-whatsapp btn-large"
-                style={{ flex: 1 }}
+                style={{ flex: 1, justifyContent: 'center' }}
               >
                 <WhatsAppIcon size={18} /> WhatsApp
               </a>
@@ -292,3 +297,4 @@ export default function QuoteModal({ isOpen, onClose, defaultService = 'Suminist
     </div>
   );
 }
+

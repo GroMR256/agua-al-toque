@@ -15,17 +15,17 @@ export default function FloatingContactButtons({ onOpenQuoteModal }) {
         className="floating-whatsapp"
         aria-label="Contacto por WhatsApp"
       >
-        <WhatsAppIcon size={32} />
+        <WhatsAppIcon size={30} />
       </a>
 
       {/* Sticky Mobile Action Bar */}
-      <div className="sticky-cta-bar">
-        <span style={{ fontSize: '0.85rem', fontWeight: 600 }}>Logística & Cisternas</span>
+      <div className="sticky-cta-bar" role="region" aria-label="Acciones rápidas de contacto">
+        <span style={{ fontSize: '0.85rem', fontWeight: 600, color: '#F1F5F9' }}>Agua Al Toque</span>
         <div style={{ display: 'flex', gap: '8px' }}>
           <button
             onClick={onOpenQuoteModal}
             className="btn btn-primary"
-            style={{ padding: '8px 14px', fontSize: '0.85rem' }}
+            style={{ padding: '8px 14px', fontSize: '0.85rem', minHeight: '44px' }}
           >
             <FileTextIcon size={14} /> Cotizar
           </button>
@@ -35,7 +35,7 @@ export default function FloatingContactButtons({ onOpenQuoteModal }) {
             rel="noreferrer"
             onClick={(e) => handleDirectWhatsAppClick(e, 'sticky_mobile_bar', 'Hola, deseo cotizar agua en cisterna')}
             className="btn btn-whatsapp"
-            style={{ padding: '8px 14px', fontSize: '0.85rem' }}
+            style={{ padding: '8px 14px', fontSize: '0.85rem', minHeight: '44px' }}
           >
             <WhatsAppIcon size={14} /> WhatsApp
           </a>
@@ -44,3 +44,4 @@ export default function FloatingContactButtons({ onOpenQuoteModal }) {
     </>
   );
 }
+

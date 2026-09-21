@@ -64,10 +64,10 @@ export default function ContactSection() {
   const fallbackWaUrl = getWhatsAppLink('Hola, deseo cotizar servicio de agua en cisterna');
 
   return (
-    <section id="contacto" className="section" style={{ padding: '80px 0', backgroundColor: '#FFFFFF' }}>
+    <section id="contacto" className="section" style={{ backgroundColor: '#FFFFFF' }}>
       <div className="container">
-        <div style={{ textAlign: 'center', maxWidth: '650px', margin: '0 auto 48px auto' }}>
-          <h2 className="section-title" style={{ marginTop: '12px' }}>
+        <div style={{ textAlign: 'center', maxWidth: '650px', margin: '0 auto 40px auto' }}>
+          <h2 className="section-title" style={{ marginTop: '8px' }}>
             Solicitar Cotización o Información
           </h2>
           <p className="section-subtitle" style={{ margin: '10px auto 0 auto' }}>
@@ -75,8 +75,13 @@ export default function ContactSection() {
           </p>
         </div>
 
-        <div className="grid-2" style={{ gap: '48px', alignItems: 'flex-start' }}>
-          <div style={{ backgroundColor: 'var(--bg-light)', padding: '36px', borderRadius: '16px', border: '1px solid var(--border-light)' }}>
+        <div className="grid-2" style={{ gap: '32px', alignItems: 'flex-start' }}>
+          <div style={{
+            backgroundColor: 'var(--bg-light)',
+            padding: 'clamp(20px, 4vw, 36px)',
+            borderRadius: '16px',
+            border: '1px solid var(--border-light)'
+          }}>
             {submitted ? (
               <div style={{ textAlign: 'center', padding: '16px 0' }}>
                 <div style={{ fontSize: '2.5rem', color: 'var(--accent-emerald)', marginBottom: '8px' }}>✓</div>
@@ -123,10 +128,11 @@ export default function ContactSection() {
                 )}
 
                 <div>
-                  <label style={{ display: 'block', fontSize: '0.88rem', fontWeight: 600, color: 'var(--text-secondary)', marginBottom: '6px' }}>
+                  <label htmlFor="contact-name" style={{ display: 'block', fontSize: '0.88rem', fontWeight: 600, color: 'var(--text-secondary)', marginBottom: '6px' }}>
                     Nombre completo *
                   </label>
                   <input
+                    id="contact-name"
                     type="text"
                     placeholder="Tu nombre"
                     value={name}
@@ -137,10 +143,11 @@ export default function ContactSection() {
                 </div>
 
                 <div>
-                  <label style={{ display: 'block', fontSize: '0.88rem', fontWeight: 600, color: 'var(--text-secondary)', marginBottom: '6px' }}>
+                  <label htmlFor="contact-phone" style={{ display: 'block', fontSize: '0.88rem', fontWeight: 600, color: 'var(--text-secondary)', marginBottom: '6px' }}>
                     Teléfono / WhatsApp *
                   </label>
                   <input
+                    id="contact-phone"
                     type="tel"
                     placeholder="Ej. 987 654 321"
                     value={phone}
@@ -151,10 +158,11 @@ export default function ContactSection() {
                 </div>
 
                 <div>
-                  <label style={{ display: 'block', fontSize: '0.88rem', fontWeight: 600, color: 'var(--text-secondary)', marginBottom: '6px' }}>
+                  <label htmlFor="contact-company" style={{ display: 'block', fontSize: '0.88rem', fontWeight: 600, color: 'var(--text-secondary)', marginBottom: '6px' }}>
                     Empresa (opcional)
                   </label>
                   <input
+                    id="contact-company"
                     type="text"
                     placeholder="Nombre de tu empresa o particular"
                     value={company}
@@ -164,10 +172,11 @@ export default function ContactSection() {
                 </div>
 
                 <div>
-                  <label style={{ display: 'block', fontSize: '0.88rem', fontWeight: 600, color: 'var(--text-secondary)', marginBottom: '6px' }}>
+                  <label htmlFor="contact-message" style={{ display: 'block', fontSize: '0.88rem', fontWeight: 600, color: 'var(--text-secondary)', marginBottom: '6px' }}>
                     ¿Cómo podemos ayudarte? (opcional)
                   </label>
                   <textarea
+                    id="contact-message"
                     rows={3}
                     placeholder="Ej. Requiero una cisterna de 10 m³ para mañana..."
                     value={message}
@@ -176,12 +185,12 @@ export default function ContactSection() {
                   />
                 </div>
 
-                <div style={{ display: 'flex', gap: '12px', marginTop: '8px' }}>
+                <div className="modal-actions">
                   <button
                     type="submit"
                     disabled={isSubmitting}
                     className="btn btn-primary btn-large"
-                    style={{ flex: 1, opacity: isSubmitting ? 0.7 : 1, cursor: isSubmitting ? 'not-allowed' : 'pointer' }}
+                    style={{ flex: 1, opacity: isSubmitting ? 0.7 : 1, cursor: isSubmitting ? 'not-allowed' : 'pointer', justifyContent: 'center' }}
                   >
                     <FileTextIcon size={18} /> {isSubmitting ? 'Enviando...' : 'Enviar Cotización'}
                   </button>
@@ -191,7 +200,7 @@ export default function ContactSection() {
                     rel="noreferrer"
                     onClick={() => trackEvent(ANALYTICS_EVENTS.WHATSAPP_CLICK, { location: 'contact_section_direct' })}
                     className="btn btn-whatsapp btn-large"
-                    style={{ flex: 1 }}
+                    style={{ flex: 1, justifyContent: 'center' }}
                   >
                     <WhatsAppIcon size={18} /> WhatsApp
                   </a>
@@ -201,13 +210,13 @@ export default function ContactSection() {
           </div>
 
           <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
-            <div className="card-pro">
+            <div className="card-pro" style={{ padding: 'clamp(20px, 4vw, 32px)' }}>
               <h3 style={{ fontSize: '1.25rem', fontWeight: 700, color: 'var(--primary-navy)', marginBottom: '16px' }}>
                 Atención Directa
               </h3>
               <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '18px' }}>
                 <li style={{ display: 'flex', gap: '14px', alignItems: 'flex-start' }}>
-                  <div className="icon-wrapper" style={{ marginBottom: 0 }}>
+                  <div className="icon-wrapper" style={{ marginBottom: 0, flexShrink: 0 }}>
                     <PhoneIcon size={20} />
                   </div>
                   <div>
@@ -217,7 +226,7 @@ export default function ContactSection() {
                 </li>
 
                 <li style={{ display: 'flex', gap: '14px', alignItems: 'flex-start' }}>
-                  <div className="icon-wrapper" style={{ marginBottom: 0, backgroundColor: 'rgba(16, 185, 129, 0.1)', color: '#10B981' }}>
+                  <div className="icon-wrapper" style={{ marginBottom: 0, backgroundColor: 'rgba(16, 185, 129, 0.1)', color: '#10B981', flexShrink: 0 }}>
                     <WhatsAppIcon size={20} />
                   </div>
                   <div>
@@ -227,7 +236,7 @@ export default function ContactSection() {
                 </li>
 
                 <li style={{ display: 'flex', gap: '14px', alignItems: 'flex-start' }}>
-                  <div className="icon-wrapper" style={{ marginBottom: 0 }}>
+                  <div className="icon-wrapper" style={{ marginBottom: 0, flexShrink: 0 }}>
                     <MapPinIcon size={20} />
                   </div>
                   <div>
@@ -237,7 +246,7 @@ export default function ContactSection() {
                 </li>
 
                 <li style={{ display: 'flex', gap: '14px', alignItems: 'flex-start' }}>
-                  <div className="icon-wrapper" style={{ marginBottom: 0 }}>
+                  <div className="icon-wrapper" style={{ marginBottom: 0, flexShrink: 0 }}>
                     <ClockIcon size={20} />
                   </div>
                   <div>
@@ -253,3 +262,4 @@ export default function ContactSection() {
     </section>
   );
 }
+

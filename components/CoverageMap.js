@@ -1,15 +1,15 @@
 'use client';
-import { MapPinIcon, WhatsAppIcon, FileTextIcon } from './Icons';
+import { MapPinIcon, FileTextIcon } from './Icons';
 
 export default function CoverageMap({ onOpenQuoteModal }) {
   return (
-    <section id="cobertura" className="section" style={{ padding: '90px 0', backgroundColor: 'var(--bg-light)' }}>
+    <section id="cobertura" className="section" style={{ backgroundColor: 'var(--bg-light)' }}>
       <div className="container">
-        <div style={{ textAlign: 'center', maxWidth: '700px', margin: '0 auto 60px auto' }}>
-          <h2 className="section-title" style={{ marginTop: '12px' }}>
+        <div style={{ textAlign: 'center', maxWidth: '700px', margin: '0 auto 40px auto' }}>
+          <h2 className="section-title" style={{ marginTop: '8px' }}>
             Zonas de Cobertura & Mapa Operativo
           </h2>
-          <p className="section-subtitle" style={{ margin: '12px auto 0 auto' }}>
+          <p className="section-subtitle" style={{ margin: '10px auto 0 auto' }}>
             Operamos en las principales áreas urbanas, zonas industriales, proyectos de infraestructura y fundos agrícolas de [ZONA DE COBERTURA / CIUDAD].
           </p>
         </div>
@@ -18,18 +18,18 @@ export default function CoverageMap({ onOpenQuoteModal }) {
           backgroundColor: '#FFFFFF',
           borderRadius: '16px',
           border: '1px solid var(--border-light)',
-          padding: '36px',
+          padding: 'clamp(20px, 4vw, 36px)',
           boxShadow: 'var(--shadow-lg)'
         }}>
-          <div className="grid-2" style={{ gap: '36px', alignItems: 'center' }}>
+          <div className="grid-2" style={{ gap: '32px', alignItems: 'center' }}>
             <div>
-              <h3 style={{ fontSize: '1.35rem', fontWeight: 800, color: 'var(--primary-navy)', marginBottom: '16px' }}>
+              <h3 style={{ fontSize: '1.25rem', fontWeight: 800, color: 'var(--primary-navy)', marginBottom: '16px' }}>
                 Zonas Atendidas Habitualmente
               </h3>
 
               <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '14px', marginBottom: '24px' }}>
                 <li style={{ display: 'flex', gap: '12px', alignItems: 'flex-start' }}>
-                  <MapPinIcon size={20} color="var(--accent-sky)" />
+                  <MapPinIcon size={20} color="var(--accent-sky)" style={{ flexShrink: 0, marginTop: '2px' }} />
                   <div>
                     <strong style={{ color: 'var(--primary-navy)' }}>Zona Urbana & Comercial:</strong>
                     <div style={{ fontSize: '0.9rem', color: 'var(--text-secondary)' }}>
@@ -38,7 +38,7 @@ export default function CoverageMap({ onOpenQuoteModal }) {
                   </div>
                 </li>
                 <li style={{ display: 'flex', gap: '12px', alignItems: 'flex-start' }}>
-                  <MapPinIcon size={20} color="var(--accent-sky)" />
+                  <MapPinIcon size={20} color="var(--accent-sky)" style={{ flexShrink: 0, marginTop: '2px' }} />
                   <div>
                     <strong style={{ color: 'var(--primary-navy)' }}>Zona Agrícola & Fundos:</strong>
                     <div style={{ fontSize: '0.9rem', color: 'var(--text-secondary)' }}>
@@ -47,7 +47,7 @@ export default function CoverageMap({ onOpenQuoteModal }) {
                   </div>
                 </li>
                 <li style={{ display: 'flex', gap: '12px', alignItems: 'flex-start' }}>
-                  <MapPinIcon size={20} color="var(--accent-sky)" />
+                  <MapPinIcon size={20} color="var(--accent-sky)" style={{ flexShrink: 0, marginTop: '2px' }} />
                   <div>
                     <strong style={{ color: 'var(--primary-navy)' }}>Proyectos & Obras en Carretera:</strong>
                     <div style={{ fontSize: '0.9rem', color: 'var(--text-secondary)' }}>
@@ -59,11 +59,11 @@ export default function CoverageMap({ onOpenQuoteModal }) {
 
               <div style={{
                 backgroundColor: 'rgba(2, 132, 199, 0.06)',
-                padding: '20px',
+                padding: '16px 20px',
                 borderRadius: '10px',
                 border: '1px solid rgba(2, 132, 199, 0.2)'
               }}>
-                <h4 style={{ fontSize: '1rem', fontWeight: 700, color: 'var(--primary-navy)', marginBottom: '6px' }}>
+                <h4 style={{ fontSize: '0.95rem', fontWeight: 700, color: 'var(--primary-navy)', marginBottom: '6px' }}>
                   ¿Necesitas atención fuera de nuestra zona habitual?
                 </h4>
                 <p style={{ fontSize: '0.88rem', color: 'var(--text-secondary)', marginBottom: '14px' }}>
@@ -81,7 +81,8 @@ export default function CoverageMap({ onOpenQuoteModal }) {
               overflow: 'hidden',
               boxShadow: 'var(--shadow-md)',
               border: '1px solid var(--border-light)',
-              height: '380px'
+              height: 'clamp(240px, 35vh, 380px)',
+              width: '100%'
             }}>
               <iframe
                 title="Mapa de Zonas de Cobertura de Agua Al Toque"
@@ -100,3 +101,4 @@ export default function CoverageMap({ onOpenQuoteModal }) {
     </section>
   );
 }
+

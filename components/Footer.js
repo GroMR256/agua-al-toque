@@ -60,19 +60,19 @@ export default function Footer() {
             <div className="footer-col-title">Contacto & Operación</div>
             <ul className="footer-links-list">
               <li style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
-                <PhoneIcon size={16} color="#0EA5E9" />
+                <PhoneIcon size={16} color="#0EA5E9" style={{ flexShrink: 0 }} />
                 <span>Central: +{PUBLIC_CONFIG.whatsappNumber}</span>
               </li>
               <li style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
-                <WhatsAppIcon size={16} color="#10B981" />
+                <WhatsAppIcon size={16} color="#10B981" style={{ flexShrink: 0 }} />
                 <span>WhatsApp: +{PUBLIC_CONFIG.whatsappNumber}</span>
               </li>
               <li style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
-                <MapPinIcon size={16} color="#0EA5E9" />
+                <MapPinIcon size={16} color="#0EA5E9" style={{ flexShrink: 0 }} />
                 <span>Base: [ZONA DE COBERTURA / CIUDAD]</span>
               </li>
               <li style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
-                <ClockIcon size={16} color="#0EA5E9" />
+                <ClockIcon size={16} color="#0EA5E9" style={{ flexShrink: 0 }} />
                 <span>Horarios: Atención 24/7 y Emergencias</span>
               </li>
             </ul>
@@ -80,10 +80,10 @@ export default function Footer() {
         </div>
 
         <div className="footer-bottom">
-          <div>
+          <div style={{ textAlign: 'center' }}>
             &copy; 2026 Agua Al Toque. Todos los derechos reservados. Soluciones de abastecimiento y logística de agua.
           </div>
-          <div style={{ display: 'flex', gap: '20px' }}>
+          <div style={{ display: 'flex', gap: '16px 20px', flexWrap: 'wrap', justifyContent: 'center' }}>
             <a href="#cobertura" className="footer-link">Cobertura</a>
             <a href="#nosotros" className="footer-link">Nosotros</a>
             <a href="#faq" className="footer-link">FAQ</a>
@@ -94,3 +94,4 @@ export default function Footer() {
     </footer>
   );
 }
+

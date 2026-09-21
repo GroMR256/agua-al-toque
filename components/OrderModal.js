@@ -1,5 +1,5 @@
 'use client';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { getWhatsAppLink } from '@/lib/contactConfig';
 import { getStoredUtmData } from '@/lib/utmTracker';
 import { trackEvent, ANALYTICS_EVENTS } from '@/lib/analytics';
@@ -19,6 +19,24 @@ export default function OrderModal({ isOpen, onClose, selectedProduct = null }) 
   const [submitted, setSubmitted] = useState(false);
   const [errorMsg, setErrorMsg] = useState('');
   const [whatsappUrl, setWhatsappUrl] = useState('');
+
+  useEffect(() => {
+    if (!isOpen) return;
+
+    document.body.classList.add('no-scroll');
+
+    const handleKeyDown = (e) => {
+      if (e.key === 'Escape') {
+        if (onClose) onClose();
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => {
+      document.body.classList.remove('no-scroll');
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [isOpen, onClose]);
 
   if (!isOpen) return null;
 
@@ -92,35 +110,28 @@ export default function OrderModal({ isOpen, onClose, selectedProduct = null }) 
   );
 
   return (
-    <div style={{
-      position: 'fixed',
-      top: 0,
-      left: 0,
-      width: '100vw',
-      height: '100vh',
-      background: 'rgba(3, 7, 18, 0.85)',
-      backdropFilter: 'blur(20px)',
-      WebkitBackdropFilter: 'blur(20px)',
-      zIndex: 2000,
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
-      padding: '20px'
-    }}>
-      <div className="glass-panel" style={{
+    <div
+      className="modal-overlay"
+      style={{ background: 'rgba(3, 7, 18, 0.85)' }}
+      onClick={(e) => {
+        if (e.target === e.currentTarget) handleReset();
+      }}
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="order-modal-title"
+    >
+      <div className="modal-content glass-panel" style={{
         maxWidth: '540px',
-        width: '100%',
-        padding: '36px',
-        position: 'relative',
         boxShadow: '0 25px 60px rgba(0, 242, 254, 0.25)',
         border: '1px solid rgba(0, 242, 254, 0.3)'
       }}>
         <button 
           onClick={handleReset}
+          aria-label="Cerrar modal"
           style={{
             position: 'absolute',
-            top: '20px',
-            right: '20px',
+            top: '16px',
+            right: '16px',
             background: 'rgba(255, 255, 255, 0.1)',
             border: 'none',
             color: 'white',
@@ -128,18 +139,24 @@ export default function OrderModal({ isOpen, onClose, selectedProduct = null }) 
             height: '36px',
             borderRadius: '50%',
             cursor: 'pointer',
-            fontSize: '1.1rem'
+            fontSize: '1.1rem',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            zIndex: 10
           }}
         >
           ✕
         </button>
 
-        <h3 style={{ fontSize: '1.8rem', fontWeight: 800, marginBottom: '8px' }} className="text-gradient">
-          Pide tu Agua al Toque 💧
-        </h3>
-        <p style={{ color: 'var(--text-muted)', marginBottom: '24px', fontSize: '0.95rem' }}>
-          Completa los datos para coordinar el envío directo a tu hogar u oficina en minutos.
-        </p>
+        <div style={{ paddingRight: '30px', marginBottom: '16px' }}>
+          <h3 id="order-modal-title" style={{ fontSize: 'clamp(1.4rem, 4vw, 1.8rem)', fontWeight: 800, marginBottom: '6px' }} className="text-gradient">
+            Pide tu Agua al Toque 💧
+          </h3>
+          <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem' }}>
+            Completa los datos para coordinar el envío directo a tu hogar u oficina en minutos.
+          </p>
+        </div>
 
         {submitted ? (
           <div style={{ textAlign: 'center', padding: '20px 0' }}>
@@ -147,7 +164,7 @@ export default function OrderModal({ isOpen, onClose, selectedProduct = null }) 
             <h4 style={{ fontSize: '1.3rem', fontWeight: 700, color: 'white', marginBottom: '8px' }}>
               ¡Pedido Registrado Correctamente!
             </h4>
-            <p style={{ color: 'var(--text-muted)', fontSize: '0.95rem', marginBottom: '24px' }}>
+            <p style={{ color: 'var(--text-muted)', fontSize: '0.92rem', marginBottom: '24px' }}>
               Tu orden de {quantity}x {product} (S/ {totalPrice.toFixed(2)}) ha sido ingresada a nuestro sistema de despacho.
             </p>
             <a
@@ -162,7 +179,7 @@ export default function OrderModal({ isOpen, onClose, selectedProduct = null }) 
             </a>
           </div>
         ) : (
-          <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+          <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
             <input
               type="text"
               name="hp_field"
@@ -212,7 +229,7 @@ export default function OrderModal({ isOpen, onClose, selectedProduct = null }) 
               </div>
             </div>
 
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px' }}>
+            <div className="modal-form-grid">
               <input 
                 type="text" 
                 placeholder="Tu Nombre completo *" 
@@ -259,15 +276,15 @@ export default function OrderModal({ isOpen, onClose, selectedProduct = null }) 
 
             <div style={{
               background: 'rgba(255, 255, 255, 0.04)',
-              padding: '16px',
-              borderRadius: '16px',
+              padding: '14px 16px',
+              borderRadius: '12px',
               display: 'flex',
               justifyContent: 'space-between',
               alignItems: 'center',
               border: '1px solid rgba(255, 255, 255, 0.1)'
             }}>
-              <span style={{ color: 'var(--text-muted)' }}>Total a pagar:</span>
-              <span style={{ fontSize: '1.6rem', fontWeight: 800, color: 'var(--color-cyan)' }}>
+              <span style={{ color: 'var(--text-muted)', fontSize: '0.9rem' }}>Total a pagar:</span>
+              <span style={{ fontSize: '1.5rem', fontWeight: 800, color: 'var(--accent-cyan)' }}>
                 S/ {totalPrice.toFixed(2)}
               </span>
             </div>
@@ -276,7 +293,7 @@ export default function OrderModal({ isOpen, onClose, selectedProduct = null }) 
               type="submit"
               disabled={isSubmitting}
               className="btn btn-primary btn-large"
-              style={{ width: '100%', marginTop: '8px', opacity: isSubmitting ? 0.7 : 1, cursor: isSubmitting ? 'not-allowed' : 'pointer' }}
+              style={{ width: '100%', marginTop: '6px', opacity: isSubmitting ? 0.7 : 1, cursor: isSubmitting ? 'not-allowed' : 'pointer', justifyContent: 'center' }}
             >
               📲 {isSubmitting ? 'Procesando Pedido...' : 'Confirmar Pedido'}
             </button>
@@ -286,3 +303,4 @@ export default function OrderModal({ isOpen, onClose, selectedProduct = null }) 
     </div>
   );
 }
+

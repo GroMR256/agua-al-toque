@@ -1,13 +1,9 @@
 'use client';
 import { FileTextIcon, WhatsAppIcon } from './Icons';
 import { getWhatsAppLink } from '@/lib/contactConfig';
-import { trackEvent, ANALYTICS_EVENTS } from '@/lib/analytics';
+import { handleDirectWhatsAppClick } from '@/lib/whatsappTracker';
 
 export default function FinalCta({ onOpenQuoteModal }) {
-  const handleWhatsAppClick = () => {
-    trackEvent(ANALYTICS_EVENTS.WHATSAPP_CLICK, { location: 'final_cta' });
-  };
-
   return (
     <section className="section" style={{ padding: '90px 0', backgroundColor: 'var(--primary-navy)', color: '#FFFFFF', textAlign: 'center' }}>
       <div className="container">
@@ -30,7 +26,7 @@ export default function FinalCta({ onOpenQuoteModal }) {
               href={getWhatsAppLink('Hola, deseo solicitar abastecimiento de agua en cisterna')}
               target="_blank"
               rel="noreferrer"
-              onClick={handleWhatsAppClick}
+              onClick={(e) => handleDirectWhatsAppClick(e, 'final_cta', 'Hola, deseo solicitar abastecimiento de agua en cisterna')}
               className="btn btn-whatsapp btn-large"
             >
               <WhatsAppIcon size={20} /> Contactar por WhatsApp

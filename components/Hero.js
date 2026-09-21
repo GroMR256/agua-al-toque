@@ -1,13 +1,10 @@
 'use client';
 import { FileTextIcon, WhatsAppIcon, ShieldCheckIcon } from './Icons';
 import { getWhatsAppLink } from '@/lib/contactConfig';
+import { handleDirectWhatsAppClick } from '@/lib/whatsappTracker';
 import { trackEvent, ANALYTICS_EVENTS } from '@/lib/analytics';
 
 export default function Hero({ onOpenQuoteModal }) {
-  const handleWhatsAppClick = () => {
-    trackEvent(ANALYTICS_EVENTS.WHATSAPP_CLICK, { location: 'hero' });
-  };
-
   const handleQuoteClick = () => {
     trackEvent(ANALYTICS_EVENTS.QUOTE_MODAL_OPENED, { location: 'hero' });
     if (onOpenQuoteModal) onOpenQuoteModal();
@@ -35,7 +32,7 @@ export default function Hero({ onOpenQuoteModal }) {
                 href={getWhatsAppLink('Hola, deseo contactarme para un servicio de agua en cisterna')}
                 target="_blank"
                 rel="noreferrer"
-                onClick={handleWhatsAppClick}
+                onClick={(e) => handleDirectWhatsAppClick(e, 'hero', 'Hola, deseo contactarme para un servicio de agua en cisterna')}
                 className="btn btn-whatsapp btn-large"
               >
                 <WhatsAppIcon size={20} /> Contactar por WhatsApp

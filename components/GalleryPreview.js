@@ -1,6 +1,4 @@
-'use client';
-import Link from 'next/link';
-import { ArrowRightIcon } from './Icons';
+import Image from 'next/image';
 
 export default function GalleryPreview() {
   const galleryItems = [
@@ -24,9 +22,6 @@ export default function GalleryPreview() {
               Imágenes de nuestras unidades cisterna, entregas y presencia en proyectos reales.
             </p>
           </div>
-          {/*<Link href="/galeria" className="btn btn-secondary">
-            Ver galería completa <ArrowRightIcon size={16} />
-          </Link>*/}
         </div>
 
         <div className="grid-3">
@@ -39,10 +34,13 @@ export default function GalleryPreview() {
               boxShadow: 'var(--shadow-md)',
               border: '1px solid var(--border-light)'
             }}>
-              <img
+              <Image
                 src={item.image}
                 alt={item.title}
-                style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                fill
+                loading="lazy"
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                style={{ objectFit: 'cover' }}
               />
               <div style={{
                 position: 'absolute',
@@ -51,7 +49,8 @@ export default function GalleryPreview() {
                 right: 0,
                 background: 'linear-gradient(180deg, transparent 0%, rgba(15, 23, 42, 0.9) 100%)',
                 padding: '20px',
-                color: '#FFFFFF'
+                color: '#FFFFFF',
+                zIndex: 2
               }}>
                 <span style={{ fontSize: '0.75rem', textTransform: 'uppercase', color: 'var(--accent-cyan)', fontWeight: 700 }}>
                   {item.category}

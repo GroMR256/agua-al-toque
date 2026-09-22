@@ -1,5 +1,3 @@
-'use client';
-
 export default function TrustMetrics() {
   const metrics = [
     { value: '+10', label: 'Años de Experiencia' },

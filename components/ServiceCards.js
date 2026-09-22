@@ -1,7 +1,18 @@
 'use client';
-import { ArrowRightIcon } from './Icons';
+import Image from 'next/image';
+import { useQuoteModal } from '@/components/quote/QuoteModalProvider';
 
 export default function ServiceCards({ onOpenQuoteModal }) {
+  const { openQuoteModal } = useQuoteModal();
+
+  const handleQuoteClick = (title) => {
+    if (onOpenQuoteModal) {
+      onOpenQuoteModal(title);
+    } else {
+      openQuoteModal(title);
+    }
+  };
+
   const services = [
     {
       id: 'suministro-de-agua',
@@ -21,13 +32,6 @@ export default function ServiceCards({ onOpenQuoteModal }) {
       title: 'Agua para agricultura',
       desc: 'Abastecimiento continuo de fundos, reservorios y operaciones agrícolas de alta escala.',
     },
-    /*
-    {
-      id: 'agua-para-construccion',
-      image: 'https://images.unsplash.com/photo-1541888946425-d0fbb186a5b3?auto=format&fit=crop&w=600&q=80',
-      title: 'Agua para construcción',
-      desc: 'Suministro para obras, campamentos de construcción, curado de concreto y compactación de suelos.',
-    },*/
     {
       id: 'agua-para-mineria',
       image: 'https://images.unsplash.com/photo-1578575437130-527eed3abbec?auto=format&fit=crop&w=600&q=80',
@@ -40,7 +44,6 @@ export default function ServiceCards({ onOpenQuoteModal }) {
       title: 'Alquiler de cisternas',
       desc: 'Alquiler de unidades de cisterna para operaciones que requieren transporte y almacenamiento temporal.',
     },
-
     {
       id: 'abastecimiento-de-emergencia',
       image: 'https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=600&q=80',
@@ -65,10 +68,13 @@ export default function ServiceCards({ onOpenQuoteModal }) {
           {services.map((srv) => (
             <div key={srv.id} className="card-pro" style={{ padding: 0, overflow: 'hidden' }}>
               <div style={{ height: '180px', overflow: 'hidden', position: 'relative' }}>
-                <img
+                <Image
                   src={srv.image}
                   alt={srv.title}
-                  style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                  fill
+                  loading="lazy"
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                  style={{ objectFit: 'cover' }}
                 />
               </div>
 
@@ -82,7 +88,7 @@ export default function ServiceCards({ onOpenQuoteModal }) {
 
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', paddingTop: '16px', borderTop: '1px solid var(--border-light)' }}>
                   <button
-                    onClick={() => onOpenQuoteModal(srv.title)}
+                    onClick={() => handleQuoteClick(srv.title)}
                     className="btn btn-primary"
                     style={{ width: '100%', justifyContent: 'center' }}
                   >

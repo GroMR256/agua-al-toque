@@ -2,8 +2,19 @@
 import { WhatsAppIcon, FileTextIcon } from './Icons';
 import { getWhatsAppLink } from '@/lib/contactConfig';
 import { handleDirectWhatsAppClick } from '@/lib/whatsappTracker';
+import { useQuoteModal } from '@/components/quote/QuoteModalProvider';
 
 export default function FloatingContactButtons({ onOpenQuoteModal }) {
+  const { openQuoteModal } = useQuoteModal();
+
+  const handleQuoteClick = () => {
+    if (onOpenQuoteModal) {
+      onOpenQuoteModal();
+    } else {
+      openQuoteModal();
+    }
+  };
+
   return (
     <>
       {/* Floating WhatsApp Button */}
@@ -23,7 +34,7 @@ export default function FloatingContactButtons({ onOpenQuoteModal }) {
         <span style={{ fontSize: '0.85rem', fontWeight: 600, color: '#F1F5F9' }}>Agua Al Toque</span>
         <div style={{ display: 'flex', gap: '8px' }}>
           <button
-            onClick={onOpenQuoteModal}
+            onClick={handleQuoteClick}
             className="btn btn-primary"
             style={{ padding: '8px 14px', fontSize: '0.85rem', minHeight: '44px' }}
           >
@@ -44,4 +55,3 @@ export default function FloatingContactButtons({ onOpenQuoteModal }) {
     </>
   );
 }
-

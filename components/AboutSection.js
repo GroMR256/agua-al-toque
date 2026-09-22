@@ -1,4 +1,4 @@
-'use client';
+import Image from 'next/image';
 
 export default function AboutSection() {
   return (
@@ -28,9 +28,13 @@ export default function AboutSection() {
           </div>
 
           <div style={{ borderRadius: '16px', overflow: 'hidden', boxShadow: 'var(--shadow-xl)', border: '4px solid #FFFFFF' }}>
-            <img
+            <Image
               src="https://images.unsplash.com/photo-1601584115197-04ecc0da31d7?auto=format&fit=crop&w=800&q=80"
               alt="Flota de cisternas de Agua Al Toque"
+              width={800}
+              height={500}
+              loading="lazy"
+              sizes="(max-width: 768px) 100vw, 50vw"
               style={{ width: '100%', height: '360px', objectFit: 'cover' }}
             />
           </div>
@@ -42,7 +46,7 @@ export default function AboutSection() {
               Nuestra Experiencia
             </h4>
             <p style={{ color: 'var(--text-secondary)', fontSize: '0.95rem', lineHeight: 1.5 }}>
-              Años operando en rutas urbanas, industriales y rurales en [ZONA DE COBERTURA / CIUDAD], respaldados por miles de m³ entregados puntualmente.
+              Años operando en rutas urbanas, industriales y rurales, respaldados por miles de m³ entregados puntualmente.
             </p>
           </div>
 

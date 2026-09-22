@@ -1,4 +1,3 @@
-'use client';
 import { TruckIcon, CalendarIcon, WaterIcon, BuildingIcon, EmergencyIcon, MapPinIcon } from './Icons';
 
 export default function WhyUs() {

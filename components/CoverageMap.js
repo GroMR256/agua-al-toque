@@ -1,7 +1,18 @@
 'use client';
 import { MapPinIcon, FileTextIcon } from './Icons';
+import { useQuoteModal } from '@/components/quote/QuoteModalProvider';
 
 export default function CoverageMap({ onOpenQuoteModal }) {
+  const { openQuoteModal } = useQuoteModal();
+
+  const handleQuoteClick = () => {
+    if (onOpenQuoteModal) {
+      onOpenQuoteModal();
+    } else {
+      openQuoteModal();
+    }
+  };
+
   return (
     <section id="cobertura" className="section" style={{ backgroundColor: 'var(--bg-light)' }}>
       <div className="container">
@@ -10,7 +21,7 @@ export default function CoverageMap({ onOpenQuoteModal }) {
             Zonas de Cobertura & Mapa Operativo
           </h2>
           <p className="section-subtitle" style={{ margin: '10px auto 0 auto' }}>
-            Operamos en las principales áreas urbanas, zonas industriales, proyectos de infraestructura y fundos agrícolas de [ZONA DE COBERTURA / CIUDAD].
+            Operamos en las principales áreas urbanas, zonas industriales, proyectos de infraestructura y fundos agrícolas.
           </p>
         </div>
 
@@ -33,7 +44,7 @@ export default function CoverageMap({ onOpenQuoteModal }) {
                   <div>
                     <strong style={{ color: 'var(--primary-navy)' }}>Zona Urbana & Comercial:</strong>
                     <div style={{ fontSize: '0.9rem', color: 'var(--text-secondary)' }}>
-                      Atención a hoteles, comercios, hospitales, empresas y condominios en [CIUDAD Y DISTRITOS].
+                      Atención a hoteles, comercios, hospitales, empresas y condominios.
                     </div>
                   </div>
                 </li>
@@ -42,7 +53,7 @@ export default function CoverageMap({ onOpenQuoteModal }) {
                   <div>
                     <strong style={{ color: 'var(--primary-navy)' }}>Zona Agrícola & Fundos:</strong>
                     <div style={{ fontSize: '0.9rem', color: 'var(--text-secondary)' }}>
-                      Despacho en cisternas a reservorios y valles de [ZONAS AGRÍCOLAS].
+                      Despacho en cisternas a reservorios y valles agrícolas.
                     </div>
                   </div>
                 </li>
@@ -69,7 +80,7 @@ export default function CoverageMap({ onOpenQuoteModal }) {
                 <p style={{ fontSize: '0.88rem', color: 'var(--text-secondary)', marginBottom: '14px' }}>
                   Evaluamos rutas especiales y despliegue de unidades para proyectos fuera de la zona estándar.
                 </p>
-                <button onClick={onOpenQuoteModal} className="btn btn-primary" style={{ fontSize: '0.85rem' }}>
+                <button onClick={handleQuoteClick} className="btn btn-primary" style={{ fontSize: '0.85rem' }}>
                   <FileTextIcon size={16} /> Consultar disponibilidad de ruta
                 </button>
               </div>
@@ -101,4 +112,3 @@ export default function CoverageMap({ onOpenQuoteModal }) {
     </section>
   );
 }
-

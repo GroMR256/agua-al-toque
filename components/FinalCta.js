@@ -2,14 +2,23 @@
 import { FileTextIcon, WhatsAppIcon } from './Icons';
 import { getWhatsAppLink } from '@/lib/contactConfig';
 import { handleDirectWhatsAppClick } from '@/lib/whatsappTracker';
+import { useQuoteModal } from '@/components/quote/QuoteModalProvider';
 
 export default function FinalCta({ onOpenQuoteModal }) {
+  const { openQuoteModal } = useQuoteModal();
+
+  const handleQuoteClick = () => {
+    if (onOpenQuoteModal) {
+      onOpenQuoteModal();
+    } else {
+      openQuoteModal();
+    }
+  };
+
   return (
     <section className="section" style={{ padding: '90px 0', backgroundColor: 'var(--primary-navy)', color: '#FFFFFF', textAlign: 'center' }}>
       <div className="container">
         <div style={{ maxWidth: '750px', margin: '0 auto' }}>
-
-
           <h2 style={{ fontSize: 'clamp(2rem, 3.5vw, 2.8rem)', fontWeight: 800, marginTop: '16px', marginBottom: '16px' }}>
             ¿Necesitas abastecimiento de agua?
           </h2>
@@ -19,7 +28,7 @@ export default function FinalCta({ onOpenQuoteModal }) {
           </p>
 
           <div style={{ display: 'flex', gap: '16px', justifyContent: 'center', flexWrap: 'wrap' }}>
-            <button onClick={onOpenQuoteModal} className="btn btn-primary btn-large">
+            <button onClick={handleQuoteClick} className="btn btn-primary btn-large">
               <FileTextIcon size={20} /> Solicitar Cotización
             </button>
             <a

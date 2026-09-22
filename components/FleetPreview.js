@@ -1,8 +1,20 @@
 'use client';
-import Link from 'next/link';
-import { TruckIcon, ArrowRightIcon, ShieldCheckIcon } from './Icons';
+import Image from 'next/image';
+import { ShieldCheckIcon } from './Icons';
+import { useQuoteModal } from '@/components/quote/QuoteModalProvider';
 
 export default function FleetPreview({ onOpenQuoteModal }) {
+  const { openQuoteModal } = useQuoteModal();
+
+  const handleQuoteClick = (title) => {
+    const serviceName = `Alquiler/Servicio de ${title}`;
+    if (onOpenQuoteModal) {
+      onOpenQuoteModal(serviceName);
+    } else {
+      openQuoteModal(serviceName);
+    }
+  };
+
   const fleetItems = [
     {
       title: 'Camión Cisterna 10 m³ (10,000 Litros)',
@@ -40,7 +52,6 @@ export default function FleetPreview({ onOpenQuoteModal }) {
                 Flota propia de unidades acondicionadas y mantenidas bajo estrictos estándares de limpieza y seguridad.
               </p>
             </div>
-
           </div>
         </div>
 
@@ -48,10 +59,13 @@ export default function FleetPreview({ onOpenQuoteModal }) {
           {fleetItems.map((item, idx) => (
             <div key={idx} className="card-pro" style={{ padding: 0, overflow: 'hidden' }}>
               <div style={{ height: '220px', overflow: 'hidden', position: 'relative' }}>
-                <img
+                <Image
                   src={item.image}
                   alt={item.title}
-                  style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                  fill
+                  loading="lazy"
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                  style={{ objectFit: 'cover' }}
                 />
                 <div style={{
                   position: 'absolute',
@@ -62,7 +76,8 @@ export default function FleetPreview({ onOpenQuoteModal }) {
                   padding: '4px 12px',
                   borderRadius: '99px',
                   fontSize: '0.8rem',
-                  fontWeight: 700
+                  fontWeight: 700,
+                  zIndex: 2
                 }}>
                   {item.capacity}
                 </div>
@@ -81,7 +96,7 @@ export default function FleetPreview({ onOpenQuoteModal }) {
                 </div>
 
                 <button
-                  onClick={() => onOpenQuoteModal(`Alquiler/Servicio de ${item.title}`)}
+                  onClick={() => handleQuoteClick(item.title)}
                   className="btn btn-primary"
                   style={{ width: '100%', justifyContent: 'center' }}
                 >

@@ -4,9 +4,11 @@ import Link from 'next/link';
 import { TruckIcon, WhatsAppIcon, FileTextIcon } from './Icons';
 import { getWhatsAppLink } from '@/lib/contactConfig';
 import { handleDirectWhatsAppClick } from '@/lib/whatsappTracker';
+import { useQuoteModal } from '@/components/quote/QuoteModalProvider';
 
 export default function Header({ onOpenQuoteModal }) {
   const [isOpen, setIsOpen] = useState(false);
+  const { openQuoteModal } = useQuoteModal();
 
   useEffect(() => {
     if (isOpen) {
@@ -32,6 +34,14 @@ export default function Header({ onOpenQuoteModal }) {
 
   const handleLinkClick = () => {
     setIsOpen(false);
+  };
+
+  const handleQuoteClick = (service = 'Suministro de Agua') => {
+    if (onOpenQuoteModal) {
+      onOpenQuoteModal(service);
+    } else {
+      openQuoteModal(service);
+    }
   };
 
   return (
@@ -75,7 +85,7 @@ export default function Header({ onOpenQuoteModal }) {
             <button
               onClick={() => {
                 handleLinkClick();
-                if (onOpenQuoteModal) onOpenQuoteModal();
+                handleQuoteClick();
               }}
               className="btn btn-primary"
               style={{ width: '100%', padding: '12px 16px', fontSize: '0.95rem' }}
@@ -110,7 +120,7 @@ export default function Header({ onOpenQuoteModal }) {
             <WhatsAppIcon size={16} /> WhatsApp
           </a>
           <button
-            onClick={onOpenQuoteModal}
+            onClick={() => handleQuoteClick()}
             className="btn btn-primary"
             style={{ padding: '10px 20px', fontSize: '0.88rem' }}
           >
@@ -121,4 +131,3 @@ export default function Header({ onOpenQuoteModal }) {
     </header>
   );
 }
-

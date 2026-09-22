@@ -1,13 +1,21 @@
 'use client';
+import Image from 'next/image';
 import { FileTextIcon, WhatsAppIcon } from './Icons';
 import { getWhatsAppLink } from '@/lib/contactConfig';
 import { handleDirectWhatsAppClick } from '@/lib/whatsappTracker';
 import { trackEvent, ANALYTICS_EVENTS } from '@/lib/analytics';
+import { useQuoteModal } from '@/components/quote/QuoteModalProvider';
 
 export default function Hero({ onOpenQuoteModal }) {
+  const { openQuoteModal } = useQuoteModal();
+
   const handleQuoteClick = () => {
     trackEvent(ANALYTICS_EVENTS.QUOTE_MODAL_OPENED, { location: 'hero' });
-    if (onOpenQuoteModal) onOpenQuoteModal();
+    if (onOpenQuoteModal) {
+      onOpenQuoteModal();
+    } else {
+      openQuoteModal();
+    }
   };
 
   return (
@@ -57,9 +65,14 @@ export default function Hero({ onOpenQuoteModal }) {
           </div>
 
           <div className="hero-image-wrapper">
-            <img
+            <Image
               src="https://images.unsplash.com/photo-1601584115197-04ecc0da31d7?auto=format&fit=crop&w=1200&q=80"
               alt="Camión cisterna de agua listo para despacho industrial"
+              width={1200}
+              height={800}
+              priority
+              sizes="(max-width: 768px) 100vw, 50vw"
+              style={{ width: '100%', height: 'auto', objectFit: 'cover', borderRadius: '12px' }}
             />
             <div style={{
               position: 'absolute',
@@ -93,4 +106,3 @@ export default function Hero({ onOpenQuoteModal }) {
     </section>
   );
 }
-

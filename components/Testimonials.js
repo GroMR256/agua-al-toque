@@ -1,4 +1,3 @@
-'use client';
 import { ShieldCheckIcon, HotelIcon, HardHatIcon, SproutIcon } from './Icons';
 
 export default function Testimonials() {

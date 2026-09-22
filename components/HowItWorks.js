@@ -1,4 +1,3 @@
-'use client';
 import { FileTextIcon, CalendarIcon, TruckIcon, CheckCircleIcon } from './Icons';
 
 export default function HowItWorks() {

@@ -1,6 +1,6 @@
-'use client';
+import Image from 'next/image';
 
-export default function SectorsGrid({ onOpenQuoteModal }) {
+export default function SectorsGrid() {
   const sectors = [
     {
       id: 'hoteles-y-restaurantes',
@@ -68,10 +68,13 @@ export default function SectorsGrid({ onOpenQuoteModal }) {
           {sectors.map((sec) => (
             <div key={sec.id} className="card-pro" style={{ padding: 0, overflow: 'hidden', backgroundColor: '#FFFFFF' }}>
               <div style={{ height: '180px', overflow: 'hidden', position: 'relative' }}>
-                <img
+                <Image
                   src={sec.image}
                   alt={sec.title}
-                  style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                  fill
+                  loading="lazy"
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
+                  style={{ objectFit: 'cover' }}
                 />
               </div>
 
@@ -82,7 +85,6 @@ export default function SectorsGrid({ onOpenQuoteModal }) {
                 <p style={{ color: 'var(--text-secondary)', fontSize: '0.9rem', lineHeight: 1.5, marginBottom: '20px', flex: 1 }}>
                   {sec.desc}
                 </p>
-
               </div>
             </div>
           ))}

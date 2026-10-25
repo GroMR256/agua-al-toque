@@ -1,6 +1,38 @@
 'use client';
-import Image from 'next/image';
 import { useQuoteModal } from '@/components/quote/QuoteModalProvider';
+
+const services = [
+  {
+    id: 'suministro-de-agua',
+    title: 'Suministro de agua',
+    desc: 'Una cisterna para una necesidad puntual o programada, descargada en el punto que acordemos.',
+  },
+  {
+    id: 'abastecimiento-empresarial',
+    title: 'Abastecimiento empresarial',
+    desc: 'Entregas recurrentes con contrato, orden de compra y factura, para que tu operación no se detenga.',
+  },
+  {
+    id: 'agua-para-agricultura',
+    title: 'Agua para agricultura',
+    desc: 'Riego de auxilio y llenado de reservorios para fundos, en temporada seca o cuando falle el canal.',
+  },
+  {
+    id: 'agua-para-mineria',
+    title: 'Agua para minería y proyectos',
+    desc: 'Abastecimiento de campamentos y frentes de trabajo en zonas alejadas o de acceso difícil.',
+  },
+  {
+    id: 'alquiler-de-cisternas',
+    title: 'Alquiler de cisternas',
+    desc: 'La unidad con chofer por días, semanas o meses, para transporte o almacenamiento temporal en obra.',
+  },
+  {
+    id: 'abastecimiento-de-emergencia',
+    title: 'Abastecimiento de emergencia',
+    desc: 'Despacho prioritario ante un corte, una bomba malograda o un tanque que se vació sin aviso.',
+  },
+];
 
 export default function ServiceCards({ onOpenQuoteModal }) {
   const { openQuoteModal } = useQuoteModal();
@@ -13,92 +45,34 @@ export default function ServiceCards({ onOpenQuoteModal }) {
     }
   };
 
-  const services = [
-    {
-      id: 'suministro-de-agua',
-      image: 'https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&w=600&q=80',
-      title: 'Suministro de agua',
-      desc: 'Abastecimiento mediante cisternas para necesidades programadas o puntuales en cualquier punto acordado.',
-    },
-    {
-      id: 'abastecimiento-empresarial',
-      image: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=600&q=80',
-      title: 'Abastecimiento empresarial',
-      desc: 'Contratos y entregas recurrentes para empresas que necesitan garantizar continuidad en su operación.',
-    },
-    {
-      id: 'agua-para-agricultura',
-      image: 'https://images.unsplash.com/photo-1500937386664-56d1dfef3854?auto=format&fit=crop&w=600&q=80',
-      title: 'Agua para agricultura',
-      desc: 'Abastecimiento continuo de fundos, reservorios y operaciones agrícolas de alta escala.',
-    },
-    {
-      id: 'agua-para-mineria',
-      image: 'https://images.unsplash.com/photo-1578575437130-527eed3abbec?auto=format&fit=crop&w=600&q=80',
-      title: 'Agua para minería y proyectos',
-      desc: 'Abastecimiento especializado para proyectos mineros, operaciones en zonas remotas y campamentos.',
-    },
-    {
-      id: 'alquiler-de-cisternas',
-      image: 'https://images.unsplash.com/photo-1601584115197-04ecc0da31d7?auto=format&fit=crop&w=600&q=80',
-      title: 'Alquiler de cisternas',
-      desc: 'Alquiler de unidades de cisterna para operaciones que requieren transporte y almacenamiento temporal.',
-    },
-    {
-      id: 'abastecimiento-de-emergencia',
-      image: 'https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=600&q=80',
-      title: 'Abastecimiento de emergencia',
-      desc: 'Entregas prioritarias e inmediatas ante cortes imprevistos, fallas mecánicas o falta repentina de agua.',
-    },
-  ];
-
   return (
-    <section id="servicios" className="section" style={{ padding: '90px 0', backgroundColor: '#FFFFFF' }}>
-      <div className="container">
-        <div style={{ textAlign: 'center', maxWidth: '700px', margin: '0 auto 60px auto' }}>
-          <h2 className="section-title" style={{ marginTop: '12px' }}>
-            Soluciones de Abastecimiento & Logística de Agua
-          </h2>
-          <p className="section-subtitle" style={{ margin: '12px auto 0 auto' }}>
-            No somos simplemente vendedores de agua; ofrecemos una gestión completa de transporte, cisternas y entrega garantizada.
+    <section id="servicios" className="chapter chapter--coal" data-ink="paper">
+      <div className="frame">
+        <div className="grid services-head">
+          <h2 className="display section-heading" data-reveal>Lo que hacemos</h2>
+          <p className="section-intro muted-on-coal" data-reveal style={{ '--reveal-delay': '80ms' }}>
+            No vendemos bidones. Movemos agua por metro cúbico: transporte, cisterna y descarga, con o sin contrato.
           </p>
         </div>
 
-        <div className="grid-3">
-          {services.map((srv) => (
-            <div key={srv.id} className="card-pro" style={{ padding: 0, overflow: 'hidden' }}>
-              <div style={{ height: '180px', overflow: 'hidden', position: 'relative' }}>
-                <Image
-                  src={srv.image}
-                  alt={srv.title}
-                  fill
-                  loading="lazy"
-                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                  style={{ objectFit: 'cover' }}
-                />
+        <ul className="service-list">
+          {services.map((srv, idx) => (
+            <li key={srv.id} className="service-row" data-reveal style={{ '--reveal-delay': `${(idx % 2) * 70}ms` }}>
+              <h3 className="display service-name">{srv.title}</h3>
+              <div className="service-body">
+                <p>{srv.desc}</p>
+                <button
+                  type="button"
+                  onClick={() => handleQuoteClick(srv.title)}
+                  className="btn btn-ghost"
+                  aria-label={`Solicitar cotización: ${srv.title}`}
+                >
+                  <span>Solicitar cotización</span>
+                </button>
               </div>
-
-              <div style={{ padding: '24px', display: 'flex', flexDirection: 'column', flex: 1 }}>
-                <h3 style={{ fontSize: '1.2rem', fontWeight: 700, color: 'var(--primary-navy)', marginBottom: '10px' }}>
-                  {srv.title}
-                </h3>
-                <p style={{ color: 'var(--text-secondary)', fontSize: '0.9rem', lineHeight: 1.5, marginBottom: '20px', flex: 1 }}>
-                  {srv.desc}
-                </p>
-
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', paddingTop: '16px', borderTop: '1px solid var(--border-light)' }}>
-                  <button
-                    onClick={() => handleQuoteClick(srv.title)}
-                    className="btn btn-primary"
-                    style={{ width: '100%', justifyContent: 'center' }}
-                  >
-                    Solicitar cotización
-                  </button>
-                </div>
-              </div>
-            </div>
+            </li>
           ))}
-        </div>
+        </ul>
       </div>
     </section>
   );

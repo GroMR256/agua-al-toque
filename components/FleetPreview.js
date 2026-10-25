@@ -1,13 +1,73 @@
 'use client';
-import Image from 'next/image';
-import { ShieldCheckIcon } from './Icons';
+import { useState } from 'react';
 import { useQuoteModal } from '@/components/quote/QuoteModalProvider';
+
+const TRUCKS = [30, 15, 10];
+const HOME_TANK_LITERS = 1100;
+
+const PRESETS = [
+  { label: 'Tanque de casa', value: 2 },
+  { label: 'Hotel o colegio', value: 12 },
+  { label: 'Obra, una semana', value: 45 },
+  { label: 'Reservorio de fundo', value: 90 },
+];
+
+const fleetItems = [
+  {
+    size: 10,
+    title: 'Cisterna de 10 m³',
+    specs: 'Entra a calles estrechas. Para comercios, hoteles pequeños y emergencias en casa.',
+    detail: 'Bomba de alto flujo incluida.',
+  },
+  {
+    size: 15,
+    title: 'Cisterna de 15 m³',
+    specs: 'La más versátil: construcción, fundos agrícolas y clientes con entregas fijas.',
+    detail: 'Mangueras de descarga de 50 metros.',
+  },
+  {
+    size: 30,
+    title: 'Cisterna de 30 m³',
+    specs: 'Carga pesada para minería, plantas industriales y llenado de reservorios.',
+    detail: 'Tanque de acero inoxidable sanitizado.',
+  },
+];
+
+/**
+ * Reparte un volumen en el menor número de viajes posible y, a igual número
+ * de viajes, con la menor capacidad ociosa.
+ */
+export function planTrips(volume) {
+  const loads = [];
+  let rest = volume;
+  while (rest > 30) {
+    loads.push(30);
+    rest -= 30;
+  }
+  if (rest > 25) loads.push(30);
+  else if (rest > 15) loads.push(15, 10);
+  else if (rest > 10) loads.push(15);
+  else if (rest > 0) loads.push(10);
+  return loads;
+}
+
+function describeLoads(loads) {
+  const counts = TRUCKS.map((size) => [size, loads.filter((l) => l === size).length]).filter(([, n]) => n > 0);
+  return counts.map(([size, n]) => `${n} de ${size} m³`).join(' + ');
+}
+
+// Separador de miles fijo (no toLocaleString) para que servidor y navegador rendericen lo mismo
+const format = (n) => String(n).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 
 export default function FleetPreview({ onOpenQuoteModal }) {
   const { openQuoteModal } = useQuoteModal();
+  const [volume, setVolume] = useState(18);
 
-  const handleQuoteClick = (title) => {
-    const serviceName = `Alquiler/Servicio de ${title}`;
+  const loads = planTrips(volume);
+  const trips = loads.length;
+  const tanks = Math.ceil((volume * 1000) / HOME_TANK_LITERS);
+
+  const openQuote = (serviceName) => {
     if (onOpenQuoteModal) {
       onOpenQuoteModal(serviceName);
     } else {
@@ -15,97 +75,93 @@ export default function FleetPreview({ onOpenQuoteModal }) {
     }
   };
 
-  const fleetItems = [
-    {
-      title: 'Camión Cisterna 10 m³ (10,000 Litros)',
-      image: 'https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&w=800&q=80',
-      specs: 'Ideal para accesos urbanos, comercios, hoteles pequeños y emergencias residenciales.',
-      capacity: '10,000 Litros (10 m³)',
-      pump: 'Bomba impulsora de alto flujo incluida'
-    },
-    {
-      title: 'Camión Cisterna 15 m³ (15,000 Litros)',
-      image: 'https://images.unsplash.com/photo-1601584115197-04ecc0da31d7?auto=format&fit=crop&w=800&q=80',
-      specs: 'Unidad intermedia versátil para construcciones, fundos agrícolas y clientes corporativos.',
-      capacity: '15,000 Litros (15 m³)',
-      pump: 'Mangueras de descarga rápida de 50 metros'
-    },
-    {
-      title: 'Camión Cisterna 30 m³ (30,000 Litros)',
-      image: 'https://images.unsplash.com/photo-1519003722824-194d4455a60c?auto=format&fit=crop&w=800&q=80',
-      specs: 'Gran capacidad de transporte pesado para operaciones mineras, plantas industriales y reservorios.',
-      capacity: '30,000 Litros (30 m³)',
-      pump: 'Cisterna sanitizada de acero inoxidable'
-    }
-  ];
-
   return (
-    <section id="flota" className="section" style={{ padding: '90px 0', backgroundColor: '#FFFFFF' }}>
-      <div className="container">
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', marginBottom: '48px' }}>
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', flexWrap: 'wrap', gap: '20px' }}>
-            <div>
-              <h2 className="section-title">
-                Capacidad Operativa & Equipamiento Técnico
-              </h2>
-              <p className="section-subtitle">
-                Flota propia de unidades acondicionadas y mantenidas bajo estrictos estándares de limpieza y seguridad.
-              </p>
-            </div>
+    <section id="flota" className="chapter calc" data-ink="dark">
+      <div className="frame">
+        <div className="grid fleet-head">
+          <h2 className="display section-heading" data-reveal>¿Cuánta agua necesitas?</h2>
+          <p className="section-intro muted-on-paper" data-reveal style={{ '--reveal-delay': '80ms' }}>
+            Mueve la barra o elige un caso. Te decimos qué cisternas salen y en cuántos viajes, con la flota que tenemos hoy.
+          </p>
+        </div>
+
+        <div className="calc-control" data-reveal>
+          <label htmlFor="calc-volume">Volumen: {format(volume)} m³ ({format(volume * 1000)} litros)</label>
+          <input
+            id="calc-volume"
+            className="calc-range"
+            type="range"
+            min={1}
+            max={120}
+            step={1}
+            value={volume}
+            onChange={(e) => setVolume(Number(e.target.value))}
+          />
+          <div className="calc-presets" role="group" aria-label="Casos frecuentes">
+            {PRESETS.map((preset) => (
+              <button
+                key={preset.label}
+                type="button"
+                aria-pressed={volume === preset.value}
+                onClick={() => setVolume(preset.value)}
+              >
+                {preset.label} · {preset.value} m³
+              </button>
+            ))}
           </div>
         </div>
 
-        <div className="grid-3">
-          {fleetItems.map((item, idx) => (
-            <div key={idx} className="card-pro" style={{ padding: 0, overflow: 'hidden' }}>
-              <div style={{ height: '220px', overflow: 'hidden', position: 'relative' }}>
-                <Image
-                  src={item.image}
-                  alt={item.title}
-                  fill
-                  loading="lazy"
-                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                  style={{ objectFit: 'cover' }}
-                />
-                <div style={{
-                  position: 'absolute',
-                  top: '12px',
-                  right: '12px',
-                  backgroundColor: 'var(--primary-navy)',
-                  color: '#FFFFFF',
-                  padding: '4px 12px',
-                  borderRadius: '99px',
-                  fontSize: '0.8rem',
-                  fontWeight: 700,
-                  zIndex: 2
-                }}>
-                  {item.capacity}
-                </div>
-              </div>
-
-              <div style={{ padding: '24px', display: 'flex', flexDirection: 'column', flex: 1 }}>
-                <h3 style={{ fontSize: '1.2rem', fontWeight: 700, color: 'var(--primary-navy)', marginBottom: '8px' }}>
-                  {item.title}
-                </h3>
-                <p style={{ color: 'var(--text-secondary)', fontSize: '0.9rem', lineHeight: 1.5, marginBottom: '16px', flex: 1 }}>
-                  {item.specs}
-                </p>
-
-                <div style={{ fontSize: '0.85rem', color: 'var(--text-muted)', marginBottom: '20px', display: 'flex', alignItems: 'center', gap: '6px' }}>
-                  <ShieldCheckIcon size={16} color="var(--accent-emerald)" /> {item.pump}
-                </div>
-
-                <button
-                  onClick={() => handleQuoteClick(item.title)}
-                  className="btn btn-primary"
-                  style={{ width: '100%', justifyContent: 'center' }}
-                >
-                  Solicitar disponibilidad
-                </button>
-              </div>
-            </div>
-          ))}
+        <div className="calc-specimens" aria-live="polite">
+          <div className="specimen">
+            <p className="display specimen-value tabular">
+              {format(volume)}<small>m³</small>
+            </p>
+            <p className="specimen-note muted-on-paper">
+              Lo que necesitas: igual a llenar {format(tanks)} {tanks === 1 ? 'tanque' : 'tanques'} de 1,100 litros, el de casa.
+            </p>
+          </div>
+          <div className="specimen specimen--out">
+            <p className="display specimen-value tabular">
+              {trips}<small>{trips === 1 ? 'viaje' : 'viajes'}</small>
+            </p>
+            <p className="specimen-note muted-on-paper">
+              Lo que enviamos: {describeLoads(loads)}. Si es entrega recurrente, lo repartimos en tus fechas.
+            </p>
+          </div>
         </div>
+
+        <div className="calc-footer">
+          <button
+            type="button"
+            className="btn btn-primary btn-large"
+            onClick={() => openQuote(`Suministro de ${volume} m³ (${describeLoads(loads)})`)}
+          >
+            Cotizar {format(volume)} m³
+          </button>
+          <span className="muted-on-paper small">El precio depende de la distancia, el acceso y la frecuencia.</span>
+        </div>
+
+        <h3 className="trucks-title" data-reveal>La flota, unidad por unidad</h3>
+        <ul className="trucks">
+          {fleetItems.map((item, idx) => (
+            <li key={item.size} className="truck" data-reveal style={{ '--reveal-delay': `${idx * 80}ms` }}>
+              <p className="display truck-size tabular" aria-hidden="true">
+                {item.size}<small>m³</small>
+              </p>
+              <div className="truck-text">
+                <h4>{item.title}</h4>
+                <p>{item.specs} {item.detail}</p>
+              </div>
+              <button
+                type="button"
+                onClick={() => openQuote(`Alquiler/Servicio de ${item.title}`)}
+                className="btn btn-dark"
+              >
+                Solicitar disponibilidad
+              </button>
+            </li>
+          ))}
+        </ul>
       </div>
     </section>
   );

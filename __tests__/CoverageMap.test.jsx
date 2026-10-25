@@ -5,7 +5,7 @@ describe('CoverageMap Component', () => {
   it('renders coverage details and embedded Google Maps iframe', () => {
     render(<CoverageMap onOpenQuoteModal={() => {}} />);
 
-    expect(screen.getByText(/Zonas de Cobertura & Mapa Operativo/i)).toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: /Dónde trabajamos/i })).toBeInTheDocument();
     
     const iframe = screen.getByTitle(/Mapa de Zonas de Cobertura de Agua Al Toque/i);
     expect(iframe).toBeInTheDocument();

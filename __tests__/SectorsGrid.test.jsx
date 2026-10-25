@@ -2,7 +2,7 @@ import { render, screen } from '@testing-library/react';
 import SectorsGrid from '../components/SectorsGrid';
 
 describe('SectorsGrid Component', () => {
-  it('renders all 8 target sectors with photographic images and descriptions', () => {
+  it('renders all 8 target sectors with their usual tanker size and a photograph', () => {
     render(<SectorsGrid onOpenQuoteModal={() => {}} />);
 
     const sectors = [
@@ -20,7 +20,7 @@ describe('SectorsGrid Component', () => {
       expect(screen.getByText(sec)).toBeInTheDocument();
     });
 
-    const sectorImages = screen.getAllByRole('img');
-    expect(sectorImages.length).toBeGreaterThanOrEqual(8);
+    expect(screen.getAllByText(/Cisterna habitual:/i)).toHaveLength(8);
+    expect(screen.getAllByRole('img').length).toBeGreaterThanOrEqual(1);
   });
 });

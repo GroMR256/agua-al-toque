@@ -1,8 +1,11 @@
 'use client';
-import { WhatsAppIcon, FileTextIcon } from './Icons';
+import { WhatsAppIcon } from './Icons';
 import { getWhatsAppLink } from '@/lib/contactConfig';
 import { handleDirectWhatsAppClick } from '@/lib/whatsappTracker';
 import { useQuoteModal } from '@/components/quote/QuoteModalProvider';
+
+const FLOATING_MESSAGE = 'Hola, deseo solicitar información sobre suministro de agua y cisternas';
+const BAR_MESSAGE = 'Hola, deseo cotizar agua en cisterna';
 
 export default function FloatingContactButtons({ onOpenQuoteModal }) {
   const { openQuoteModal } = useQuoteModal();
@@ -17,40 +20,32 @@ export default function FloatingContactButtons({ onOpenQuoteModal }) {
 
   return (
     <>
-      {/* Floating WhatsApp Button */}
+      {/* Botón flotante de WhatsApp (escritorio) */}
       <a
-        href={getWhatsAppLink('Hola, deseo solicitar información sobre suministro de agua y cisternas')}
+        href={getWhatsAppLink(FLOATING_MESSAGE)}
         target="_blank"
         rel="noreferrer"
-        onClick={(e) => handleDirectWhatsAppClick(e, 'floating_button', 'Hola, deseo solicitar información sobre suministro de agua y cisternas')}
+        onClick={(e) => handleDirectWhatsAppClick(e, 'floating_button', FLOATING_MESSAGE)}
         className="floating-whatsapp"
-        aria-label="Contacto por WhatsApp"
+        aria-label="Escribir por WhatsApp"
       >
         <WhatsAppIcon size={30} />
       </a>
 
-      {/* Sticky Mobile Action Bar */}
-      <div className="sticky-cta-bar" role="region" aria-label="Acciones rápidas de contacto">
-        <span style={{ fontSize: '0.85rem', fontWeight: 600, color: '#F1F5F9' }}>Agua Al Toque</span>
-        <div style={{ display: 'flex', gap: '8px' }}>
-          <button
-            onClick={handleQuoteClick}
-            className="btn btn-primary"
-            style={{ padding: '8px 14px', fontSize: '0.85rem', minHeight: '44px' }}
-          >
-            <FileTextIcon size={14} /> Cotizar
-          </button>
-          <a
-            href={getWhatsAppLink('Hola, deseo cotizar agua en cisterna')}
-            target="_blank"
-            rel="noreferrer"
-            onClick={(e) => handleDirectWhatsAppClick(e, 'sticky_mobile_bar', 'Hola, deseo cotizar agua en cisterna')}
-            className="btn btn-whatsapp"
-            style={{ padding: '8px 14px', fontSize: '0.85rem', minHeight: '44px' }}
-          >
-            <WhatsAppIcon size={14} /> WhatsApp
-          </a>
-        </div>
+      {/* Barra fija inferior (móvil) */}
+      <div className="sticky-cta-bar" role="region" aria-label="Contacto rápido">
+        <button type="button" onClick={handleQuoteClick} className="btn btn-primary">
+          Cotizar
+        </button>
+        <a
+          href={getWhatsAppLink(BAR_MESSAGE)}
+          target="_blank"
+          rel="noreferrer"
+          onClick={(e) => handleDirectWhatsAppClick(e, 'sticky_mobile_bar', BAR_MESSAGE)}
+          className="btn btn-whatsapp"
+        >
+          <WhatsAppIcon size={18} /> WhatsApp
+        </a>
       </div>
     </>
   );

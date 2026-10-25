@@ -1,6 +1,6 @@
 'use client';
 import { useState, useEffect } from 'react';
-import { FileTextIcon, WhatsAppIcon } from './Icons';
+import { WhatsAppIcon } from './Icons';
 import { getWhatsAppLink } from '@/lib/contactConfig';
 import { getStoredUtmData } from '@/lib/utmTracker';
 import { trackEvent, ANALYTICS_EVENTS } from '@/lib/analytics';
@@ -17,6 +17,11 @@ export default function QuoteModal({ isOpen, onClose, defaultService = 'Suminist
   const [submitted, setSubmitted] = useState(false);
   const [errorMsg, setErrorMsg] = useState('');
   const [whatsappUrl, setWhatsappUrl] = useState('');
+
+  // Cada vez que se abre, el servicio refleja el botón que lo abrió
+  useEffect(() => {
+    if (isOpen) setService(defaultService);
+  }, [isOpen, defaultService]);
 
   useEffect(() => {
     if (!isOpen) return;
@@ -108,80 +113,40 @@ export default function QuoteModal({ isOpen, onClose, defaultService = 'Suminist
       aria-labelledby="quote-modal-title"
     >
       <div className="modal-content">
-        <button
-          onClick={handleReset}
-          aria-label="Cerrar modal"
-          style={{
-            position: 'absolute',
-            top: '16px',
-            right: '16px',
-            background: '#F1F5F9',
-            border: 'none',
-            color: '#475569',
-            width: '36px',
-            height: '36px',
-            borderRadius: '50%',
-            cursor: 'pointer',
-            fontSize: '1.2rem',
-            fontWeight: 700,
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            zIndex: 10
-          }}
-        >
-          ✕
+        <button type="button" onClick={handleReset} aria-label="Cerrar" className="modal-close">
+          <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true">
+            <path d="M2 2l12 12M14 2L2 14" stroke="currentColor" strokeWidth="2" />
+          </svg>
         </button>
 
-        <div style={{ marginBottom: '20px', paddingRight: '30px' }}>
-          <span className="badge-pro" style={{ marginBottom: '8px' }}>
-            <FileTextIcon size={14} /> Cotización Rápida
-          </span>
-          <h3 id="quote-modal-title" style={{ fontSize: '1.4rem', fontWeight: 800, color: 'var(--primary-navy)' }}>
-            Solicitar Cotización de Servicio
+        <div style={{ marginBottom: '24px' }}>
+          <h3 id="quote-modal-title" className="display modal-title">
+            Solicitar cotización
           </h3>
-          <p style={{ color: 'var(--text-secondary)', fontSize: '0.9rem', marginTop: '4px' }}>
-            Ingresa tus datos de contacto y te enviaremos una propuesta formal a la brevedad.
+          <p className="muted-on-paper" style={{ marginTop: '10px' }}>
+            Déjanos tus datos y te enviamos la propuesta por WhatsApp o por teléfono.
           </p>
         </div>
 
         {submitted ? (
-          <div style={{ textAlign: 'center', padding: '16px 0' }}>
-            <div style={{
-              fontSize: '3rem',
-              color: 'var(--accent-emerald)',
-              marginBottom: '12px'
-            }}>
-              ✓
-            </div>
-            <h4 style={{ fontSize: '1.25rem', fontWeight: 700, color: 'var(--primary-navy)', marginBottom: '8px' }}>
-              ¡Solicitud Registrada con Éxito!
-            </h4>
-            <p style={{ color: 'var(--text-secondary)', fontSize: '0.92rem', marginBottom: '24px', lineHeight: 1.5 }}>
-              Hemos recibido tus datos y nuestro equipo comercial te contactará inmediatamente.
-            </p>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-              <a
-                href={whatsappUrl || fallbackWaUrl}
-                target="_blank"
-                rel="noreferrer"
-                className="btn btn-whatsapp btn-large"
-                style={{ width: '100%', justifyContent: 'center' }}
-                onClick={() => trackEvent(ANALYTICS_EVENTS.WHATSAPP_CLICK, { location: 'quote_modal_success' })}
-              >
-                <WhatsAppIcon size={20} /> Continuar Atención por WhatsApp
-              </a>
-              <button
-                onClick={handleReset}
-                className="btn"
-                style={{ background: '#F1F5F9', color: '#334155', width: '100%', padding: '12px' }}
-              >
-                Cerrar ventana
-              </button>
-            </div>
+          <div className="form-success" role="status">
+            <h4>Solicitud registrada</h4>
+            <p>Recibimos tus datos. Te contactamos en breve; si es urgente, sigue por WhatsApp.</p>
+            <a
+              href={whatsappUrl || fallbackWaUrl}
+              target="_blank"
+              rel="noreferrer"
+              className="btn btn-whatsapp btn-large"
+              onClick={() => trackEvent(ANALYTICS_EVENTS.WHATSAPP_CLICK, { location: 'quote_modal_success' })}
+            >
+              <WhatsAppIcon size={20} /> Continuar por WhatsApp
+            </a>
+            <button type="button" onClick={handleReset} className="btn btn-ghost">
+              <span>Cerrar</span>
+            </button>
           </div>
         ) : (
-          <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
+          <form onSubmit={handleSubmit} className="form">
             <input
               type="text"
               name="hp_field"
@@ -190,95 +155,85 @@ export default function QuoteModal({ isOpen, onClose, defaultService = 'Suminist
               style={{ display: 'none' }}
               tabIndex={-1}
               autoComplete="off"
+              aria-hidden="true"
             />
 
             {errorMsg && (
-              <div style={{
-                padding: '12px 14px',
-                borderRadius: '8px',
-                backgroundColor: 'rgba(239, 68, 68, 0.1)',
-                border: '1px solid #EF4444',
-                color: '#B91C1C',
-                fontSize: '0.88rem'
-              }}>
-                ⚠️ {errorMsg}
+              <div className="form-error" role="alert">
+                {errorMsg}
               </div>
             )}
 
-            <div>
-              <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: 600, color: 'var(--text-secondary)', marginBottom: '4px' }}>
-                Nombre completo *
-              </label>
-              <input
-                type="text"
-                placeholder="Tu nombre"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-                required
-                style={{ width: '100%', padding: '10px 14px', borderRadius: '8px', border: '1px solid var(--border-light)', outline: 'none' }}
-              />
+            <div className="modal-form-grid">
+              <div>
+                <label htmlFor="quote-name" className="field-label">Nombre completo</label>
+                <input
+                  id="quote-name"
+                  className="input"
+                  type="text"
+                  autoComplete="name"
+                  placeholder="Tu nombre"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  required
+                />
+              </div>
+
+              <div>
+                <label htmlFor="quote-phone" className="field-label">Teléfono o WhatsApp</label>
+                <input
+                  id="quote-phone"
+                  className="input"
+                  type="tel"
+                  autoComplete="tel"
+                  inputMode="tel"
+                  placeholder="Ej. 987 654 321"
+                  value={phone}
+                  onChange={(e) => setPhone(e.target.value)}
+                  required
+                />
+              </div>
             </div>
 
             <div>
-              <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: 600, color: 'var(--text-secondary)', marginBottom: '4px' }}>
-                Teléfono / WhatsApp *
-              </label>
+              <label htmlFor="quote-company" className="field-label">Empresa (opcional)</label>
               <input
-                type="tel"
-                placeholder="Ej. 987 654 321"
-                value={phone}
-                onChange={(e) => setPhone(e.target.value)}
-                required
-                style={{ width: '100%', padding: '10px 14px', borderRadius: '8px', border: '1px solid var(--border-light)', outline: 'none' }}
-              />
-            </div>
-
-            <div>
-              <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: 600, color: 'var(--text-secondary)', marginBottom: '4px' }}>
-                Empresa (opcional)
-              </label>
-              <input
+                id="quote-company"
+                className="input"
                 type="text"
+                autoComplete="organization"
                 placeholder="Nombre de la empresa"
                 value={company}
                 onChange={(e) => setCompany(e.target.value)}
-                style={{ width: '100%', padding: '10px 14px', borderRadius: '8px', border: '1px solid var(--border-light)', outline: 'none' }}
               />
             </div>
 
             <div>
-              <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: 600, color: 'var(--text-secondary)', marginBottom: '4px' }}>
-                Servicio Requerido
-              </label>
+              <label htmlFor="quote-service" className="field-label">Servicio</label>
               <input
+                id="quote-service"
+                className="input"
                 type="text"
                 value={service}
                 onChange={(e) => setService(e.target.value)}
-                style={{ width: '100%', padding: '10px 14px', borderRadius: '8px', border: '1px solid var(--border-light)', outline: 'none' }}
               />
             </div>
 
             <div>
-              <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: 600, color: 'var(--text-secondary)', marginBottom: '4px' }}>
-                Mensaje o Ubicación (opcional)
-              </label>
+              <label htmlFor="quote-message" className="field-label">Lugar de entrega o detalle (opcional)</label>
               <textarea
+                id="quote-message"
+                className="input"
                 rows={2}
-                placeholder="Indica la ubicación o cantidad requerida..."
+                placeholder="Distrito, obra o fundo, y para cuándo"
                 value={message}
                 onChange={(e) => setMessage(e.target.value)}
-                style={{ width: '100%', padding: '10px 14px', borderRadius: '8px', border: '1px solid var(--border-light)', outline: 'none', resize: 'vertical' }}
               />
             </div>
 
-            <div className="modal-actions">
-              <button
-                type="submit"
-                disabled={isSubmitting}
-                className="btn btn-primary btn-large"
-                style={{ flex: 1, opacity: isSubmitting ? 0.7 : 1, cursor: isSubmitting ? 'not-allowed' : 'pointer', justifyContent: 'center' }}
-              >
-                <FileTextIcon size={18} /> {isSubmitting ? 'Enviando...' : 'Enviar Cotización'}
+            <div className="form-actions">
+              <button type="submit" disabled={isSubmitting} className="btn btn-primary btn-large">
+                {isSubmitting ? 'Enviando…' : 'Enviar Cotización'}
               </button>
               <a
                 href={fallbackWaUrl}
@@ -286,9 +241,8 @@ export default function QuoteModal({ isOpen, onClose, defaultService = 'Suminist
                 rel="noreferrer"
                 onClick={() => trackEvent(ANALYTICS_EVENTS.WHATSAPP_CLICK, { location: 'quote_modal_direct' })}
                 className="btn btn-whatsapp btn-large"
-                style={{ flex: 1, justifyContent: 'center' }}
               >
-                <WhatsAppIcon size={18} /> WhatsApp
+                <WhatsAppIcon size={20} /> WhatsApp
               </a>
             </div>
           </form>
@@ -297,4 +251,3 @@ export default function QuoteModal({ isOpen, onClose, defaultService = 'Suminist
     </div>
   );
 }
-

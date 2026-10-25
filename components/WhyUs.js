@@ -1,67 +1,41 @@
-import { TruckIcon, CalendarIcon, WaterIcon, BuildingIcon, EmergencyIcon, MapPinIcon } from './Icons';
+const fields = [
+  {
+    tone: 'coal',
+    ink: 'paper',
+    phrase: 'Flota propia',
+    text: 'Los camiones son nuestros, sin intermediarios. Pasan inspección sanitaria y mecánica, y la hora que te confirmamos depende solo de nosotros.',
+  },
+  {
+    tone: 'lake',
+    ink: 'light',
+    phrase: '24 horas',
+    text: 'Un corte de agua no avisa. Contestamos de día y de noche y, si hay una unidad libre, sale de inmediato con despacho prioritario.',
+    mirror: true,
+  },
+  {
+    tone: 'glacier',
+    ink: 'dark',
+    phrase: 'Con factura',
+    text: 'Para empresas: órdenes de compra, entregas con frecuencia fija y facturación formal. Una persona que conoce tu cuenta y tus horarios.',
+  },
+];
 
 export default function WhyUs() {
-  const advantages = [
-    {
-      icon: <TruckIcon size={24} />,
-      title: 'Flota propia',
-      desc: 'Unidades de transporte propias mantenidas bajo inspecciones sanitarias y mecánicas periódicas sin intermediarios.'
-    },
-    {
-      icon: <CalendarIcon size={24} />,
-      title: 'Entregas programadas',
-      desc: 'Coordinación precisa de fechas y franjas horarias fijas para garantizar la continuidad operativa de tu empresa o fundo.'
-    },
-    {
-      icon: <WaterIcon size={24} />,
-      title: 'Diferentes capacidades',
-      desc: 'Cisternas adaptadas desde 10 m³ hasta 30 m³ para optimizar el flete según el volumen exacto requerido.'
-    },
-    {
-      icon: <BuildingIcon size={24} />,
-      title: 'Atención empresarial',
-      desc: 'Gestión comercial dedicada a contratos corporativos, órdenes de compra y facturación formal.'
-    },
-    {
-      icon: <EmergencyIcon size={24} />,
-      title: 'Respuesta ante emergencias',
-      desc: 'Capacidad logística de despliegue prioritario frente a cortes del suministro público o contingencias imprevistas.'
-    },
-    {
-      icon: <MapPinIcon size={24} />,
-      title: 'Experiencia local',
-      desc: 'Conocimiento detallado de las rutas, accesos complejos y regulaciones locales en las zonas de operación.'
-    }
-  ];
-
   return (
-    <section className="section" style={{ padding: '90px 0', backgroundColor: '#FFFFFF' }}>
-      <div className="container">
-        <div style={{ textAlign: 'center', maxWidth: '700px', margin: '0 auto 60px auto' }}>
-          <h2 className="section-title" style={{ marginTop: '12px' }}>
-            ¿Por Qué Elegirnos como Aliado Logístico?
-          </h2>
-          <p className="section-subtitle" style={{ margin: '12px auto 0 auto' }}>
-            Nos basamos en infraestructura técnica, puntualidad y cumplimiento respaldado por flota propia.
-          </p>
+    <section id="por-que" aria-labelledby="why-title">
+      <h2 id="why-title" className="visually-hidden">Por qué trabajar con nosotros</h2>
+      {fields.map((field) => (
+        <div
+          key={field.phrase}
+          className={`field field--${field.tone}${field.mirror ? ' field--mirror' : ''}`}
+          data-ink={field.ink}
+        >
+          <p data-reveal>{field.text}</p>
+          <h3 className="display" data-reveal style={{ '--reveal-delay': '100ms' }}>
+            {field.phrase}
+          </h3>
         </div>
-
-        <div className="grid-3">
-          {advantages.map((adv, idx) => (
-            <div key={idx} className="card-pro">
-              <div className="icon-wrapper">
-                {adv.icon}
-              </div>
-              <h3 style={{ fontSize: '1.2rem', fontWeight: 700, color: 'var(--primary-navy)', marginBottom: '8px' }}>
-                {adv.title}
-              </h3>
-              <p style={{ color: 'var(--text-secondary)', fontSize: '0.92rem', lineHeight: 1.5 }}>
-                {adv.desc}
-              </p>
-            </div>
-          ))}
-        </div>
-      </div>
+      ))}
     </section>
   );
 }

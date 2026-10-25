@@ -2,7 +2,7 @@ import { render, screen, fireEvent } from '@testing-library/react';
 import ServiceCards from '../components/ServiceCards';
 
 describe('ServiceCards Component', () => {
-  it('renders main services with descriptions and image elements', () => {
+  it('renders the six main services as headings', () => {
     render(<ServiceCards onOpenQuoteModal={() => {}} />);
 
     const serviceTitles = [
@@ -15,11 +15,8 @@ describe('ServiceCards Component', () => {
     ];
 
     serviceTitles.forEach((title) => {
-      expect(screen.getByText(title)).toBeInTheDocument();
+      expect(screen.getByRole('heading', { name: title })).toBeInTheDocument();
     });
-
-    const images = screen.getAllByRole('img');
-    expect(images.length).toBeGreaterThanOrEqual(6);
   });
 
   it('triggers quote modal callback when clicking a quote button on a service card', () => {

@@ -1,133 +1,151 @@
 'use client';
 import { useState, useEffect } from 'react';
-import Link from 'next/link';
-import { TruckIcon, WhatsAppIcon, FileTextIcon } from './Icons';
 import { getWhatsAppLink } from '@/lib/contactConfig';
 import { handleDirectWhatsAppClick } from '@/lib/whatsappTracker';
 import { useQuoteModal } from '@/components/quote/QuoteModalProvider';
 
+const WA_MESSAGE = 'Hola, deseo consultar por servicio de agua en cisterna';
+
+const navItems = [
+  { label: 'Servicios', href: '#servicios' },
+  { label: 'Flota', href: '#flota' },
+  { label: 'Sectores', href: '#sectores' },
+  { label: 'Cobertura', href: '#cobertura' },
+  { label: 'Preguntas', href: '#faq' },
+];
+
+// Tinta y fondo de la cabecera según el capítulo que pasa por debajo
+const INKS = {
+  light: { ink: '#ffffff', ground: '#1d7894' },
+  dark: { ink: '#121719', ground: '#eef1ef' },
+  paper: { ink: '#eef1ef', ground: '#121719' },
+};
+
 export default function Header({ onOpenQuoteModal }) {
   const [isOpen, setIsOpen] = useState(false);
+  const [ink, setInk] = useState('light');
   const { openQuoteModal } = useQuoteModal();
 
   useEffect(() => {
-    if (isOpen) {
-      document.body.classList.add('no-scroll');
-    } else {
-      document.body.classList.remove('no-scroll');
-    }
-
+    document.body.classList.toggle('no-scroll', isOpen);
+    document.documentElement.classList.toggle('menu-open', isOpen);
     return () => {
       document.body.classList.remove('no-scroll');
+      document.documentElement.classList.remove('menu-open');
     };
   }, [isOpen]);
 
-  const navItems = [
-    { label: 'Inicio', href: '#inicio' },
-    { label: 'Servicios', href: '#servicios' },
-    { label: 'Sectores', href: '#sectores' },
-    { label: 'Flota', href: '#flota' },
-    { label: 'Cobertura', href: '#cobertura' },
-    { label: 'FAQ', href: '#faq' },
-    { label: 'Contacto', href: '#contacto' },
-  ];
+  useEffect(() => {
+    const onKey = (e) => {
+      if (e.key === 'Escape') setIsOpen(false);
+    };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, []);
 
-  const handleLinkClick = () => {
+  useEffect(() => {
+    let frame = 0;
+    const probe = () => {
+      frame = 0;
+      const y = 34;
+      const chapters = document.querySelectorAll('[data-ink]');
+      for (const chapter of chapters) {
+        const rect = chapter.getBoundingClientRect();
+        if (rect.top <= y && rect.bottom > y) {
+          setInk(chapter.dataset.ink);
+          return;
+        }
+      }
+    };
+    const onScroll = () => {
+      if (!frame) frame = requestAnimationFrame(probe);
+    };
+    probe();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll);
+    return () => {
+      window.removeEventListener('scroll', onScroll);
+      window.removeEventListener('resize', onScroll);
+      cancelAnimationFrame(frame);
+    };
+  }, []);
+
+  const handleQuoteClick = () => {
     setIsOpen(false);
-  };
-
-  const handleQuoteClick = (service = 'Suministro de Agua') => {
     if (onOpenQuoteModal) {
-      onOpenQuoteModal(service);
+      onOpenQuoteModal('Suministro de Agua');
     } else {
-      openQuoteModal(service);
+      openQuoteModal('Suministro de Agua');
     }
   };
 
+  const colors = INKS[ink] || INKS.light;
+
   return (
-    <header className="site-header">
-      <div className="container header-inner">
-        <Link href="#inicio" className="brand-logo" onClick={handleLinkClick}>
-          <div className="brand-icon" style={{ flexShrink: 0 }}>
-            <TruckIcon size={22} />
-          </div>
-          <div style={{ minWidth: 0 }}>
-            <div style={{ whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>Agua Al Toque</div>
-            <div style={{ fontSize: 'clamp(0.55rem, 2vw, 0.68rem)', fontWeight: 600, color: 'var(--accent-sky)', textTransform: 'uppercase', letterSpacing: '0.5px', marginTop: '-4px', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
-              Abastecimiento & Logística
-            </div>
-          </div>
-        </Link>
+    <>
+      <header
+        className="site-header"
+        style={{ '--header-ink': colors.ink, '--header-ground': colors.ground }}
+      >
+        <div className="frame">
+          <a href="#inicio" className="wordmark" onClick={() => setIsOpen(false)}>
+            Agua Al Toque
+          </a>
 
-        <button
-          className="mobile-toggle-btn"
-          onClick={() => setIsOpen(!isOpen)}
-          aria-expanded={isOpen}
-          aria-label={isOpen ? 'Cerrar menú de navegación' : 'Abrir menú de navegación'}
-        >
-          {isOpen ? '✕' : '☰'}
-        </button>
-
-        <nav className={`nav-links ${isOpen ? 'open' : ''}`} aria-label="Navegación principal">
-          {navItems.map((item) => (
-            <li key={item.href}>
-              <a
-                href={item.href}
-                className="nav-item-link"
-                onClick={handleLinkClick}
-              >
-                {item.label}
-              </a>
-            </li>
-          ))}
-
-          <li className="mobile-only" style={{ flexDirection: 'column', gap: '10px', marginTop: '12px', width: '100%' }}>
+          <nav aria-label="Navegación principal" style={{ display: 'flex', alignItems: 'center', gap: '32px' }}>
+            <ul className="header-nav">
+              {navItems.map((item) => (
+                <li key={item.href}>
+                  <a href={item.href}>{item.label}</a>
+                </li>
+              ))}
+            </ul>
+            <button type="button" onClick={handleQuoteClick} className="btn header-cta">
+              Solicitar cotización
+            </button>
             <button
-              onClick={() => {
-                handleLinkClick();
-                handleQuoteClick();
-              }}
-              className="btn btn-primary"
-              style={{ width: '100%', padding: '12px 16px', fontSize: '0.95rem' }}
+              type="button"
+              className="menu-toggle"
+              onClick={() => setIsOpen((open) => !open)}
+              aria-expanded={isOpen}
+              aria-controls="mobile-menu"
             >
-              <FileTextIcon size={18} /> Solicitar Cotización
+              {isOpen ? 'Cerrar' : 'Menú'}
+            </button>
+          </nav>
+        </div>
+      </header>
+
+      {isOpen && (
+        <div id="mobile-menu" className="mobile-menu">
+          <ul>
+            {navItems.map((item) => (
+              <li key={item.href}>
+                <a href={item.href} className="display" onClick={() => setIsOpen(false)}>
+                  {item.label}
+                </a>
+              </li>
+            ))}
+          </ul>
+          <div className="menu-actions">
+            <button type="button" onClick={handleQuoteClick} className="btn btn-primary btn-large">
+              Solicitar cotización
             </button>
             <a
-              href={getWhatsAppLink('Hola, deseo consultar por servicio de agua en cisterna')}
+              href={getWhatsAppLink(WA_MESSAGE)}
               target="_blank"
               rel="noreferrer"
               onClick={(e) => {
-                handleLinkClick();
-                handleDirectWhatsAppClick(e, 'header_mobile_menu', 'Hola, deseo consultar por servicio de agua en cisterna');
+                setIsOpen(false);
+                handleDirectWhatsAppClick(e, 'header_mobile_menu', WA_MESSAGE);
               }}
-              className="btn btn-whatsapp"
-              style={{ width: '100%', padding: '12px 16px', fontSize: '0.95rem' }}
+              className="btn btn-whatsapp btn-large"
             >
-              <WhatsAppIcon size={18} /> Contactar por WhatsApp
+              Escribir por WhatsApp
             </a>
-          </li>
-        </nav>
-
-        <div style={{ gap: '12px', alignItems: 'center' }} className="desktop-only">
-          <a
-            href={getWhatsAppLink('Hola, deseo consultar por servicio de agua en cisterna')}
-            target="_blank"
-            rel="noreferrer"
-            onClick={(e) => handleDirectWhatsAppClick(e, 'header', 'Hola, deseo consultar por servicio de agua en cisterna')}
-            className="btn btn-whatsapp"
-            style={{ padding: '10px 16px', fontSize: '0.88rem' }}
-          >
-            <WhatsAppIcon size={16} /> WhatsApp
-          </a>
-          <button
-            onClick={() => handleQuoteClick()}
-            className="btn btn-primary"
-            style={{ padding: '10px 20px', fontSize: '0.88rem' }}
-          >
-            <FileTextIcon size={16} /> Solicitar Cotización
-          </button>
+          </div>
         </div>
-      </div>
-    </header>
+      )}
+    </>
   );
 }

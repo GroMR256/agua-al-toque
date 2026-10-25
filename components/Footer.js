@@ -1,97 +1,104 @@
 'use client';
-import { TruckIcon, PhoneIcon, WhatsAppIcon, MapPinIcon, ClockIcon } from './Icons';
-import { getWhatsAppLink, PUBLIC_CONFIG } from '@/lib/contactConfig';
+import { getWhatsAppLink, formatPhone, PUBLIC_CONFIG } from '@/lib/contactConfig';
 import { handleDirectWhatsAppClick } from '@/lib/whatsappTracker';
+import credits from '@/public/images/credits.json';
+
+const WA_MESSAGE = 'Hola, deseo contactar con atención directa de Agua Al Toque';
+
+const columns = [
+  {
+    title: 'Servicios',
+    links: [
+      ['Suministro de agua', '#servicios'],
+      ['Empresas', '#servicios'],
+      ['Agricultura', '#servicios'],
+      ['Minería', '#servicios'],
+      ['Alquiler de cisternas', '#servicios'],
+      ['Emergencias', '#servicios'],
+    ],
+  },
+  {
+    title: 'Sectores',
+    links: [
+      ['Hoteles', '#sectores'],
+      ['Construcción', '#sectores'],
+      ['Industria', '#sectores'],
+      ['Fundos', '#sectores'],
+      ['Hogares', '#sectores'],
+    ],
+  },
+  {
+    title: 'La empresa',
+    links: [
+      ['Quiénes somos', '#nosotros'],
+      ['Flota', '#flota'],
+      ['Cobertura', '#cobertura'],
+      ['Preguntas', '#faq'],
+      ['Contacto', '#contacto'],
+    ],
+  },
+];
 
 export default function Footer() {
   return (
-    <footer className="site-footer">
-      <div className="container">
-        <div className="footer-grid">
-          <div>
-            <div className="brand-logo" style={{ color: '#FFFFFF', marginBottom: '16px' }}>
-              <div className="brand-icon">
-                <TruckIcon size={22} />
-              </div>
-              <span>Agua Al Toque</span>
-            </div>
-            <p style={{ color: '#94A3B8', fontSize: '0.92rem', lineHeight: 1.6, marginBottom: '20px' }}>
-              Soluciones integrales de abastecimiento, transporte y logística de agua mediante camiones cisterna para empresas, minería, construcción, agricultura y necesidades particulares.
-            </p>
-            <div style={{ display: 'flex', gap: '12px' }}>
+    <footer className="site-footer" data-ink="light">
+      <div className="frame">
+        <p className="display footer-name" aria-hidden="true">
+          <span>Agua</span>
+          <span>al toque</span>
+        </p>
+
+        <div className="grid footer-main">
+          <ul className="footer-places">
+            <li>
               <a
-                href={getWhatsAppLink('Hola, deseo contactar con atención directa de Agua Al Toque')}
+                href={getWhatsAppLink(WA_MESSAGE)}
                 target="_blank"
                 rel="noreferrer"
-                onClick={(e) => handleDirectWhatsAppClick(e, 'footer', 'Hola, deseo contactar con atención directa de Agua Al Toque')}
-                className="btn btn-whatsapp"
-                style={{ padding: '8px 16px', fontSize: '0.85rem' }}
+                onClick={(e) => handleDirectWhatsAppClick(e, 'footer', WA_MESSAGE)}
               >
-                <WhatsAppIcon size={16} /> WhatsApp Directo
+                {formatPhone()}
               </a>
-            </div>
-          </div>
+            </li>
+            <li>
+              <a href={`mailto:${PUBLIC_CONFIG.contactEmail}`}>{PUBLIC_CONFIG.contactEmail}</a>
+            </li>
+            <li>
+              <span>{PUBLIC_CONFIG.serviceArea}, {PUBLIC_CONFIG.serviceRegion} · 24 horas</span>
+            </li>
+          </ul>
 
-          <div>
-            <div className="footer-col-title">Servicios Principales</div>
-            <ul className="footer-links-list">
-              <li><a href="#servicios" className="footer-link">Suministro de Agua</a></li>
-              <li><a href="#servicios" className="footer-link">Abastecimiento Empresarial</a></li>
-              <li><a href="#servicios" className="footer-link">Agua para Agricultura</a></li>
-              <li><a href="#servicios" className="footer-link">Agua para Construcción</a></li>
-              <li><a href="#servicios" className="footer-link">Agua para Minería</a></li>
-              <li><a href="#servicios" className="footer-link">Alquiler de Cisternas</a></li>
-            </ul>
-          </div>
-
-          <div>
-            <div className="footer-col-title">Sectores Atendidos</div>
-            <ul className="footer-links-list">
-              <li><a href="#sectores" className="footer-link">Hoteles y Restaurantes</a></li>
-              <li><a href="#sectores" className="footer-link">Agricultura y Fundos</a></li>
-              <li><a href="#sectores" className="footer-link">Minería y Proyectos</a></li>
-              <li><a href="#sectores" className="footer-link">Construcción y Obras</a></li>
-              <li><a href="#sectores" className="footer-link">Industria y Comercio</a></li>
-              <li><a href="#sectores" className="footer-link">Hogares y Condominios</a></li>
-            </ul>
-          </div>
-
-          <div>
-            <div className="footer-col-title">Contacto & Operación</div>
-            <ul className="footer-links-list">
-              <li style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
-                <PhoneIcon size={16} color="#0EA5E9" style={{ flexShrink: 0 }} />
-                <span>Central: +{PUBLIC_CONFIG.whatsappNumber}</span>
-              </li>
-              <li style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
-                <WhatsAppIcon size={16} color="#10B981" style={{ flexShrink: 0 }} />
-                <span>WhatsApp: +{PUBLIC_CONFIG.whatsappNumber}</span>
-              </li>
-              <li style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
-                <MapPinIcon size={16} color="#0EA5E9" style={{ flexShrink: 0 }} />
-                <span>Base: [ZONA DE COBERTURA / CIUDAD]</span>
-              </li>
-              <li style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
-                <ClockIcon size={16} color="#0EA5E9" style={{ flexShrink: 0 }} />
-                <span>Horarios: Atención 24/7 y Emergencias</span>
-              </li>
-            </ul>
-          </div>
+          <nav className="footer-cols" aria-label="Mapa del sitio">
+            {columns.map((col) => (
+              <div key={col.title}>
+                <h3>{col.title}</h3>
+                <ul>
+                  {col.links.map(([label, href]) => (
+                    <li key={label}>
+                      <a href={href}>{label}</a>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </nav>
         </div>
 
-        <div className="footer-bottom">
-          <div style={{ textAlign: 'center' }}>
-            &copy; 2026 Agua Al Toque. Todos los derechos reservados. Soluciones de abastecimiento y logística de agua.
-          </div>
-          <div style={{ display: 'flex', gap: '16px 20px', flexWrap: 'wrap', justifyContent: 'center' }}>
-            <a href="#cobertura" className="footer-link">Cobertura</a>
-            <a href="#nosotros" className="footer-link">Nosotros</a>
-            <a href="#faq" className="footer-link">FAQ</a>
-            <a href="#contacto" className="footer-link">Contacto</a>
-          </div>
+        <div className="footer-legal">
+          <p>© {new Date().getFullYear()} Agua Al Toque. Transporte y abastecimiento de agua en cisterna.</p>
+          <a href="#inicio" className="link">Volver arriba</a>
+          <p className="credits">
+            Fotografías:{' '}
+            {credits.map((c, idx) => (
+              <span key={c.file}>
+                <a href={c.page} target="_blank" rel="noreferrer">“{c.title}”</a> de {c.creator},{' '}
+                <a href={c.licenseUrl} target="_blank" rel="noreferrer">{c.license}</a>, vía {c.via}
+                {idx < credits.length - 1 ? '; ' : '.'}
+              </span>
+            ))}
+          </p>
         </div>
       </div>
     </footer>
   );
 }
-
